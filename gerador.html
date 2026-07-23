@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gerador de Peça de Defesa — Doutor Detrânsito (uso interno)</title>
+<style>
+  :root{--navy:#0b1730;--card:#111f3d;--line:#28375c;--bg:#0a1424;--txt:#eaf0fb;--muted:#93a2c6;--gold:#e0a53b;--brand:#2f6bdd;--ok:#2fbf7f;--warn:#e5a53b;--danger:#e26}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.55}
+  header{background:var(--navy);border-bottom:1px solid var(--line);padding:14px 22px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
+  header .mk{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--gold),#f0c874);display:grid;place-items:center;color:#20160a;font-weight:800}
+  header h1{font-size:16px;margin:0}
+  header small{color:var(--muted);font-size:12px}
+  .wrap{max-width:1250px;margin:0 auto;padding:18px;display:grid;grid-template-columns:420px 1fr;gap:18px}
+  @media(max-width:1000px){.wrap{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .card h2{font-size:13px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);margin:0 0 12px}
+  label{display:block;font-size:12.5px;color:var(--muted);margin:11px 0 5px;font-weight:600}
+  input,select,textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:9px;color:var(--txt);padding:10px 11px;font:inherit}
+  textarea{min-height:90px;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold)}
+  .row{display:flex;gap:10px}.row>*{flex:1}
+  .drop{border:2px dashed var(--line);border-radius:11px;padding:16px;text-align:center;color:var(--muted);cursor:pointer;font-size:13px}
+  .drop.hot{border-color:var(--gold)}
+  .files{margin-top:8px;display:flex;flex-direction:column;gap:5px}
+  .file{display:flex;gap:8px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:12.5px}
+  .file .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .file .rm{border:none;background:none;color:var(--danger);cursor:pointer}
+  .chk{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--txt);margin:8px 0}
+  .chk input{width:auto}
+  .btn{font:inherit;font-weight:700;border:none;border-radius:10px;padding:13px 18px;cursor:pointer;background:var(--gold);color:#20160a;width:100%;font-size:15px}
+  .btn:disabled{opacity:.55;cursor:not-allowed}
+  .btn.sec{background:transparent;border:1px solid var(--line);color:var(--txt);width:auto;padding:9px 14px}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .status{display:flex;gap:9px;align-items:center;color:var(--muted);font-size:14px;margin-bottom:10px}
+  .spin{width:15px;height:15px;border:2.5px solid var(--line);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .peca{background:#fff;color:#111;border-radius:12px;padding:34px 40px;font-family:Georgia,"Times New Roman",serif;font-size:15px;line-height:1.7;text-align:justify;min-height:200px}
+  .peca h1{font-size:19px;text-align:center} .peca h2{font-size:16px;color:#111;margin:18px 0 6px} .peca h3{font-size:15px;margin:14px 0 4px}
+  .peca p{margin:9px 0} .peca ul,.peca ol{margin:8px 0;padding-left:26px}
+  .peca strong{color:#000}
+  .peca .conferir{background:#fff6e6;border:1px solid #e6c56a;color:#5a4410;border-radius:8px;padding:2px 10px;font-family:Segoe UI,sans-serif}
+  .hint{font-size:12px;color:var(--muted);margin-top:6px}
+  .warnbox{background:rgba(229,165,59,.12);border:1px solid rgba(229,165,59,.4);border-radius:10px;padding:11px 13px;font-size:12.5px;color:#f0d9a8;margin-bottom:14px}
+  .gate{position:fixed;inset:0;background:var(--bg);display:grid;place-items:center;z-index:50}
+  .gate .box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px;width:340px;text-align:center}
+  @media print{header,.col-left,.toolbar,.status{display:none}.wrap{display:block;padding:0}.card{border:none;padding:0;background:#fff}.peca{border-radius:0;box-shadow:none}}
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div class="box">
+    <div style="font-weight:800;margin-bottom:6px">Área do especialista</div>
+    <div style="color:var(--muted);font-size:13px;margin-bottom:14px">Digite o código de acesso.</div>
+    <input type="password" id="gateCode" placeholder="código de acesso" style="text-align:center">
+    <button class="btn" id="gateBtn" style="margin-top:12px">Entrar</button>
+    <div class="hint" style="margin-top:10px">Trava simples de acesso. O controle real (login por usuário) entra na Fase 2.</div>
+  </div>
+</div>
+
+<header>
+  <div class="mk">🛡️</div>
+  <div><h1>Gerador de Peça de Defesa</h1><small>Uso interno • Doutor Detrânsito • revise e assine antes de protocolar</small></div>
+</header>
+
+<div class="wrap">
+  <!-- FORMULÁRIO -->
+  <div class="card col-left">
+    <h2>Dados do caso</h2>
+
+    <label>Fase / tipo de peça</label>
+    <select id="fase">
+      <option value="Defesa da Autuação (defesa prévia) de auto de infração de multa">Multa — Defesa da Autuação (prévia)</option>
+      <option value="Recurso à JARI contra a penalidade de multa">Multa — Recurso à JARI</option>
+      <option value="Recurso ao CETRAN (2ª instância) contra a decisão da JARI">Multa — Recurso ao CETRAN</option>
+      <option value="Defesa em processo administrativo de SUSPENSÃO do direito de dirigir">Suspensão — Defesa</option>
+      <option value="Recurso em processo de SUSPENSÃO do direito de dirigir (JARI/CETRAN)">Suspensão — Recurso</option>
+      <option value="Defesa em processo administrativo de CASSAÇÃO da CNH">Cassação — Defesa</option>
+      <option value="Defesa em processo de CANCELAMENTO/nulidade da habilitação">Cancelamento — Defesa</option>
+    </select>
+
+    <div class="row">
+      <div><label>Órgão de trânsito</label><input id="orgao" placeholder="Ex.: DETRAN-XX, Prefeitura, DER"></div>
+      <div><label>UF</label><input id="uf" placeholder="Ex.: SE"></div>
+    </div>
+
+    <div class="row">
+      <div><label>Nº do AIT</label><input id="ait" placeholder="auto de infração"></div>
+      <div><label>Nº do processo</label><input id="proc" placeholder="se houver"></div>
+    </div>
+
+    <label>Enquadramento (artigo do CTB), se souber</label>
+    <input id="enq" placeholder="Ex.: art. 218 (velocidade), art. 165 (embriaguez)...">
+
+    <h2 style="margin-top:18px">Condutor / veículo</h2>
+    <label>Nome do condutor</label>
+    <input id="nome" placeholder="Nome completo">
+    <div class="row">
+      <div><label>CPF</label><input id="cpf" placeholder="000.000.000-00"></div>
+      <div><label>CNH nº / categoria</label><input id="cnh" placeholder="nº — cat."></div>
+    </div>
+    <label>Endereço</label>
+    <input id="end" placeholder="Rua, nº, bairro, cidade/UF, CEP">
+    <div class="row">
+      <div><label>Veículo (marca/modelo)</label><input id="veic" placeholder="se aplicável"></div>
+      <div><label>Placa</label><input id="placa" placeholder="se aplicável"></div>
+    </div>
+    <label>Status da CNH</label>
+    <select id="statuscnh">
+      <option value="Permanente">Permanente</option>
+      <option value="Provisória (Permissão para Dirigir - PPD)">Provisória (PPD)</option>
+    </select>
+
+    <h2 style="margin-top:18px">Datas</h2>
+    <div class="row">
+      <div><label>Data da infração</label><input id="dinfra" placeholder="dd/mm/aaaa"></div>
+      <div><label>Notificação autuação</label><input id="dnaut" placeholder="dd/mm/aaaa"></div>
+    </div>
+    <div class="row">
+      <div><label>Notificação penalidade</label><input id="dnpen" placeholder="dd/mm/aaaa"></div>
+      <div><label>Ciência da portaria</label><input id="dport" placeholder="dd/mm/aaaa"></div>
+    </div>
+
+    <h2 style="margin-top:18px">Fatos e leitura técnica</h2>
+    <label>Descreva os fatos e as teses que você já identificou (quanto mais, melhor)</label>
+    <textarea id="fatos" placeholder="Ex.: condutor não recebeu a notificação da autuação; radar sem aferição visível; pontuação inclui multa prescrita; portaria genérica; emergência médica no dia; dependência do veículo para trabalho..."></textarea>
+
+    <label>Documentos (PDF ou foto)</label>
+    <div class="drop" id="drop">📎 Enviar auto, notificações, portaria, prontuário, CNH...</div>
+    <input type="file" id="fileInput" accept=".pdf,image/*" multiple hidden>
+    <div class="files" id="fileList"></div>
+
+    <div style="margin-top:14px">
+      <div class="chk"><input type="checkbox" id="efeito" checked><label style="margin:0">Requerer efeito suspensivo</label></div>
+      <div class="chk"><input type="checkbox" id="web" checked><label style="margin:0">Buscar legislação/jurisprudência atualizada (web)</label></div>
+      <div class="chk"><input type="checkbox" id="think"><label style="margin:0">Raciocínio aprofundado (mais lento)</label></div>
+      <label>Modelo</label>
+      <select id="modelo">
+        <option value="claude-opus-4-8">Opus 4.8 — máxima qualidade</option>
+        <option value="claude-sonnet-5">Sonnet 5 — mais rápido/barato</option>
+      </select>
+    </div>
+
+    <button class="btn" id="btnGerar" style="margin-top:16px">⚖️ Gerar peça de defesa</button>
+    <div class="hint">Custo por peça varia com o tamanho. Opus + web + raciocínio = melhor e mais caro.</div>
+  </div>
+
+  <!-- SAÍDA -->
+  <div class="card">
+    <div class="warnbox" id="warn">
+      A peça é um <b>rascunho técnico</b> para você revisar, ajustar e assinar. <b>Confira toda citação de lei, súmula e jurisprudência na fonte primária</b> (a seção final lista o que verificar) e confirme os <b>prazos</b> antes de protocolar. O sistema não garante deferimento.
+    </div>
+    <div class="toolbar" id="toolbar" style="display:none">
+      <button class="btn sec" id="btnCopy">📋 Copiar</button>
+      <button class="btn sec" id="btnPdf">🖨️ Gerar PDF (formatado)</button>
+    </div>
+    <div id="statusWrap"></div>
+    <div class="peca" id="peca"><p style="color:#888;font-family:Segoe UI,sans-serif;text-align:left">Preencha os dados à esquerda e clique em <b>Gerar peça de defesa</b>. A peça aparece aqui, pronta para revisão.</p></div>
+  </div>
+</div>
+
+<script>
+"use strict";
+const ACCESS_CODE = "detransito2026"; // troque este código
+const $ = s=>document.querySelector(s);
+
+// Gate
+(function(){
+  if(sessionStorage.getItem('dd_gate')==='1'){ $('#gate').style.display='none'; }
+  $('#gateBtn').onclick=()=>{ if($('#gateCode').value===ACCESS_CODE){ sessionStorage.setItem('dd_gate','1'); $('#gate').style.display='none'; } else { alert('Código incorreto.'); } };
+  $('#gateCode').onkeydown=e=>{ if(e.key==='Enter') $('#gateBtn').click(); };
+})();
+
+// Upload
+let files=[];
+const drop=$('#drop'), fi=$('#fileInput');
+drop.onclick=()=>fi.click();
+['dragenter','dragover'].forEach(e=>drop.addEventListener(e,ev=>{ev.preventDefault();drop.classList.add('hot');}));
+['dragleave','drop'].forEach(e=>drop.addEventListener(e,ev=>{ev.preventDefault();drop.classList.remove('hot');}));
+drop.addEventListener('drop',ev=>addFiles(ev.dataTransfer.files));
+fi.onchange=()=>addFiles(fi.files);
+async function addFiles(list){
+  for(const f of list){
+    const isPdf=f.type==='application/pdf'||/\.pdf$/i.test(f.name);
+    const isImg=/^image\//.test(f.type);
+    if(!isPdf&&!isImg){alert('Envie PDF ou imagem: '+f.name);continue;}
+    if(f.size>20*1024*1024){alert(f.name+' muito grande (máx ~20MB).');continue;}
+    files.push({name:f.name,isPdf,mediaType:isPdf?'application/pdf':(f.type||'image/png'),data:await toB64(f)});
+  }
+  render();
+}
+function toB64(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]);r.onerror=rej;r.readAsDataURL(f);});}
+function render(){const el=$('#fileList');el.innerHTML='';files.forEach((f,i)=>{const d=document.createElement('div');d.className='file';d.innerHTML=`<span>${f.isPdf?'📄':'🖼️'}</span><span class="nm">${f.name}</span><button class="rm">✕</button>`;d.querySelector('.rm').onclick=()=>{files.splice(i,1);render();};el.appendChild(d);});}
+
+const SYS = `Você é um especialista sênior em DIREITO ADMINISTRATIVO DE TRÂNSITO no Brasil, elaborando uma peça técnica de defesa/recurso administrativo em favor do condutor. Escreva com máxima densidade técnica, profundidade e precisão. O objetivo é construir a defesa mais robusta possível para ANULAR o auto de infração e/ou o processo administrativo, buscando o arquivamento, o cancelamento da penalidade e a preservação do direito de dirigir e do prontuário do condutor.
+
+REGRAS INEGOCIÁVEIS DE INTEGRIDADE (a mais importante de todas):
+- NUNCA invente jurisprudência. NÃO crie números de acórdão, de processo, de recurso especial, datas de julgamento nem ementas literais. Se não tiver certeza absoluta do teor de um julgado específico, NÃO o cite como se fosse literal: apresente o argumento e marque com o rótulo [CONFERIR JURISPRUDÊNCIA].
+- Só afirme como literal um dispositivo de lei/resolução se tiver alta confiança no texto; caso contrário, parafraseie e marque [CONFERIR TEXTO LEGAL].
+- A legislação de trânsito muda com frequência (Resoluções do CONTRAN são revogadas e substituídas). Quando houver ferramenta de busca na web disponível, USE-A para confirmar a legislação vigente, o número/vigência das Resoluções aplicáveis e a existência de súmulas/temas citados. Não presuma que um número de Resolução continua em vigor.
+- Não invente fatos do caso. Use apenas o que foi informado e os documentos. Onde faltar dado, use marcadores entre colchetes como [NOME], [Nº DO AIT], [DATA], [ÓRGÃO].
+- Não prometa nem afirme êxito garantido em nenhum ponto da peça.
+
+MÉTODO DE CADA TESE (no tópico "DO DIREITO"): FATO -> NORMA -> CONEXÃO -> DOUTRINA -> JURISPRUDÊNCIA. Cada tese em tópico numerado próprio, argumentação autêntica e distinta, sem repetir parágrafos para alongar.
+
+ESTRUTURA OBRIGATÓRIA (nesta ordem, com títulos):
+1. ENDEREÇAMENTO (conforme a fase: Diretor do órgão para defesa prévia; Presidente da JARI para recurso de 1ª instância; Presidente do CETRAN/UF para 2ª instância).
+2. QUALIFICAÇÃO do condutor e identificação do veículo; nº do AIT/processo; base legal da interposição.
+3. TEMPESTIVIDADE (demonstrar que está no prazo; se a data não permitir calcular, oriente com marcador e cite a base do prazo).
+4. DOS FATOS.
+5. DO DIREITO (o núcleo; todas as teses cabíveis, cada uma pelo método acima).
+6. DO EFEITO SUSPENSIVO (se solicitado).
+7. DOS PEDIDOS (conhecimento; anulação do AIT/processo; cancelamento de multa/penalidade/pontuação; arquivamento; efeito suspensivo; conversão em advertência quando cabível).
+8. FECHAMENTO ("Nestes termos, pede e aguarda deferimento."), local, data, bloco de assinatura do condutor.
+
+ARSENAL DE TESES (aplique, de forma cumulativa, TODAS as cabíveis ao caso concreto; não force teses impertinentes):
+Nulidades formais e processuais: vícios formais no AIT (dados obrigatórios, tipificação, identificação do agente); decadência (notificação da autuação fora do prazo legal, ~30 dias); ausência de dupla notificação (Súmula 312 do STJ: notificação da autuação e da penalidade); falta de fundamentação da decisão (decisão genérica/padronizada); incompetência do agente/órgão; cerceamento de defesa (ausência de imagem, indeferimento sem análise de mérito, art. 5º LV CF); nulidade na notificação de instauração do processo de suspensão/cassação; prescrição da pretensão punitiva; prescrição intercorrente; instauração prematura do processo de suspensão antes do encerramento definitivo das multas de origem; nulidade por derivação (se as multas de origem são nulas, o processo delas derivado também).
+Fiscalização eletrônica/sinalização: irregularidade do medidor/radar (aferição do INMETRO, posicionamento); sinalização deficiente/ausente; ausência de estudo técnico do local; etilômetro sem aferição e o princípio de não produzir prova contra si.
+Materialidade/tipicidade/mérito: ausência de prova de materialidade (ônus do Estado; fotos ilegíveis); erro de tipificação/atipicidade; distinção veículo parado/estacionado/em circulação; teoria dos motivos determinantes; presunção relativa (juris tantum) do ato; erro no cômputo de pontos (pontos prescritos, soma indevida, limites vigentes); cassação sem prova robusta da condução; ausência de reincidência específica; cancelamento sem prova da irregularidade (ônus da Administração).
+Princípios e atenuantes: conversão em advertência (infração leve/média, sem reincidência no período); estado de necessidade/força maior (emergência médica, risco à segurança); proteção à CNH provisória/PPD; dignidade da pessoa humana e proteção ao motorista profissional (direito ao trabalho); proporcionalidade e razoabilidade; vedação ao bis in idem; in dubio pro reo administrativo.
+
+BASE NORMATIVA de apoio (confirme vigência e números via web quando disponível): Constituição Federal (art. 5º, LIV e LV; princípios da Administração, art. 37); Código de Trânsito Brasileiro (Lei nº 9.503/1997), com destaque para o art. 281 e parágrafo único (prazo de notificação da autuação sob pena de arquivamento) e os arts. 285 a 290 (defesa e recursos: JARI e CETRAN); Lei do processo administrativo aplicável (Lei nº 9.784/1999 no âmbito federal, ou a lei estadual correspondente, a confirmar); Súmula 312 do STJ. Para as Resoluções do CONTRAN (procedimentos de autuação, processo de suspensão/cassação, fiscalização por equipamento, fiscalização de alcoolemia) e para temas/súmulas específicos, VERIFIQUE os números e a vigência atuais antes de citar; se não confirmar, cite de forma genérica e marque [CONFERIR].
+
+FORMATAÇÃO: linguagem formal, técnica, persuasiva e respeitosa; texto corrido justificado; use **negrito** para termos-chave; NÃO use tabelas nem quadros; numere os tópicos e subtópicos; transcreva o texto do dispositivo apenas quando tiver alta confiança (senão parafraseie e marque para conferir). Considere o status da CNH informado (Permanente ou Provisória/PPD).
+
+AO FINAL, acrescente OBRIGATORIAMENTE:
+## PONTOS A CONFERIR NA FONTE PRIMÁRIA (antes de protocolar)
+Liste, em bullets, TODOS os dispositivos de lei/resolução, súmulas e referências de jurisprudência citados na peça, para o responsável validar. Inclua um alerta final de conferência do PRAZO. Esta seção é de conferência interna e deve ser removida da versão final protocolada.
+
+Responda em português do Brasil, em Markdown.`;
+
+$('#btnGerar').onclick=gerar;
+async function gerar(){
+  if(files.length===0 && !$('#fatos').value.trim()){ alert('Envie documentos ou descreva os fatos/teses.'); return; }
+  const btn=$('#btnGerar'); btn.disabled=true; btn.textContent='⏳ Gerando peça...';
+  $('#toolbar').style.display='none';
+  $('#statusWrap').innerHTML='<div class="status"><span class="spin"></span> Analisando o caso, pesquisando a fundamentação e redigindo a peça. Pode levar 1 a 3 minutos.</div>';
+  const peca=$('#peca'); peca.innerHTML='';
+
+  const hoje=new Date().toLocaleDateString('pt-BR');
+  const dados=
+`Data de hoje: ${hoje}
+Fase/tipo de peça: ${$('#fase').value}
+Órgão de trânsito: ${$('#orgao').value||'[ÓRGÃO]'} | UF: ${$('#uf').value||'[UF]'}
+Nº do AIT: ${$('#ait').value||'[Nº DO AIT]'} | Nº do processo: ${$('#proc').value||'[Nº DO PROCESSO]'}
+Enquadramento informado: ${$('#enq').value||'(não informado)'}
+Condutor: ${$('#nome').value||'[NOME]'} | CPF: ${$('#cpf').value||'[CPF]'} | CNH: ${$('#cnh').value||'[CNH]'}
+Endereço: ${$('#end').value||'[ENDEREÇO]'}
+Veículo: ${$('#veic').value||'[VEÍCULO]'} | Placa: ${$('#placa').value||'[PLACA]'}
+Status da CNH: ${$('#statuscnh').value}
+Datas — infração: ${$('#dinfra').value||'—'}; notificação autuação: ${$('#dnaut').value||'—'}; notificação penalidade: ${$('#dnpen').value||'—'}; ciência da portaria: ${$('#dport').value||'—'}
+Efeito suspensivo: ${$('#efeito').checked?'SIM, requerer':'não requerer'}
+Fatos e teses identificadas pelo especialista:
+${$('#fatos').value.trim()||'(nenhuma observação; extraia dos documentos)'}`;
+
+  const content=[];
+  files.forEach(f=>content.push(f.isPdf
+    ?{type:'document',source:{type:'base64',media_type:'application/pdf',data:f.data}}
+    :{type:'image',source:{type:'base64',media_type:f.mediaType,data:f.data}}));
+  content.push({type:'text',text:dados+'\n\nElabore a peça completa conforme a estrutura e o método definidos, aplicando todas as teses cabíveis ao caso.'});
+
+  const body={ model:$('#modelo').value, max_tokens:16000, system:SYS, messages:[{role:'user',content}], output_config:{effort:'high'} };
+  if($('#think').checked) body.thinking={type:'adaptive',display:'omitted'};
+  if($('#web').checked) body.tools=[{type:'web_search_20260209',name:'web_search'}];
+
+  let raw='';
+  try{
+    const resp=await fetch('/api/analisar',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)});
+    if(!resp.ok){let m='Erro '+resp.status;try{const j=await resp.json();m=j.error||m;}catch(e){}throw new Error(m);}
+    const rd=resp.body.getReader(); const dec=new TextDecoder(); let buf='',started=false;
+    while(true){
+      const {done,value}=await rd.read(); if(done)break;
+      buf+=dec.decode(value,{stream:true}); const lines=buf.split('\n'); buf=lines.pop();
+      for(const line of lines){
+        if(!line.startsWith('data:'))continue;
+        const d=line.slice(5).trim(); if(!d||d==='[DONE]')continue;
+        let ev;try{ev=JSON.parse(d);}catch(e){continue;}
+        if(ev.type==='content_block_delta'&&ev.delta.type==='text_delta'){ if(!started){started=true;$('#statusWrap').innerHTML='';} raw+=ev.delta.text; peca.innerHTML=md(raw); }
+        else if(ev.type==='error'){ throw new Error(ev.error&&ev.error.message||'Erro'); }
+      }
+    }
+    lastRaw=raw;
+    $('#toolbar').style.display='flex';
+    $('#statusWrap').innerHTML='';
+  }catch(err){
+    $('#statusWrap').innerHTML='';
+    peca.innerHTML='<p style="color:#c33;font-family:Segoe UI,sans-serif;text-align:left">Falha: '+esc(err.message)+'<br>Se for tempo esgotado, desmarque "Raciocínio aprofundado" e/ou a busca na web e tente de novo, ou gere uma peça mais curta. Confirme também que a chave está configurada no Netlify.</p>';
+  }finally{ btn.disabled=false; btn.textContent='⚖️ Gerar peça de defesa'; }
+}
+
+let lastRaw='';
+$('#btnCopy').onclick=()=>{navigator.clipboard.writeText(lastRaw);$('#btnCopy').textContent='✅ Copiado';setTimeout(()=>$('#btnCopy').textContent='📋 Copiar',1500);};
+$('#btnPdf').onclick=()=>{
+  const w=window.open('','_blank');
+  w.document.write('<html><head><meta charset="utf-8"><title>'+esc($('#nome').value||'Peça de Defesa')+'</title><style>'+
+    '@page{size:A4;margin:3cm 2cm 2cm 3cm}'+
+    'body{font-family:"Times New Roman",Georgia,serif;font-size:12pt;line-height:1.6;text-align:justify;color:#000}'+
+    'h1{font-size:14pt;text-align:center;text-transform:uppercase}h2{font-size:12pt;margin:16px 0 6px}h3{font-size:12pt}'+
+    'p{margin:8px 0;text-indent:1.25cm}ul,ol{margin:8px 0}strong{font-weight:bold}'+
+    '.conferir{background:#fff6e6;border:1px solid #e6c56a;padding:1px 6px}'+
+    '</style></head><body>'+md(lastRaw)+'</body></html>');
+  w.document.close(); setTimeout(()=>w.print(),500);
+};
+
+function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+function inl(s){return esc(s).replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/\[CONFERIR[^\]]*\]/g,m=>'<span class="conferir">'+m+'</span>');}
+function md(t){
+  const L=t.split('\n');let h='',i=0;
+  while(i<L.length){let l=L[i],m;
+    if((m=l.match(/^#\s+(.*)/))){h+='<h1>'+inl(m[1])+'</h1>';i++;continue;}
+    if((m=l.match(/^##\s+(.*)/))){h+='<h2>'+inl(m[1])+'</h2>';i++;continue;}
+    if((m=l.match(/^###\s+(.*)/))){h+='<h3>'+inl(m[1])+'</h3>';i++;continue;}
+    if(/^\s*[-*]\s+/.test(l)){h+='<ul>';while(i<L.length&&/^\s*[-*]\s+/.test(L[i])){h+='<li>'+inl(L[i].replace(/^\s*[-*]\s+/,''))+'</li>';i++;}h+='</ul>';continue;}
+    if(/^\s*\d+[.)]\s+/.test(l)){h+='<ol>';while(i<L.length&&/^\s*\d+[.)]\s+/.test(L[i])){h+='<li>'+inl(L[i].replace(/^\s*\d+[.)]\s+/,''))+'</li>';i++;}h+='</ol>';continue;}
+    if(l.trim()===''){i++;continue;}
+    let p=l;i++;while(i<L.length&&L[i].trim()!==''&&!/^(#|\s*[-*]\s|\s*\d+[.)]\s)/.test(L[i])){p+=' '+L[i];i++;}
+    h+='<p>'+inl(p)+'</p>';
+  }
+  return h;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enviar documentos — Doutor Detrânsito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  :root{--navy:#0c0b09;--navy2:#14130f;--bg:#0a0a0a;--card:#14130f;--line:rgba(255,217,102,0.22);--txt:#F3EBD3;--muted:#CFC3A0;--gold:#FFD966;--gold2:#E8B93B;--brand:#FFD966;--ok:#FFD966;--danger:#E8B93B}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Helvetica,Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.55}
+  header{background:radial-gradient(ellipse 900px 420px at 50% 0%, #17130a 0%, #0b0b0b 65%, #0a0a0a 100%);border-bottom:1px solid rgba(255,217,102,0.18);padding:16px 20px;display:flex;justify-content:center}
+  .wrap{max-width:680px;margin:0 auto;padding:26px 18px 90px}
+  .hero{text-align:center;margin-bottom:22px}
+  .hero h1{font-size:26px;margin:6px 0 6px}
+  .hero p{color:var(--muted);margin:0}
+  .steps{display:flex;gap:8px;justify-content:center;margin:16px 0 26px}
+  .steps span{width:34px;height:5px;border-radius:4px;background:var(--line)}
+  .steps span.on{background:var(--gold)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+  .card h2{font-size:14px;text-transform:uppercase;letter-spacing:.22em;color:#FFD966;font-weight:700;margin:0 0 14px}
+  label{display:block;font-size:13.5px;font-weight:600;margin:12px 0 6px}
+  input[type=text],input[type=email]{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:10px;font:inherit;background:#171613;color:var(--txt)}
+  input::placeholder{color:#6d6650}
+  input:focus{outline:none;border-color:var(--gold)}
+  .row{display:flex;gap:12px}.row>*{flex:1}
+  @media(max-width:520px){.row{flex-direction:column;gap:0}}
+  /* upload box */
+  .upbox{margin-bottom:16px}
+  .uphead{display:flex;align-items:center;gap:8px;margin-bottom:6px;position:relative}
+  .uphead label{margin:0}
+  .req{color:var(--danger);font-weight:700}
+  .info{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--brand);color:var(--brand);background:transparent;font-weight:800;font-size:13px;cursor:pointer;display:grid;place-items:center;line-height:1}
+  .info:hover{background:var(--brand);color:#141414}
+  .pop{display:none;position:absolute;top:30px;left:0;z-index:5;background:#14130f;border:1px solid rgba(255,217,102,0.22);color:#F3EBD3;border-radius:12px;padding:13px 15px;font-size:13.5px;line-height:1.5;max-width:340px;box-shadow:0 14px 34px rgba(0,0,0,.6)}
+  .pop.show{display:block}
+  .pop b{color:var(--gold)}
+  .pop::before{content:"";position:absolute;top:-7px;left:14px;border:7px solid transparent;border-top:0;border-bottom-color:#14130f}
+  .drop{border:1.5px dashed rgba(255,217,102,0.4);border-radius:12px;padding:20px;text-align:center;color:var(--muted);cursor:pointer;background:rgba(255,217,102,0.02);font-size:14px;transition:.15s}
+  .drop:hover,.drop.hot{border-color:var(--gold);color:var(--txt)}
+  .drop svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.8;display:block;margin:0 auto 6px}
+  .fname{margin-top:8px;font-size:13px;color:var(--ok);font-weight:600;display:none;align-items:center;gap:7px}
+  .fname.show{display:flex}
+  .fname .x{margin-left:auto;color:var(--danger);cursor:pointer;font-weight:700}
+  .consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);margin:8px 0 4px}
+  .consent input{margin-top:3px}
+  .btn{width:100%;font:inherit;font-weight:800;border:none;border-radius:12px;padding:15px;font-size:16px;cursor:pointer;background:linear-gradient(180deg,#FFE071,#E8B93B);color:#141414;box-shadow:0 8px 28px rgba(255,217,102,0.2)}
+  .btn:disabled{opacity:.6;cursor:not-allowed}
+  .hint{font-size:12.5px;color:var(--muted);text-align:center;margin-top:12px}
+  .done{display:none;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:30px 24px}
+  .done .ok{width:64px;height:64px;border-radius:50%;background:rgba(255,217,102,.12);color:var(--ok);display:grid;place-items:center;margin:0 auto 14px}
+  .done .ok svg{width:34px;height:34px;stroke:var(--ok);fill:none;stroke-width:2.5}
+  .done h2{margin:0 0 8px}.done p{color:var(--muted)}
+  .wabtn{display:inline-flex;align-items:center;gap:9px;background:linear-gradient(180deg,#FFE071,#E8B93B);color:#141414;font-weight:700;border-radius:12px;padding:14px 22px;margin-top:14px;text-decoration:none}
+
+  /* ===== Marca oficial ===== */
+  .logo-svg{height:46px;width:auto;display:block;flex:none;filter:drop-shadow(0 8px 22px rgba(0,0,0,0.65))}
+  .logo-txt{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:22px;color:#FFD966;letter-spacing:.09em;white-space:nowrap;line-height:1}
+  .marca-link{display:flex;align-items:center;gap:12px;text-decoration:none}
+  h1,h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;letter-spacing:.02em}
+  @media(max-width:420px){ .logo-txt{font-size:17px} .logo-svg{height:38px} }
+  .card,.done{background:linear-gradient(180deg,#14130f,#0f0e0b);border:1px solid rgba(255,217,102,0.22);box-shadow:0 10px 40px rgba(0,0,0,0.45)}
+  .hero h1{color:#FFD966}
+  label{color:#B8A76C;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+  .consent{font-size:13px;letter-spacing:0;text-transform:none;font-weight:400;color:var(--muted)}
+  input:focus{border-color:#FFD966;box-shadow:0 0 0 3px rgba(255,217,102,0.1)}
+  .steps span{background:rgba(255,217,102,0.22)}
+</style>
+</head>
+<body>
+<header><a class="marca-link" href="index.html"><svg class="logo-svg" viewBox="44 54 392 424" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="lenteOuro" cx="0.38" cy="0.32" r="0.85">
+                <stop offset="0" stop-color="#FFFBE8"></stop>
+                <stop offset="0.45" stop-color="#FFD966"></stop>
+                <stop offset="1" stop-color="#C0942A"></stop>
+              </radialGradient>
+            </defs>
+            <rect x="202" y="436" width="76" height="12" rx="5" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <rect x="186" y="446" width="108" height="18" rx="9" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+                        <rect x="205" y="138" width="70" height="306" rx="8" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <path d="M104,170 Q240,128 376,170" fill="none" stroke="#FFD966" stroke-width="39" stroke-linecap="round"></path>
+            <path d="M104,170 Q240,128 376,170" fill="none" stroke="#141414" stroke-width="34" stroke-linecap="round"></path>
+            <path d="M104,160 Q150,146 196,141" fill="none" stroke="#FFD966" stroke-width="3"></path>
+            <path d="M284,141 Q330,146 376,160" fill="none" stroke="#FFD966" stroke-width="3"></path>
+            <path d="M104,180 Q150,166 196,161" fill="none" stroke="#FFD966" stroke-width="3"></path>
+            <path d="M284,161 Q330,166 376,180" fill="none" stroke="#FFD966" stroke-width="3"></path>
+            <line x1="213" y1="174" x2="213" y2="390" stroke="#FFD966" stroke-width="3"></line>
+            <line x1="267" y1="174" x2="267" y2="390" stroke="#FFD966" stroke-width="3"></line>
+            <g stroke="#FFD966" stroke-width="5">
+              <line x1="111.4" y1="167.8" x2="127" y2="163.6"></line>
+              <line x1="142.2" y1="159.9" x2="157.8" y2="156.7"></line>
+              <line x1="173" y1="154.1" x2="188.6" y2="151.9"></line>
+              <line x1="291.4" y1="151.9" x2="307" y2="154.1"></line>
+              <line x1="322.2" y1="156.7" x2="337.8" y2="159.9"></line>
+              <line x1="353" y1="163.6" x2="368.6" y2="167.8"></line>
+            </g>
+            <line x1="240" y1="178" x2="240" y2="381" stroke="#FFD966" stroke-width="6" stroke-dasharray="20 14"></line>
+            <rect x="214" y="396" width="52" height="8" rx="2" fill="#FFD966"></rect>
+            <rect x="214" y="410" width="52" height="8" rx="2" fill="#FFD966"></rect>
+            <rect x="214" y="424" width="52" height="8" rx="2" fill="#FFD966"></rect>
+            <g stroke="#FFD966" stroke-width="4.5" stroke-linecap="round">
+              <line x1="104" y1="184" x2="66" y2="264"></line>
+              <line x1="104" y1="184" x2="142" y2="264"></line>
+              <line x1="376" y1="184" x2="338" y2="264"></line>
+              <line x1="376" y1="184" x2="414" y2="264"></line>
+            </g>
+            <circle cx="104" cy="184" r="4.5" fill="#FFD966"></circle>
+            <circle cx="376" cy="184" r="4.5" fill="#FFD966"></circle>
+            <circle cx="66" cy="264" r="3" fill="#FFD966"></circle>
+            <circle cx="142" cy="264" r="3" fill="#FFD966"></circle>
+            <circle cx="338" cy="264" r="3" fill="#FFD966"></circle>
+            <circle cx="414" cy="264" r="3" fill="#FFD966"></circle>
+            <rect x="58" y="262" width="92" height="34" rx="16" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <rect x="330" y="262" width="92" height="34" rx="16" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <circle cx="78" cy="279" r="11" fill="url(#lenteOuro)" stroke="#141414" stroke-width="2"></circle>
+            <circle cx="104" cy="279" r="11" fill="url(#lenteOuro)" stroke="#141414" stroke-width="2"></circle>
+            <circle cx="130" cy="279" r="11" fill="url(#lenteOuro)" stroke="#141414" stroke-width="2"></circle>
+            <circle cx="350" cy="279" r="11" fill="url(#lenteOuro)" stroke="#141414" stroke-width="2"></circle>
+            <circle cx="376" cy="279" r="11" fill="url(#lenteOuro)" stroke="#141414" stroke-width="2"></circle>
+            <circle cx="402" cy="279" r="11" fill="url(#lenteOuro)" stroke="#141414" stroke-width="2"></circle>
+                                    <g transform="rotate(-20 258 107)">
+              <rect x="254" y="100" width="78" height="14" rx="7" fill="#141414" stroke="#FFD966" stroke-width="2"></rect>
+              <line x1="314" y1="101.5" x2="314" y2="112.5" stroke="#FFD966" stroke-width="2.5"></line>
+              <line x1="321" y1="101.5" x2="321" y2="112.5" stroke="#FFD966" stroke-width="2.5"></line>
+              <rect x="330" y="95" width="14" height="23" rx="7" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            </g>
+            <rect x="223" y="92" width="34" height="50" rx="8" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <rect x="229" y="99" width="22" height="36" rx="5" fill="none" stroke="#FFD966" stroke-width="2"></rect>
+            <rect x="216" y="82" width="48" height="15" rx="7" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <rect x="214" y="136" width="52" height="15" rx="7" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+          </svg><span class="logo-txt">DOUTOR DETRÂNSITO</span></a></header>
+
+<div class="wrap">
+  <div id="form">
+    <div class="hero">
+      <h1>Vamos analisar o seu caso</h1>
+      <p>Faça o cadastro e envie os documentos. É rápido e sem compromisso.</p>
+      <div class="steps"><span class="on"></span><span class="on"></span><span></span></div>
+    </div>
+
+    <div class="card">
+      <h2>Seus dados</h2>
+      <label>Nome completo <span class="req">*</span></label>
+      <input type="text" id="nome" placeholder="Seu nome">
+      <div class="row">
+        <div><label>E-mail <span class="req">*</span></label><input type="email" id="email" placeholder="voce@email.com"></div>
+        <div><label>CPF <span class="req">*</span></label><input type="text" id="cpf" placeholder="000.000.000-00"></div>
+      </div>
+      <label>WhatsApp <span class="req">*</span></label>
+      <input type="text" id="tel" placeholder="(00) 00000-0000">
+    </div>
+
+    <div class="card">
+      <h2>Seus documentos</h2>
+
+      <div class="upbox">
+        <div class="uphead">
+          <label>Habilitação (CNH) ou documento com foto do proprietário <span class="req">*</span></label>
+          <button class="info" data-pop="p1" aria-label="onde encontrar">i</button>
+          <div class="pop" id="p1"><b>Onde encontrar:</b> sua CNH digital está no aplicativo <b>Carteira Digital de Trânsito (CDT)</b> ou no <b>gov.br</b>. Se você não é habilitado, envie um documento oficial com foto do dono do veículo: RG, CNH, carteira de trabalho ou passaporte.</div>
+        </div>
+        <div class="drop" data-file="f1"><svg viewBox="0 0 24 24"><path d="M12 15.5V4"/><polyline points="7.5 8.5 12 4 16.5 8.5"/><path d="M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></svg>Toque para enviar ou arraste (foto ou PDF)</div>
+        <input type="file" id="f1" accept=".pdf,image/*" hidden>
+        <div class="fname" id="n1"></div>
+      </div>
+
+      <div class="upbox">
+        <div class="uphead">
+          <label>CRLV, documento de circulação do veículo <span class="req">*</span></label>
+          <button class="info" data-pop="p2" aria-label="onde encontrar">i</button>
+          <div class="pop" id="p2"><b>Onde encontrar:</b> o <b>CRLV-e</b> fica no aplicativo <b>Carteira Digital de Trânsito (CDT)</b> ou no site do <b>Detran do seu estado</b>, na opção CRLV Digital. É o documento do veículo do ano atual.</div>
+        </div>
+        <div class="drop" data-file="f2"><svg viewBox="0 0 24 24"><path d="M12 15.5V4"/><polyline points="7.5 8.5 12 4 16.5 8.5"/><path d="M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></svg>Toque para enviar ou arraste (foto ou PDF)</div>
+        <input type="file" id="f2" accept=".pdf,image/*" hidden>
+        <div class="fname" id="n2"></div>
+      </div>
+
+      <div class="upbox">
+        <div class="uphead">
+          <label>Comprovante de residência <span class="req">*</span></label>
+          <button class="info" data-pop="p3" aria-label="onde encontrar">i</button>
+          <div class="pop" id="p3"><b>Onde encontrar:</b> vale uma <b>conta recente</b> de luz, água, telefone ou internet, ou uma fatura de cartão, dos <b>últimos 3 meses</b>, de preferência no nome do proprietário. Se estiver no nome de outra pessoa, envie junto uma declaração simples de residência.</div>
+        </div>
+        <div class="drop" data-file="f3"><svg viewBox="0 0 24 24"><path d="M12 15.5V4"/><polyline points="7.5 8.5 12 4 16.5 8.5"/><path d="M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></svg>Toque para enviar ou arraste (foto ou PDF)</div>
+        <input type="file" id="f3" accept=".pdf,image/*" hidden>
+        <div class="fname" id="n3"></div>
+      </div>
+
+      <div class="upbox">
+        <div class="uphead">
+          <label>Notificação da multa <span class="req">*</span></label>
+          <button class="info" data-pop="p4" aria-label="onde encontrar">i</button>
+          <div class="pop" id="p4"><b>Onde encontrar:</b> é a <b>carta ou o comunicado da multa</b> que você recebeu, por correio, e-mail ou pelo aplicativo da <b>Carteira Digital de Trânsito</b>. Pode ser foto ou PDF. É o documento que vamos analisar e contestar.</div>
+        </div>
+        <div class="drop" data-file="f4"><svg viewBox="0 0 24 24"><path d="M12 15.5V4"/><polyline points="7.5 8.5 12 4 16.5 8.5"/><path d="M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></svg>Toque para enviar ou arraste (foto ou PDF)</div>
+        <input type="file" id="f4" accept=".pdf,image/*" hidden>
+        <div class="fname" id="n4"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <label class="consent"><input type="checkbox" id="consent"> <span>Autorizo o tratamento dos meus dados para a análise e elaboração da minha defesa, conforme a Política de Privacidade, e estou ciente de que o serviço é de <b>meio</b> e <b>não garante resultado</b>.</span></label>
+      <button class="btn" id="enviar">Enviar e solicitar minha análise</button>
+      <div class="hint">Seus documentos são usados apenas para preparar a sua defesa. Você pode pedir a exclusão a qualquer momento.</div>
+    </div>
+  </div>
+
+  <div class="done" id="done">
+    <div class="ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+    <h2>Cadastro recebido!</h2>
+    <p>Agora finalize enviando as fotos dos documentos pelo WhatsApp, para um especialista analisar o seu caso e preparar a sua defesa.</p>
+    <a class="wabtn" id="waFinal" href="#">
+      <svg viewBox="0 0 24 24" style="width:22px;height:22px;fill:currentColor"><path d="M12 3a9 9 0 0 0-7.7 13.7L3 21l4.5-1.2A9 9 0 1 0 12 3z"/></svg>
+      Continuar no WhatsApp
+    </a>
+  </div>
+</div>
+
+<script>
+"use strict";
+const CFG={ marca:"Doutor Detrânsito", whatsapp:"5599999999999" }; // troque o whatsapp
+const $=s=>document.querySelector(s);
+const files={};
+
+// info popovers (toggle no clique, fecha ao clicar fora)
+document.querySelectorAll('.info').forEach(b=>{
+  b.addEventListener('click',e=>{
+    e.stopPropagation();
+    const pop=$('#'+b.getAttribute('data-pop'));
+    const open=pop.classList.contains('show');
+    document.querySelectorAll('.pop').forEach(p=>p.classList.remove('show'));
+    if(!open) pop.classList.add('show');
+  });
+});
+document.addEventListener('click',()=>document.querySelectorAll('.pop').forEach(p=>p.classList.remove('show')));
+
+// uploads
+document.querySelectorAll('.drop').forEach(d=>{
+  const id=d.getAttribute('data-file');
+  const input=$('#'+id);
+  d.onclick=()=>input.click();
+  ['dragenter','dragover'].forEach(e=>d.addEventListener(e,ev=>{ev.preventDefault();d.classList.add('hot');}));
+  ['dragleave','drop'].forEach(e=>d.addEventListener(e,ev=>{ev.preventDefault();d.classList.remove('hot');}));
+  d.addEventListener('drop',ev=>{ if(ev.dataTransfer.files[0]) setFile(id,ev.dataTransfer.files[0]); });
+  input.onchange=()=>{ if(input.files[0]) setFile(id,input.files[0]); };
+});
+function setFile(id,f){
+  if(f.size>20*1024*1024){ alert('Arquivo muito grande (máx ~20MB): '+f.name); return; }
+  files[id]=f;
+  const n=$('#n'+id.slice(1)); n.classList.add('show');
+  n.innerHTML='📎 '+f.name+'<span class="x" data-clr="'+id+'">remover</span>';
+  n.querySelector('.x').onclick=()=>{ delete files[id]; n.classList.remove('show'); $('#'+id).value=''; };
+}
+
+$('#enviar').onclick=()=>{
+  const nome=$('#nome').value.trim(), email=$('#email').value.trim(), cpf=$('#cpf').value.trim(), tel=$('#tel').value.trim();
+  if(!nome||!email||!cpf||!tel){ alert('Preencha nome, e-mail, CPF e WhatsApp.'); return; }
+  if(!$('#consent').checked){ alert('Marque a autorização para continuar.'); return; }
+  const faltando=[];
+  if(!files.f1)faltando.push('documento com foto');
+  if(!files.f2)faltando.push('CRLV');
+  if(!files.f3)faltando.push('comprovante de residência');
+  if(!files.f4)faltando.push('notificação da multa');
+  if(faltando.length){ if(!confirm('Faltam: '+faltando.join(', ')+'. Deseja enviar assim mesmo e completar depois?')) return; }
+
+  const enviados=Object.values(files).map(f=>f.name);
+  const msg=`Olá! Fiz meu cadastro no site do ${CFG.marca}.\n`+
+    `Nome: ${nome}\nCPF: ${cpf}\nE-mail: ${email}\nWhatsApp: ${tel}\n`+
+    `Documentos: ${enviados.length?enviados.join(', '):'vou enviar as fotos por aqui'}.\n`+
+    `Quero analisar minha multa e preparar minha defesa.`;
+  $('#waFinal').href=`https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(msg)}`;
+  $('#form').style.display='none';
+  $('#done').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+};
+</script>
+</body>
+</html>

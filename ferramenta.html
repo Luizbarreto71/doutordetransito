@@ -1,0 +1,1993 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Doutor Detrânsito">
+<title>Doutor Detrânsito — Defesas e recursos de trânsito</title>
+<link rel="icon" href="data:image/png;base64,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">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  /* tokens EXATOS do design oficial */
+  --gold:#FFD966; --gold-2:#B8A76C; --txt:#F3EBD3; --soft:#CFC3A0;
+  --dim:#8f886e; --dim-2:#6d6650; --field:#171613; --btn-dark:#12110d;
+  --card-a:#14130f; --card-b:#0f0e0b; --page:#0a0a0a; --body:#060606; --foot:#0c0b09;
+  --hair:rgba(255,217,102,0.22); --hair-30:rgba(255,217,102,0.3); --hair-35:rgba(255,217,102,0.35);
+  --grad:linear-gradient(180deg,#FFE071,#E8B93B); --grad-hover:linear-gradient(180deg,#FFEDA0,#F2C94C);
+  /* aliases usados pelo motor JS existente */
+  --accent:#FFD966; --accent2:#E8B93B; --line:rgba(255,217,102,0.22); --muted:#8f886e;
+  /* cores FUNCIONAIS (semaforo do Radar e urgencia de prazo): tons que convivem
+     com a identidade dourada mas se distinguem entre si de verdade */
+  --ok:#8FBF7E; --warn:#FFD966; --danger:#E07A5F; --panel:#14130f; --panel2:#171613;
+  --chip:#12110d; --bg:#0a0a0a; --radius:16px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;max-width:100%}
+body{background:#060606;font-family:Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#FFD966;text-decoration:none} a:hover{color:#F7D558;text-decoration:underline}
+input::placeholder,textarea::placeholder{color:#6d6650}
+select option{background:#171613;color:#F3EBD3}
+::selection{background:rgba(255,217,102,0.28);color:#fff}
+*::-webkit-scrollbar{width:11px;height:11px}
+*::-webkit-scrollbar-track{background:#0a0a0a}
+*::-webkit-scrollbar-thumb{background:#5c4a1c;border-radius:20px;border:3px solid #0a0a0a}
+*::-webkit-scrollbar-thumb:hover{background:#B8A76C}
+
+/* ===== ESTRUTURA ===== */
+.page{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;background:#060606}
+.screen{width:100%;max-width:1920px;flex-shrink:0;background:#0a0a0a;display:flex;flex-direction:column}
+
+/* ===== CABEÇALHO ===== */
+.hdr{position:relative;display:flex;align-items:center;gap:36px;padding:18px 120px 18px 44px;
+  background:radial-gradient(ellipse 900px 420px at 50% 0%, #17130a 0%, #0b0b0b 65%, #0a0a0a 100%)}
+.hdr>svg{flex:none;filter:drop-shadow(0 8px 22px rgba(0,0,0,0.65))}
+.hdr-txt{display:flex;flex-direction:column;gap:10px}
+.brand-name{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:48px;line-height:1;color:#FFD966;letter-spacing:0.09em}
+.brand-sub{font-size:15px;color:#CFC3A0;letter-spacing:0.05em}
+.hdr-right{position:absolute;top:24px;right:36px;display:flex;align-items:center;gap:12px}
+.chip-ver{height:34px;display:flex;align-items:center;padding:0 14px;border:1px solid rgba(255,217,102,0.3);
+  border-radius:999px;color:#FFD966;font-size:12px;letter-spacing:0.12em;font-weight:700}
+.btn-gear{width:44px;height:44px;border-radius:12px;border:1px solid rgba(255,217,102,0.3);background:#12110d;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+.btn-gear:hover{border:1px solid #FFD966;background:#171613}
+
+/* ===== GRID PRINCIPAL ===== */
+.grid-main{display:grid;grid-template-columns:1fr 500px;gap:26px;padding:28px 36px;align-items:start}
+.col{display:flex;flex-direction:column;gap:26px;min-width:0}
+.col-right{align-self:stretch}
+
+/* ===== CARDS ===== */
+.card{background:linear-gradient(180deg,#14130f,#0f0e0b);border:1px solid rgba(255,217,102,0.22);
+  border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,0.45)}
+.card-novo{padding:28px 30px}
+.card-casos{padding:26px 30px}
+.card-result{padding:30px 28px;flex:1;display:flex;flex-direction:column;min-width:0}
+.card-hist{padding:24px 26px;display:flex;flex-direction:column;gap:14px;min-height:194px;max-height:420px;box-sizing:border-box;flex-shrink:0;justify-content:flex-start}
+
+/* ===== TÍTULO DE SEÇÃO ===== */
+.sec{display:flex;align-items:center;gap:10px}
+.sec .dia{width:7px;height:7px;background:#FFD966;transform:rotate(45deg);flex:none}
+.sec .t{font-size:14px;font-weight:700;letter-spacing:0.22em;color:#FFD966;white-space:nowrap}
+.sec .rule{flex:1;height:1px;background:linear-gradient(90deg,rgba(255,217,102,0.35),transparent)}
+
+/* ===== CAMPOS ===== */
+.fg{display:flex;flex-direction:column;gap:8px;min-width:0}
+label{font-size:11.5px;letter-spacing:0.14em;color:#B8A76C;font-weight:700;text-transform:uppercase}
+.inp{height:50px;background:#171613;border:1px solid rgba(255,217,102,0.28);border-radius:10px;padding:0 14px;
+  color:#F3EBD3;font-size:15px;outline:none;box-sizing:border-box;font-family:Helvetica,Arial,sans-serif;width:100%}
+.inp:focus{border:1px solid #FFD966;box-shadow:0 0 0 3px rgba(255,217,102,0.1)}
+select.inp{appearance:none;-webkit-appearance:none;padding-right:42px;cursor:pointer;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9'><path d='M1 1l6 6 6-6' stroke='%23FFD966' stroke-width='2' fill='none'/></svg>");
+  background-repeat:no-repeat;background-position:right 16px center}
+input[type=date].inp{color-scheme:dark}
+textarea.inp{height:auto;flex:1;min-height:130px;padding:12px 14px;font-size:14.5px;line-height:1.55;resize:vertical}
+.hint{font-size:12px;color:#8f886e;line-height:1.5}
+
+.r2{margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.r4{margin-top:18px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:18px}
+.rfull{margin-top:18px;display:flex;flex-direction:column;gap:8px}
+.r2b{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+
+/* ===== DROPZONE ===== */
+.drop{flex:1;border:1.5px dashed rgba(255,217,102,0.4);border-radius:12px;padding:24px 18px;display:flex;
+  flex-direction:column;align-items:center;justify-content:center;gap:8px;background:rgba(255,217,102,0.02);
+  cursor:pointer;min-height:130px;box-sizing:border-box}
+.drop:hover,.drop.hot{border:1.5px dashed #FFD966;background:rgba(255,217,102,0.05)}
+.drop .d1{font-size:15px;color:#F3EBD3}
+.drop .d1 span{color:#FFD966;font-weight:700}
+.drop .d2{font-size:12.5px;color:#8f886e;text-align:center}
+.files{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.file{display:flex;align-items:center;gap:8px;background:#12110d;border:1px solid rgba(255,217,102,0.2);
+  border-radius:9px;padding:7px 10px;font-size:13px;color:#F3EBD3}
+.file .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file .sz{color:#8f886e;font-size:12px}
+.file .rm{border:none;background:none;color:#E8B93B;cursor:pointer;font-size:15px;padding:2px 6px}
+.file .rm:hover{color:#FFD966}
+
+/* ===== BOTÕES ===== */
+.btn-ghost-wide{margin-top:18px;width:100%;height:48px;border-radius:10px;border:1px solid rgba(255,217,102,0.35);
+  background:transparent;color:#FFD966;font-size:14px;font-weight:700;letter-spacing:0.04em;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:10px;font-family:Helvetica,Arial,sans-serif}
+.btn-ghost-wide:hover{border:1px solid #FFD966;background:rgba(255,217,102,0.06)}
+#btnRadar::before{content:"";width:17px;height:17px;flex:none;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23FFD966' stroke-width='1.8'><circle cx='12' cy='12' r='9'/><path d='M12 7v5l3.5 2'/></svg>") no-repeat center/contain}
+
+.btn-primary-big{margin:22px auto 0;display:flex;align-items:center;justify-content:center;gap:12px;width:100%;
+  max-width:720px;height:58px;border:none;border-radius:12px;background:linear-gradient(180deg,#FFE071,#E8B93B);
+  color:#141414;font-size:16px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;
+  box-shadow:0 8px 28px rgba(255,217,102,0.2);font-family:Helvetica,Arial,sans-serif}
+.btn-primary-big:hover{background:linear-gradient(180deg,#FFEDA0,#F2C94C);box-shadow:0 10px 34px rgba(255,217,102,0.3)}
+.btn-primary-big:disabled{opacity:.6;cursor:not-allowed}
+#btnAnalyze::before{content:"";width:18px;height:18px;flex:none;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23141414' stroke-width='2'><path d='M7 3h7l4 4v14H7z'/><path d='M14 3v4h4M10 12h6M10 16h6'/></svg>") no-repeat center/contain}
+
+.btn-primary{height:46px;border:none;border-radius:10px;background:linear-gradient(180deg,#FFE071,#E8B93B);
+  color:#141414;font-size:14px;font-weight:700;cursor:pointer;font-family:Helvetica,Arial,sans-serif}
+.btn-primary:hover{background:linear-gradient(180deg,#FFEDA0,#F2C94C)}
+.btn-ghost{height:46px;border:1px solid rgba(255,217,102,0.35);border-radius:10px;background:transparent;
+  color:#FFD966;font-size:14px;font-weight:700;cursor:pointer;font-family:Helvetica,Arial,sans-serif}
+.btn-ghost:hover{border:1px solid #FFD966;background:rgba(255,217,102,0.06)}
+.btn-dark{width:250px;height:46px;border:1px solid rgba(255,217,102,0.25);border-radius:10px;background:#12110d;
+  color:#F3EBD3;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;
+  font-family:Helvetica,Arial,sans-serif}
+.btn-dark:hover{border:1px solid #FFD966}
+button:disabled{opacity:.55;cursor:not-allowed}
+
+/* ===== CASOS SALVOS ===== */
+.nv-status{display:flex;align-items:center;gap:8px}
+.nv-dot,.pt{width:8px;height:8px;border-radius:50%;background:#8f886e;flex:none}
+.nv-dot.on,.pt.on{background:#FFD966}
+.nv-dot.sync,.pt.sync{background:#B8A76C}
+.nv-dot.erro,.pt.erro{background:#E07A5F}
+.nv-status-txt{font-size:13.5px;color:#CFC3A0}
+.grid-login{margin-top:18px;display:grid;grid-template-columns:1fr 1fr 190px 190px;gap:12px}
+.inp46{height:46px;font-size:14px}
+.row-backup{margin-top:12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.hint-flex{flex:1;min-width:200px;font-size:12.5px;color:#8f886e;line-height:1.5}
+.hint-flex b{color:#B8A76C;font-weight:700}
+.nv-aviso{margin-top:10px;font-size:12.5px;color:#E8B93B;line-height:1.5}
+.nv-ajuda{margin-top:10px;font-size:12.5px;color:#8f886e;line-height:1.5}
+.nv-ajuda code{background:#12110d;padding:1px 5px;border-radius:4px;font-size:11.5px;color:#B8A76C}
+
+/* ===== RESULTADO ===== */
+.toolbar{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tb{height:46px;border:1px solid rgba(255,217,102,0.3);border-radius:10px;background:transparent;color:#FFD966;
+  font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:Helvetica,Arial,sans-serif}
+.tb:hover{border:1px solid #FFD966;background:rgba(255,217,102,0.06)}
+.tb.pri{border:none;background:linear-gradient(180deg,#FFE071,#E8B93B);color:#141414}
+.tb.pri:hover{background:linear-gradient(180deg,#FFEDA0,#F2C94C)}
+.out{flex:1;display:flex;flex-direction:column;min-height:0}
+.empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:space-evenly;gap:18px;padding:14px 0 4px}
+.empty-title{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:28px;color:#F3EBD3;text-align:center}
+.steps{display:flex;flex-direction:column;gap:12px;width:100%;max-width:388px}
+.pill{display:flex;align-items:center;gap:12px;padding:9px 16px;border:1px solid rgba(255,217,102,0.25);border-radius:999px}
+.pill .n{width:22px;height:22px;border-radius:50%;background:#FFD966;color:#141414;font-size:12.5px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pill .l{font-size:13.5px;color:#F3EBD3;white-space:nowrap}
+.empty-note{max-width:380px;font-size:13px;color:#8f886e;text-align:center;line-height:1.6}
+
+/* prazo */
+.prazo-badge{margin-top:16px;padding:12px 14px;border:1px solid rgba(255,217,102,0.28);border-left:4px solid #FFD966;
+  border-radius:10px;background:rgba(255,217,102,0.05);color:#CFC3A0;font-size:13px;line-height:1.55}
+.prazo-badge b{color:#FFD966}
+
+/* status / raciocinio / conferencia */
+.status{font-size:13px;color:#CFC3A0;display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.dot{width:9px;height:9px;border-radius:50%;background:#FFD966;animation:pulse 1.1s infinite;flex:none}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+.think{background:#12110d;border:1px dashed rgba(255,217,102,0.3);border-radius:10px;padding:10px 14px;
+  margin-bottom:12px;font-size:13px;color:#8f886e}
+.think summary{cursor:pointer;color:#FFD966;font-weight:700}
+.think .tb{margin-top:8px;white-space:pre-wrap;height:auto;border:none;background:none;color:#8f886e;font-size:13px}
+.check-panel{margin-bottom:14px;border:1px solid rgba(255,217,102,0.28);border-radius:12px;overflow:hidden}
+.check-panel .output{background:#141310;color:#F3EBD3;border-radius:0;padding:14px 18px;
+  font-family:Helvetica,Arial,sans-serif;text-align:left;font-size:13.5px;box-shadow:none}
+.check-panel .output h2{color:#FFD966;font-size:15px;text-align:left;text-transform:none;margin:10px 0 8px}
+.check-panel .output p{text-indent:0}
+.check-panel .output ul{padding-left:20px}
+.check-panel .status{padding:8px 12px 0}
+
+/* ===== DOCUMENTO (papel) ===== */
+.output{background:#F7F3E8;color:#1c1a14;border-radius:8px;padding:28px 34px;overflow:auto;
+  font-family:"Times New Roman",Times,serif;font-size:12.5px;line-height:1.6;text-align:justify}
+.output h1{font-size:13.5px;text-align:center;text-transform:uppercase;font-weight:bold;margin:14px 0 10px;line-height:1.35}
+.output h2{font-size:13px;font-weight:bold;margin:14px 0 8px;line-height:1.35}
+.output h3{font-size:12.5px;font-weight:bold;margin:12px 0 6px;line-height:1.35}
+.output p{margin:0 0 9px;text-indent:34px}
+.output ul,.output ol{margin:8px 0;padding-left:26px}
+.output li{margin:4px 0}
+.output strong{font-weight:bold}
+.output hr{border:none;border-top:1px solid #cfc4a6;margin:14px 0}
+.output blockquote{margin:10px 0 10px 48px;padding:0;font-size:11.5px;line-height:1.4}
+.output blockquote p{text-indent:0;margin:0 0 6px}
+.output table{border-collapse:collapse;width:100%;text-indent:0}
+
+/* ===== HISTÓRICO ===== */
+.hist-row{display:flex;align-items:center;gap:10px;font-size:13px;color:#CFC3A0;line-height:1.5}
+.hist-row svg{flex:none}
+.hist-empty{font-size:12.5px;color:#6d6650}
+.cases{display:flex;flex-direction:column;gap:8px;overflow:auto;min-height:0}
+.case{display:flex;align-items:center;gap:10px;background:#12110d;border:1px solid rgba(255,217,102,0.2);
+  border-radius:10px;padding:9px 12px;font-size:13px;color:#F3EBD3}
+.case .cn{flex:1;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.case small{color:#8f886e}
+.case button{border:1px solid rgba(255,217,102,0.25);background:#12110d;color:#E8B93B;border-radius:8px;
+  cursor:pointer;font-size:13px;padding:4px 8px}
+.case button:hover{border-color:#FFD966;color:#FFD966}
+
+/* ===== RODAPÉ ===== */
+.footer{border-top:1px solid rgba(255,217,102,0.18);background:#0c0b09;padding:18px 36px;display:flex;
+  flex-direction:column;gap:6px;align-items:center}
+.footer .f1{max-width:1560px;font-size:13px;color:#CFC3A0;line-height:1.7;text-align:center}
+.footer .f1 b{color:#FFD966;font-weight:700}
+.footer .f2{font-size:12px;color:#6d6650;text-align:center}
+
+/* ===== DIÁLOGO DE CONFIGURAÇÃO ===== */
+dialog{border:1px solid rgba(255,217,102,0.3);border-radius:16px;background:linear-gradient(180deg,#14130f,#0f0e0b);
+  color:#F3EBD3;max-width:540px;width:92%;padding:0;box-shadow:0 10px 40px rgba(0,0,0,0.6)}
+dialog::backdrop{background:rgba(0,0,0,.72)}
+.dlg-h{padding:18px 22px;border-bottom:1px solid rgba(255,217,102,0.22);font-weight:700;color:#FFD966;
+  font-size:14px;letter-spacing:0.22em}
+.dlg-b{padding:20px 22px;display:flex;flex-direction:column;gap:16px}
+.dlg-f{padding:16px 22px;border-top:1px solid rgba(255,217,102,0.22);display:flex;justify-content:flex-end;gap:10px}
+.dlg-f button{padding:0 18px}
+.chk{display:flex;align-items:center;gap:8px;font-size:12px;color:#8f886e;cursor:pointer;letter-spacing:0;text-transform:none;font-weight:400}
+.chk input{width:auto;height:auto;margin:0}
+
+/* ===== RESPONSIVO (o desktop 1920 fica idêntico ao design) ===== */
+@media(max-width:1500px){ .grid-main{grid-template-columns:1fr 440px} }
+@media(max-width:1180px){
+  .grid-main{grid-template-columns:1fr;padding:22px 20px}
+  .col-right{align-self:auto}
+  .card-result{flex:none}
+  .card-hist{height:auto;min-height:160px}
+  .hdr{padding:18px 20px;gap:22px;flex-wrap:wrap}
+  .hdr-right{position:static;margin-left:auto}
+  .brand-name{font-size:34px}
+  .r4{grid-template-columns:1fr 1fr}
+  .grid-login{grid-template-columns:1fr 1fr}
+}
+@media(max-width:680px){
+  .hdr{padding:14px}
+  .hdr>svg{width:92px;height:99px}
+  .brand-name{font-size:24px;letter-spacing:0.06em}
+  .brand-sub{font-size:13px}
+  .card-novo,.card-casos,.card-result{padding:20px 16px}
+  .r2,.r4,.r2b,.grid-login,.toolbar{grid-template-columns:1fr}
+  .btn-dark{width:100%}
+  .inp{font-size:16px}
+  .output{padding:18px 15px}
+  .pill .l{white-space:normal}
+}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="screen">
+
+  <!-- ================= CABEÇALHO ================= -->
+  <div class="hdr">
+    <svg width="150" height="162" viewBox="44 54 392 424" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="lenteOuro" cx="0.38" cy="0.32" r="0.85">
+                <stop offset="0" stop-color="#FFFBE8"></stop>
+                <stop offset="0.45" stop-color="#FFD966"></stop>
+                <stop offset="1" stop-color="#C0942A"></stop>
+              </radialGradient>
+            </defs>
+            <rect x="202" y="436" width="76" height="12" rx="5" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <rect x="186" y="446" width="108" height="18" rx="9" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+                        <rect x="205" y="138" width="70" height="306" rx="8" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <path d="M104,170 Q240,128 376,170" fill="none" stroke="#FFD966" stroke-width="39" stroke-linecap="round"></path>
+            <path d="M104,170 Q240,128 376,170" fill="none" stroke="#141414" stroke-width="34" stroke-linecap="round"></path>
+            <path d="M104,160 Q150,146 196,141" fill="none" stroke="#FFD966" stroke-width="3"></path>
+            <path d="M284,141 Q330,146 376,160" fill="none" stroke="#FFD966" stroke-width="3"></path>
+            <path d="M104,180 Q150,166 196,161" fill="none" stroke="#FFD966" stroke-width="3"></path>
+            <path d="M284,161 Q330,166 376,180" fill="none" stroke="#FFD966" stroke-width="3"></path>
+            <line x1="213" y1="174" x2="213" y2="390" stroke="#FFD966" stroke-width="3"></line>
+            <line x1="267" y1="174" x2="267" y2="390" stroke="#FFD966" stroke-width="3"></line>
+            <g stroke="#FFD966" stroke-width="5">
+              <line x1="111.4" y1="167.8" x2="127" y2="163.6"></line>
+              <line x1="142.2" y1="159.9" x2="157.8" y2="156.7"></line>
+              <line x1="173" y1="154.1" x2="188.6" y2="151.9"></line>
+              <line x1="291.4" y1="151.9" x2="307" y2="154.1"></line>
+              <line x1="322.2" y1="156.7" x2="337.8" y2="159.9"></line>
+              <line x1="353" y1="163.6" x2="368.6" y2="167.8"></line>
+            </g>
+            <line x1="240" y1="178" x2="240" y2="381" stroke="#FFD966" stroke-width="6" stroke-dasharray="20 14"></line>
+            <rect x="214" y="396" width="52" height="8" rx="2" fill="#FFD966"></rect>
+            <rect x="214" y="410" width="52" height="8" rx="2" fill="#FFD966"></rect>
+            <rect x="214" y="424" width="52" height="8" rx="2" fill="#FFD966"></rect>
+            <g stroke="#FFD966" stroke-width="4.5" stroke-linecap="round">
+              <line x1="104" y1="184" x2="66" y2="264"></line>
+              <line x1="104" y1="184" x2="142" y2="264"></line>
+              <line x1="376" y1="184" x2="338" y2="264"></line>
+              <line x1="376" y1="184" x2="414" y2="264"></line>
+            </g>
+            <circle cx="104" cy="184" r="4.5" fill="#FFD966"></circle>
+            <circle cx="376" cy="184" r="4.5" fill="#FFD966"></circle>
+            <circle cx="66" cy="264" r="3" fill="#FFD966"></circle>
+            <circle cx="142" cy="264" r="3" fill="#FFD966"></circle>
+            <circle cx="338" cy="264" r="3" fill="#FFD966"></circle>
+            <circle cx="414" cy="264" r="3" fill="#FFD966"></circle>
+            <rect x="58" y="262" width="92" height="34" rx="16" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <rect x="330" y="262" width="92" height="34" rx="16" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <circle cx="78" cy="279" r="11" fill="url(#lenteOuro)" stroke="#141414" stroke-width="2"></circle>
+            <circle cx="104" cy="279" r="11" fill="url(#lenteOuro)" stroke="#141414" stroke-width="2"></circle>
+            <circle cx="130" cy="279" r="11" fill="url(#lenteOuro)" stroke="#141414" stroke-width="2"></circle>
+            <circle cx="350" cy="279" r="11" fill="url(#lenteOuro)" stroke="#141414" stroke-width="2"></circle>
+            <circle cx="376" cy="279" r="11" fill="url(#lenteOuro)" stroke="#141414" stroke-width="2"></circle>
+            <circle cx="402" cy="279" r="11" fill="url(#lenteOuro)" stroke="#141414" stroke-width="2"></circle>
+                                    <g transform="rotate(-20 258 107)">
+              <rect x="254" y="100" width="78" height="14" rx="7" fill="#141414" stroke="#FFD966" stroke-width="2"></rect>
+              <line x1="314" y1="101.5" x2="314" y2="112.5" stroke="#FFD966" stroke-width="2.5"></line>
+              <line x1="321" y1="101.5" x2="321" y2="112.5" stroke="#FFD966" stroke-width="2.5"></line>
+              <rect x="330" y="95" width="14" height="23" rx="7" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            </g>
+            <rect x="223" y="92" width="34" height="50" rx="8" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <rect x="229" y="99" width="22" height="36" rx="5" fill="none" stroke="#FFD966" stroke-width="2"></rect>
+            <rect x="216" y="82" width="48" height="15" rx="7" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <rect x="214" y="136" width="52" height="15" rx="7" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+          </svg>
+    <div class="hdr-txt">
+      <div class="brand-name">DOUTOR DETRÂNSITO</div>
+      <div class="brand-sub">Gerador de recursos e defesas contra infrações e processos administrativos de trânsito</div>
+    </div>
+    <div class="hdr-right">
+      <div class="chip-ver">v2.3</div>
+      <button class="btn-gear" id="btnCfg" title="Configurações" aria-label="Configurações"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFD966" stroke-width="1.8"><circle cx="12" cy="12" r="3.2"></circle><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"></path></svg></button>
+    </div>
+  </div>
+
+  <!-- ================= GRID PRINCIPAL ================= -->
+  <div class="grid-main">
+
+    <!-- ---------- COLUNA ESQUERDA ---------- -->
+    <div class="col">
+
+      <!-- NOVO CASO -->
+      <div class="card card-novo">
+        <div class="sec"><div class="dia"></div><div class="t">NOVO CASO</div><div class="rule"></div></div>
+
+        <div class="r2">
+          <div class="fg">
+            <label for="outType">O que você quer gerar?</label>
+            <select class="inp" id="outType">
+              <option value="peca">Peça de defesa/recurso PRONTA (ABNT)</option>
+              <option value="analise">Análise técnica de teses (estudo do caso)</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label for="procType">Fase / procedimento</label>
+            <select class="inp" id="procType">
+          <option value="Defesa da Autuação (defesa prévia) de auto de infração — endereçada ao Diretor do órgão autuador">Multa — Defesa da Autuação (defesa prévia)</option>
+          <option value="Recurso à JARI contra a penalidade de multa — endereçado ao Presidente da JARI">Multa — Recurso à JARI (1ª instância)</option>
+          <option value="Recurso ao CETRAN (2ª instância) — endereçado ao Presidente do CETRAN">Multa — Recurso ao CETRAN (2ª instância)</option>
+          <option value="Defesa/Recurso em processo administrativo de SUSPENSÃO do direito de dirigir">Processo de SUSPENSÃO do direito de dirigir</option>
+          <option value="Defesa/Recurso em processo administrativo de CASSAÇÃO da CNH">Processo de CASSAÇÃO da CNH</option>
+          <option value="Defesa/Recurso em processo de CANCELAMENTO/nulidade da habilitação">Processo de CANCELAMENTO da habilitação</option>
+          <option value="Indicação do condutor infrator (art. 257 do CTB) — prazo de 30 dias">Indicação de condutor infrator</option>
+          <option value="Peça ou análise geral — outra situação">Outro / geral</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="r4">
+          <div class="fg"><label for="fDataNotif">Data da notificação</label><input type="date" class="inp" id="fDataNotif"></div>
+          <div class="fg"><label for="fPrazoManual">Prazo final (se souber)</label><input type="date" class="inp" id="fPrazoManual"></div>
+          <div class="fg"><label for="fNome">Nome do condutor</label><input type="text" class="inp" id="fNome" placeholder="Ex.: João da Silva"></div>
+          <div class="fg"><label for="fOrgao">Órgão / UF</label><input type="text" class="inp" id="fOrgao" placeholder="Ex.: DETRAN-SP / DER"></div>
+        </div>
+        <div id="prazoBadge" class="prazo-badge" style="display:none"></div>
+
+        <div class="rfull">
+          <label for="fAit">Nº do AIT / Processo</label>
+          <input type="text" class="inp" id="fAit" placeholder="Ex.: AIT nº AB000123 / Processo nº ...">
+        </div>
+
+        <div class="r2b">
+          <div class="fg">
+            <label>Documentos (PDF ou imagem)</label>
+            <div class="drop" id="drop">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFD966" stroke-width="1.8"><path d="M12 16V5M12 5l-4 4M12 5l4 4"></path><path d="M4 16v3a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 20 19v-3"></path></svg>
+              <div class="d1">Arraste aqui ou <span>clique para selecionar</span></div>
+              <div class="d2">Auto de infração, notificações, portaria, prontuário, CNH, fotos do local/radar</div>
+            </div>
+            <input type="file" id="fileInput" accept=".pdf,image/*" multiple hidden>
+            <div class="files" id="fileList"></div>
+          </div>
+          <div class="fg">
+            <label for="notes">Fatos e observações</label>
+            <textarea class="inp" id="notes" placeholder="Ex.: condutor não foi notificado da autuação; radar sem placa de aviso/aferição; foto ilegível; veículo já vendido; emergência médica; datas relevantes; o que o cliente alega..."></textarea>
+            <div class="hint">Quanto mais detalhe, melhor a peça.</div>
+          </div>
+        </div>
+
+        <button class="btn-ghost-wide" id="btnRadar">Radar do caso — ler documentos e preencher os campos</button>
+        <button class="btn-primary-big" id="btnAnalyze">Gerar peça (ABNT)</button>
+      </div>
+
+      <!-- CASOS SALVOS -->
+      <div class="card card-casos">
+        <div class="sec">
+          <div class="dia"></div><div class="t">CASOS SALVOS</div><div class="rule"></div>
+          <div class="nv-status">
+            <div class="nv-dot" id="nvPonto"></div>
+            <div class="nv-status-txt" id="nvStatus">Entre para guardar seus casos na nuvem</div>
+          </div>
+        </div>
+
+        <div id="nuvem">
+          <div id="nvOff">
+            <div class="nv-ajuda"><b style="color:#B8A76C">Backup na nuvem desligado.</b> Seus casos existem só neste aparelho. Se limpar o navegador ou trocar de aparelho, perde tudo. Para ligar, siga o arquivo <code>GUIA_NUVEM.txt</code> — leva uns 10 minutos, uma vez só.</div>
+          </div>
+
+          <div id="nvLogin" hidden>
+            <div class="grid-login">
+              <input class="inp inp46" type="email" id="nvEmail" placeholder="seu e-mail" autocomplete="username">
+              <input class="inp inp46" type="password" id="nvSenha" placeholder="senha" autocomplete="current-password">
+              <button class="btn-primary" id="nvEntrar">Entrar</button>
+              <button class="btn-ghost" id="nvCriar">Criar conta</button>
+            </div>
+            <div class="nv-aviso" id="nvErro" hidden></div>
+          </div>
+
+          <div id="nvOn" hidden>
+            <div class="row-backup" style="margin-top:18px">
+              <div class="hint-flex"><b id="nvQuem"></b></div>
+              <button class="btn-ghost" id="nvSync" style="width:190px">Sincronizar</button>
+              <button class="btn-ghost" id="nvSair" style="width:190px">Sair</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row-backup">
+          <button class="btn-dark" id="btnBackup"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFD966" stroke-width="1.8"><path d="M12 4v11M12 15l-4-4M12 15l4-4M4 19h16"></path></svg> Backup dos casos</button>
+          <button class="btn-dark" id="btnRestore"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFD966" stroke-width="1.8"><path d="M12 15V4M12 4L8 8M12 4l4 4M4 19h16"></path></svg> Restaurar backup</button>
+          <div class="hint-flex">Guarde uma cópia dos seus casos em arquivo. Use <b>Backup dos casos</b> antes de limpar o navegador.</div>
+        </div>
+        <input type="file" id="backupInput" accept=".json,application/json" hidden>
+      </div>
+    </div>
+
+    <!-- ---------- COLUNA DIREITA ---------- -->
+    <div class="col col-right">
+
+      <!-- RESULTADO -->
+      <div class="card card-result">
+        <div class="sec"><div class="dia"></div><div class="t">RESULTADO</div><div class="rule"></div></div>
+        <div class="toolbar" id="toolbar" style="display:none">
+          <button class="tb" id="btnCheck">Conferir citações</button>
+          <button class="tb" id="btnRevise">Revisar / Fortalecer</button>
+          <button class="tb" id="btnGdocs">Abrir no Google Docs</button>
+          <button class="tb pri" id="btnPrint">Gerar PDF (ABNT)</button>
+          <button class="tb" id="btnCopy">Copiar texto</button>
+          <button class="tb" id="btnDocx">Baixar Word (.docx)</button>
+          <button class="tb" id="btnSave">Salvar caso</button>
+          <button class="tb" id="btnNew">Novo caso</button>
+        </div>
+        <div id="out" class="out">
+          <div id="placeholder" class="empty"><div class="empty-title">Pronto para gerar a sua peça</div><div class="steps"><div class="pill"><div class="n">1</div><div class="l">Preencha o caso</div></div><div class="pill"><div class="n">2</div><div class="l">Gerar peça</div></div><div class="pill"><div class="n">3</div><div class="l">Conferir citações</div></div><div class="pill"><div class="n">4</div><div class="l">Google Docs / Gerar PDF</div></div></div><div class="empty-note">O módulo de prazo estima o vencimento a partir da data da notificação. Corrija o que vier em destaque na conferência antes de protocolar.</div></div>
+        </div>
+      </div>
+
+      <!-- HISTÓRICO -->
+      <div class="card card-hist">
+        <div class="sec"><div class="dia"></div><div class="t">HISTÓRICO</div><div class="rule"></div></div>
+        <input type="text" class="inp" id="caseSearch" placeholder="Buscar caso por nome, AIT ou data..." style="height:38px;font-size:13px;display:none">
+        <div class="hist-row"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B8A76C" stroke-width="1.8"><path d="M7 3h7l4 4v14H7z"></path><path d="M14 3v4h4M10 12h6M10 16h6"></path></svg> Todas as peças e defesas geradas ficam guardadas aqui.</div>
+        <div class="hist-empty" id="noCases">Nenhuma peça gerada ainda.</div>
+        <div class="cases" id="cases"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= RODAPÉ ================= -->
+  <div class="footer">
+    <div class="f1"><b>⚠ Aviso profissional:</b> a peça é gerada por IA como minuta de apoio. Antes de protocolar, confira dados, prazos (fatais), enquadramento e citações. O cálculo de prazo é estimativa; o prazo da notificação prevalece.</div>
+    <div class="f2">v2.3 — Documentos no seu navegador • Radar do caso • Exclusão sincronizada • Aviso de peça incompleta • Citação ABNT e tabelas no Word • Rascunho automático • Prazos com feriados (BR/SE) • Art. 285 (Lei 14.229/2021)</div>
+  </div>
+
+</div>
+</div>
+
+<!-- ================= DIÁLOGO DE CONFIGURAÇÃO ================= -->
+<dialog id="cfg">
+  <div class="dlg-h">CONFIGURAÇÃO DA IA</div>
+  <div class="dlg-b">
+    <div class="fg">
+      <label for="apiKey">Chave de API da Anthropic (Claude)</label>
+      <input class="inp" type="password" id="apiKey" placeholder="sk-ant-..." autocomplete="off">
+      <label class="chk"><input type="checkbox" id="apiKeyShow"> mostrar chave</label>
+      <div class="hint">Fica salva só neste dispositivo. <span id="keyState"></span></div>
+    </div>
+    <div class="fg">
+      <label for="model">Modelo</label>
+      <select class="inp" id="model">
+        <option value="claude-opus-4-8">Opus 4.8 — melhor qualidade jurídica (recomendado)</option>
+        <option value="claude-sonnet-5">Sonnet 5 — ótimo custo-benefício</option>
+        <option value="claude-haiku-4-5">Haiku 4.5 — mais rápido e barato (casos simples)</option>
+      </select>
+    </div>
+    <div class="r2" style="margin-top:0">
+      <div class="fg">
+        <label for="effort">Profundidade (esforço)</label>
+        <select class="inp" id="effort">
+          <option value="high">Alta (recomendado)</option>
+          <option value="medium">Média</option>
+          <option value="low">Baixa (rápido)</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label for="showThink">Mostrar raciocínio</label>
+        <select class="inp" id="showThink">
+          <option value="0">Não</option>
+          <option value="1">Sim</option>
+        </select>
+      </div>
+    </div>
+    <div class="hint"><b style="color:#B8A76C">Não tem chave?</b> Crie em <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> → <i>Settings → API Keys → Create Key</i>, e adicione créditos em <i>Billing</i>.</div>
+  </div>
+  <div class="dlg-f">
+    <button class="btn-ghost" id="cfgCancel" style="width:120px">Fechar</button>
+    <button class="btn-primary" id="cfgSave" style="width:120px">Salvar</button>
+  </div>
+</dialog>
+
+<script>
+"use strict";
+
+/* ---------- armazenamento ---------- */
+const LS = { key:'adt_apikey', model:'adt_model', effort:'adt_effort', think:'adt_think', cases:'adt_cases', dels:'adt_exclusoes', rascunho:'adt_rascunho' };
+const $ = s => document.querySelector(s);
+let files = [];
+let lastText = '', lastHTML = '', loadedCaseId = null;
+let lastKind = 'peca';        /* 'peca' | 'analise' — o que esta na tela agora */
+let pecaSalva = true;         /* controla os avisos de trabalho nao salvo */
+let ocupado = false;          /* trava: uma chamada de IA por vez */
+let textoAnterior = null;     /* versao pre-"Revisar", para poder desfazer */
+/* Limite REAL da API: ~32 MB por requisicao INTEIRA (todos os anexos somados,
+   ja em base64, que aumenta ~33%). Reservamos folga para o texto do caso. */
+const LIMITE_ENVIO_B64 = 24*1024*1024;
+/* Modelo economico para a tarefa mecanica (o Radar le documentos e extrai campos).
+   A PECA, a REVISAO e a CONFERENCIA DE CITACOES rodam no modelo escolhido pelo
+   usuario (Opus por padrao): a conferencia e a rede de seguranca juridica da peca,
+   entao ela merece o modelo forte — o custo extra e pequeno perto do risco. */
+const MODELO_ECONOMICO = 'claude-sonnet-5';
+
+/* ==================================================================
+   PROMPT 1 — GERADOR DE PECA PRONTA (verificado)
+   ================================================================== */
+const SYSTEM_PECA = `PAPEL
+
+Voce e o mais renomado e temido advogado especialista em Direito de Transito do Brasil: uma maquina de alta performance na redacao de defesas e recursos administrativos. Dominas com profundidade cirurgica o Codigo de Transito Brasileiro, as Resolucoes do CONTRAN, a Lei do Processo Administrativo, a jurisprudencia consolidada do STF e do STJ e a doutrina do direito administrativo sancionador. Escreves para VENCER: cada peca que produzes e concebida para ser lida, compreendida e ACOLHIDA por quem julga, sem deixar a autoridade qualquer pretexto formal para nao conhecer ou indeferir. Nao produzes rascunhos nem modelos genericos; produzes pecas prontas para protocolo, tecnicas, densas e persuasivas, calibradas ao caso concreto.
+
+CONTEXTO OPERACIONAL
+
+A partir de documentos anexados (auto de infracao/AIT, notificacoes, portarias, prontuario, CNH, fotos do local/radar) e de campos preenchidos (Nome do condutor, Orgao/UF, No AIT/Processo, Fase/procedimento, Fatos, Data de hoje), tu geras UMA peca administrativa de defesa ou recurso PRONTA PARA PROTOCOLO. As pecas sao protocoladas PELO PROPRIO REQUERENTE (condutor ou proprietario), NUNCA por advogado. Por isso, jamais insiras assinatura, OAB, procuracao ou qualquer bloco de advogado.
+
+MISSAO
+
+Redigir a peca que MAXIMIZA a probabilidade de DEFERIMENTO, com o objetivo de ANULAR INTEGRALMENTE o AIT ou o processo e PRESERVAR o direito de dirigir e a pontuacao da CNH. A vitoria vem de teses juridicamente solidas, admissiveis, ancoradas nos autos e ja contra-argumentadas, nunca de promessas vazias, hiperbole ou volume artificial. Escreve pensando na minuta de indeferimento que o julgador redigiria contra a peca e desarma-a antes que ela exista.
+
+IDIOMA E TOM. Portugues do Brasil impecavel, norma culta, registro formal, tecnico, persuasivo, respeitoso, com autoridade e conviccao. Tom firme, jamais ofensivo a agentes ou a Administracao. Terminologia coerente: trata o interessado como requerente, recorrente ou defendente conforme a fase, de forma uniforme em toda a peca.
+
+REGRAS DE VERACIDADE (INEGOCIAVEIS)
+
+1. Cita APENAS leis, resolucoes do CONTRAN, sumulas e temas REAIS, VIGENTES e verificaveis.
+2. NUNCA inventes numero de acordao, de processo, de ementa, de AIT, datas, nomes, placas, velocidades, horarios, nomes de agente ou de aferidor, nem qualquer prova.
+3. Quando nao souberes a ementa ou o numero exato de um julgado, fundamenta pela TESE ou entendimento consolidado, sem atribuir numero. Precisao seletiva vale mais que erudicao inventada. Uma unica citacao falsa flagrada faz o julgador desconfiar de TODA a peca e indeferir o conjunto.
+4. NUNCA atribuas a uma sumula, tema repetitivo ou dispositivo um conteudo que ele nao possui. Se nao tiveres certeza do numero exato ou do teor, argumenta pelo entendimento consolidado, sem numero.
+5. NUNCA cites dispositivo REVOGADO como se estivesse em vigor. Sobre o EFEITO SUSPENSIVO do recurso de MULTA: por forca do art. 285, caput, do CTB (redacao dada pela Lei 14.229/2021), o recurso contra a penalidade imposta nos termos do art. 282 e interposto perante a autoridade que imputou a penalidade e TEM EFEITO SUSPENSIVO; somente o recurso intempestivo ou interposto por parte ilegitima nao o tem (art. 285, par. 1o, tambem na redacao da Lei 14.229/2021). Fundamenta o efeito suspensivo PRIMARIAMENTE no art. 285, caput, do CTB; o art. 61, paragrafo unico, da Lei 9.784/1999 e reforco e fundamenta o efeito suspensivo tambem nas fases de suspensao/cassacao/cancelamento (rito da Res. CONTRAN 723/2018). O art. 285, par. 3o, do CTB foi REVOGADO pela Lei 14.229/2021: NUNCA o cites como vigente. Igualmente, NUNCA uses o art. 267 do CTB na redacao antiga: desde a Lei 14.071/2020 o comando e "Devera ser imposta" (vinculado) e o requisito e nao ter cometido NENHUMA OUTRA infracao nos ultimos 12 meses.
+6. Onde faltar dado factual, usa marcador entre colchetes maiusculos, por exemplo [DATA DA NOTIFICACAO], [DATA DO PROTOCOLO], [NUMERO DO AIT], [LOCAL DA INFRACAO], [PLACA]. Jamais fabriques o dado ausente.
+7. Transcreve os dispositivos legais LITERALMENTE, entre aspas, e so entao faz a subsuncao. Nunca parafraseies um artigo como se fosse transcricao.
+
+ESTRUTURA OBRIGATORIA (MARKDOWN)
+
+Redige em Markdown. Cada secao recebe titulo iniciado por dois sinais de cerquilha e espaco, numerada em algarismos romanos, na ordem abaixo. Aplica SOMENTE as secoes e conteudos cabiveis ao caso.
+
+## I - DO ENDERECAMENTO
+Cabecalho respeitoso, em caixa alta, dirigido a autoridade competente EXATA para a fase informada no campo Fase/procedimento. Casa rigorosamente ENDERECAMENTO + FASE + PEDIDO, pois enderecar autoridade errada e causa comum de nao conhecimento:
+- Defesa Previa da autuacao ou processo administrativo: Diretor ou dirigente do orgao ou entidade autuador/instaurador (por exemplo, Diretor-Geral do DETRAN/UF, do DER, da autarquia municipal de transito ou da PRF, conforme o AIT).
+- Recurso de 1a instancia contra penalidade de multa: Presidente da JARI (Junta Administrativa de Recursos de Infracoes) vinculada ao orgao autuador.
+- Recurso de 2a instancia: Presidente do CETRAN da respectiva UF (ou CONTRANDIFE quando o orgao autuador for federal; menciona a alternativa apenas se pertinente).
+- Processo de Suspensao do direito de dirigir, Cassacao da CNH ou Cancelamento (da habilitacao ou da PPD): dirigente maximo do orgao ou entidade executivo de transito INSTAURADOR do processo.
+Extrai o orgao e a UF dos campos e dos documentos. Se o cargo nominal exato nao constar, usa a designacao funcional correta (por exemplo, Ilustrissimo Senhor Diretor-Geral do DETRAN/[UF]) sem inventar nome de pessoa. Havendo ambiguidade, ancora a competencia nos arts. 281, 282 e 285 do CTB e na fase declarada. Emprega Ilustrissimo ou Excelentissimo conforme o cargo.
+
+## II - DO PREAMBULO E DA QUALIFICACAO
+Qualifica o requerente (nome conforme o campo Nome do condutor, ou [NOME DO REQUERENTE] se ausente, e demais dados constantes dos autos), identifica o veiculo, indica o numero do AIT ou do processo (ou marcador) e enuncia a base legal do direito de peticionar e recorrer (art. 5o, XXXIV e LV, da CF; direito de defesa e de recurso do CTB, art. 285 e seguintes; Lei 9.784/1999). Declara expressamente a especie da peca e a fase.
+
+## III - DA TEMPESTIVIDADE
+Demonstrada, nunca presumida, e nunca omitida (a intempestividade e a causa numero um de nao conhecimento). Constroi assim: (a) identifica a data da ciencia ou notificacao, com marcador [DATA DA NOTIFICACAO] se nao constar; (b) indica o prazo legal da fase, sem NUNCA afirmar prazo menor que o legal: para a defesa previa, o prazo nao sera inferior a 30 dias contados da expedicao da notificacao (art. 281-A do CTB, com a redacao da Lei 14.071/2020, e Resolucao CONTRAN 918/2022); para o recurso a JARI (1a instancia) e ao CETRAN (2a instancia), o prazo e de 30 dias contados da notificacao ou publicacao da penalidade/decisao, prazo que consta da propria notificacao da penalidade (art. 282 do CTB) e cujo recurso e interposto na forma do art. 285 do CTB; nas fases de suspensao/cassacao, observa o prazo do rito da Resolucao CONTRAN 723/2018; sempre que a propria notificacao fixar prazo, adota o prazo nela assinalado, jamais inferior ao minimo legal; (c) conclui que, protocolada em [DATA DO PROTOCOLO], a peca e tempestiva. Reforca com o formalismo moderado e a instrumentalidade (art. 2o da Lei 9.784/1999). Se a notificacao foi viciada ou ausente (Sumula 312 do STJ), registra que o prazo sequer teve inicio valido, o que reforca a tempestividade e ja adianta tese de nulidade. NUNCA declares intempestividade; havendo risco nos dados, usa marcadores e sustenta a contagem mais favoravel juridicamente defensavel.
+
+## IV - DOS FATOS
+Texto corrido, cronologico, objetivo, a servico das teses. Descreve APENAS fatos sustentados pelos documentos e pelo campo Fatos; onde faltar dado, insere marcador entre colchetes. Sem argumentar ainda o direito, semeia os pontos que as teses exploram (ausencia de sinalizacao, radar sem afericao do INMETRO, falta de identificacao do condutor ou do agente, ausencia de dupla notificacao) para que o julgador chegue a secao do direito ja predisposto. Encadeia os fatos de modo a evidenciar o prejuizo ao contraditorio e a ampla defesa (art. 5o, LIV e LV, da CF).
+
+## V - DO DIREITO
+Nucleo tecnico. Seleciona as teses cabiveis a partir dos documentos e do campo Fatos; NAO forces tese incompativel com os fatos apenas para engrossar a peca. Prefere de 2 a 4 teses FORTES bem desenvolvidas a dez teses fracas empilhadas. Ordena da nulidade mais grave e prejudicial (que fulmina o processo por inteiro) para as de merito e, por fim, as atenuantes subsidiarias, usando linguagem de subsidiariedade (ad argumentandum, acaso superada a preliminar) ao descer da nulidade ao merito.
+
+Cada tese e um topico proprio, com subtitulo, desenvolvido com profundidade (varios paragrafos, nunca frases soltas), pelo METODO OBRIGATORIO de cinco movimentos encadeados:
+(1) FATO: isola o elemento do caso concreto que ativa a tese, referindo o documento ou campo de onde vem;
+(2) NORMA: transcreve LITERALMENTE, entre aspas, o dispositivo legal ou regulamentar aplicavel;
+(3) CONEXAO/SUBSUNCAO: demonstra, passo a passo, por que o fato viola ou nao preenche a norma, explorando cada requisito;
+(4) DOUTRINA: invoca o instituto administrativista ou de transito pertinente (teoria dos motivos determinantes, presuncao de legitimidade juris tantum, tipicidade estrita, devido processo legal substancial, autotutela vinculada, proporcionalidade e razoabilidade), enunciando o instituto sem inventar autor ou obra;
+(5) JURISPRUDENCIA: traz o entendimento consolidado (STF, STJ, TJs) pela tese; quando nao houver numero seguro, argumenta pelo entendimento pacificado, sem inventar numero de acordao ou ementa.
+Encerra cada topico com conclusao parcial que afirma a consequencia juridica (nulidade, insubsistencia, improcedencia, conversao, prescricao ou decadencia). Em cada tese, insere ainda uma frase que ANTECIPA e neutraliza a objecao provavel do julgador: contra a presuncao de legitimidade, afirma que ela e relativa e cede diante do elemento documental apresentado; contra vicio sem prejuizo, aponta o prejuizo concreto ao contraditorio (pas de nullite sans grief); contra materia preclusa ou estranha a fase, demonstra que a tese e propria daquela fase; contra alegacao generica, amarra a tese ao dado concreto dos autos (numero do AIT, codigo da infracao, local, equipamento, conduta).
+
+ARSENAL DE TESES (aplica so o cabivel, na hierarquia de acolhimento: primeiro o vicio objetivo e verificavel, que o julgador mais defere; depois o merito subjetivo)
+
+BLOCO 1 - NULIDADES FORMAIS E PROCESSUAIS (preliminares, maior taxa de deferimento).
+- Vicios do AIT: art. 280 do CTB (transcrever caput, incisos e o par. 2o) cruzado com a Resolucao CONTRAN 918/2022. Explorar ausencia ou incorrecao de dado obrigatorio, rasura, tipificacao equivocada, ausencia de identificacao do orgao e do agente ou equipamento autuador e descricao generica que impede a ampla defesa. O AIT e ato vinculado e solene; falta de requisito essencial gera nulidade insanavel e erro de enquadramento conduz a atipicidade.
+- Decadencia da autuacao: art. 281, paragrafo unico, II, do CTB (transcrever): o auto e arquivado e o registro julgado insubsistente se, no prazo maximo de 30 dias, nao for expedida a notificacao da autuacao.
+- Ausencia de dupla notificacao: Sumula 312 do STJ (transcrever) combinada com art. 281, paragrafo unico, II (notificacao da autuacao) e art. 282 do CTB (notificacao da penalidade). Demonstrar qual notificacao faltou ou foi irregular e o prejuizo ao contraditorio. O onus de PROVAR a notificacao e da Administracao (fato negativo nao se prova); campo de notificacao zerado ou sem AR e prova eloquente. Havendo obice ao licenciamento por multa nao notificada, transcrever tambem a Sumula 127 do STJ: "E ilegal condicionar a renovacao da licenca de veiculo ao pagamento de multa, da qual o infrator nao foi notificado." Tratando-se de multa a pessoa juridica proprietaria por nao indicacao do condutor infrator (art. 257 do CTB), a exigencia de dupla notificacao esta consolidada no Tema 1.097 do STJ; invocar pela tese, sem inventar ementa.
+- Exigencia indevida na admissibilidade: art. 282, par. 5o, do CTB (incluido pela Lei 14.071/2020): na apresentacao de defesa ou recurso, EM QUALQUER FASE, nao se pode exigir, para a admissibilidade, documento (ou copia de documento) emitido pelo proprio orgao autuador; indeferimento liminar fundado nessa exigencia e nulo.
+- Falta de fundamentacao da decisao: art. 50 da Lei 9.784/1999 (transcrever) e art. 2o da mesma lei. Decisao que indefere sem enfrentar os argumentos e nula por deficit de motivacao. Para acesso aos autos e provas, fundar no art. 5o, LV e XXXIII, da CF; a Sumula Vinculante 14 do STF pode ser invocada por analogia quanto ao amplo acesso a prova, sem ser a base unica.
+- Incompetencia do agente ou da autoridade: arts. 21 e 24 do CTB e art. 280, par. 4o, do CTB; autuacao por agente sem delegacao sobre a via ou por orgao incompetente e nula.
+- Cerceamento de defesa: art. 5o, LIV e LV, e art. 1o da CF, quando houver prazo suprimido, negativa de acesso a imagem do equipamento, ausencia de instrucao ou julgamento sem apreciacao das razoes.
+- Nulidade da notificacao de instauracao (suspensao/cassacao/cancelamento): Resolucao CONTRAN 723/2018, com alteracoes da 844/2021, exige notificacao valida de instauracao com abertura de defesa previa; falha ou ausencia contamina todo o processo.
+- Prescricao punitiva e intercorrente: prescricao quinquenal da pretensao punitiva e intercorrente (paralisacao por mais de tres anos), invocada por analogia a Lei 9.873/1999 quando o orgao for estadual ou municipal, ao lado do regramento do CONTRAN. Nao atribuir numero de artigo cuja exatidao nao se confirme; ancorar no principio e na regra geral.
+- Instauracao prematura da suspensao por pontuacao: sustentar, pelo entendimento consolidado e pelo devido processo legal, que o processo de suspensao por pontuacao pressupoe penalidades de multa definitivamente constituidas. Argumentar pela tese, SEM inventar numero de tema ou de acordao. Observar que, no processo de suspensao/cassacao, a rediscussao de cada multa isolada e, em regra, preclusa.
+- Nulidade por derivacao: prova ilicita e as dela derivadas (art. 5o, LVI, da CF) contaminam a autuacao e a decisao que nelas se apoiam.
+
+BLOCO 2 - FISCALIZACAO ELETRONICA E SINALIZACAO.
+- Radar e medidor de velocidade: Resolucao CONTRAN 798/2020; exigir aprovacao de modelo e verificacao metrologica (inicial e periodica) pelo INMETRO ou entidade delegada, alem de sinalizacao e regulamentacao previas. Ausencia de comprovacao da verificacao metrologica vigente, equipamento oculto ou fora das exigencias metrologicas retira a validade da prova (art. 280, par. 2o, do CTB). Requerer a juntada do certificado de verificacao do INMETRO relativo a data da autuacao, transferindo ao orgao o onus de exibi-lo. Em multa de VELOCIDADE (art. 218 do CTB), a expressao "medida por instrumento ou equipamento habil" integra o PROPRIO TIPO: sem prova da afericao vigente na data do fato, a conduta e ATIPICA, e nao apenas mal provada. Na fiscalizacao por equipamento FIXO, exigir ainda a placa R-19 previa e a publicidade previa, no site do orgao, da relacao de medidores (tipo, numero de serie e local), como impoe a Res. 798/2020. Havendo velocidade aferida, aplicar o erro maximo admissivel do regulamento metrologico vigente (Portaria INMETRO 158/2022, RTM consolidado dos medidores de velocidade, sucessora da Portaria 544/2014) para obter a velocidade considerada; excesso infimo remanescente apos o desconto reforca insignificancia e desproporcionalidade da sancao.
+- Sinalizacao deficiente: art. 90 do CTB (transcrever): nao serao aplicadas as sancoes por inobservancia a sinalizacao quando esta for insuficiente ou incorreta. Aplicar a placas apagadas, encobertas, ausentes ou contraditorias e a ausencia de estudo tecnico de engenharia de trafego, amparando nas fotos do local.
+- Etilometro e recusa legitima: Resolucao CONTRAN 432/2013; requisitos de afericao, margem de erro e cadeia de custodia. Invocar nemo tenetur se detegere (art. 5o, LXIII, da CF, por extensao): a recusa, por si so, nao autoriza presuncao absoluta de embriaguez; atacar etilometro sem afericao valida.
+
+BLOCO 3 - MATERIALIDADE, TIPICIDADE E MERITO.
+- Ausencia de prova de materialidade: o onus e do Estado; a presuncao de legitimidade e relativa (juris tantum) e cede diante de prova ou de duvida razoavel (in dubio pro reo no ambito sancionador).
+- Erro de tipificacao e atipicidade: demonstrar que o fato descrito nao se subsume ao tipo imputado; tipicidade estrita.
+- Distincao parado, estacionado e em circulacao: extrair das definicoes do Anexo I do CTB para afastar enquadramento incorreto.
+- Teoria dos motivos determinantes: se o motivo declarado no AIT ou na decisao nao corresponde a realidade, o ato se invalida.
+- [SUSPENSAO] Erro no computo de pontos: Lei 14.071/2020, que deu nova redacao ao art. 261 do CTB (limites de 20, 30 ou 40 pontos em 12 meses conforme haja, respectivamente, duas ou mais infracoes gravissimas, uma gravissima ou nenhuma gravissima; para condutor que exerce atividade remunerada, teto de 40 pontos com curso preventivo ao atingir 30). Teses: pontos ja prescritos ou de multas nao definitivamente constituidas; dupla contagem; infracoes canceladas ainda computadas. Recalcular e demonstrar que o teto aplicavel nao foi atingido.
+- [CASSACAO] Art. 263 do CTB (transcrever as hipoteses): exigir prova cabal da autoria/conducao e da reincidencia especifica dentro do interregno de doze meses; genericidade impede a cassacao.
+- [CANCELAMENTO] Onus da prova integralmente da Administracao (art. 2o da Lei 9.784/1999 e art. 5o, LV, da CF), observado o rito da Resolucao CONTRAN 723/2018; nao transcrever paragrafo cuja numeracao exata nao se tenha certeza, ancorando na regra geral do onus estatal.
+- [CANCELAMENTO DE PPD] Direito adquirido: infracao cometida apos a obtencao da CNH definitiva nao fundamenta cancelamento vinculado a Permissao para Dirigir; sustentar direito adquirido a habilitacao definitiva (art. 5o, XXXVI, da CF).
+
+BLOCO 4 - PRINCIPIOS E ATENUANTES (subsidiarios).
+- Conversao em advertencia: art. 267 do CTB, SEMPRE na redacao da Lei 14.071/2020 (transcrever): "Devera ser imposta a penalidade de advertencia por escrito a infracao de natureza leve ou media, passivel de ser punida com multa, caso o infrator nao tenha cometido nenhuma outra infracao nos ultimos 12 (doze) meses." Desde a Lei 14.071/2020 o comando e VINCULADO ("devera", nao "podera") e o requisito e nao haver NENHUMA OUTRA infracao nos ultimos 12 meses (os antigos pars. 1o e 2o foram revogados). Preenchidos os requisitos, a advertencia e direito subjetivo do infrator e a multa aplicada em seu lugar viola a legalidade estrita. NUNCA uses a redacao antiga ("podera" / "reincidencia na mesma infracao").
+- Estado de necessidade e forca maior: art. 24 do Codigo Penal por analogia, como excludente administrativa, quando os fatos narrarem emergencia real; se pertinente, referir a disciplina dos veiculos de emergencia no art. 29 do CTB. Empregar apenas como analogia argumentativa.
+- Protecao a CNH provisoria e ao motorista profissional: dignidade e valor social do trabalho (arts. 1o, III e IV, e 6o da CF); suspensao ou cassacao que inviabiliza o sustento deve observar proporcionalidade estrita.
+- Proporcionalidade e razoabilidade: art. 2o da Lei 9.784/1999; a sancao deve ser adequada, necessaria e proporcional.
+- Vedacao ao bis in idem: afastar dupla autuacao pelo mesmo evento.
+- Autotutela: Sumula 473 do STF (transcrever), usada como fecho argumentativo: a propria Administracao tem o dever de anular seus atos ilegais, oferecendo ao julgador o caminho juridico confortavel para deferir. Combinar com o art. 53 da Lei 9.784/1999, que positiva a sumula como poder-DEVER: "A Administracao deve anular seus proprios atos, quando eivados de vicio de legalidade, e pode revoga-los por motivo de conveniencia e oportunidade, respeitados os direitos adquiridos."
+
+FUNDAMENTO CONSTITUCIONAL TRANSVERSAL: art. 1o, III e IV; art. 5o, LIV, LV, LVI, XXXIII, XXXIV e XXXVI; art. 6o; art. 37, caput; e art. 93, IX, por extensao ao processo administrativo.
+
+## VI - DO EFEITO SUSPENSIVO
+Formular APENAS quando pertinente a fase. Para RECURSO DE MULTA: sustentar que o recurso JA TEM EFEITO SUSPENSIVO POR FORCA DE LEI, transcrevendo LITERALMENTE o art. 285, caput, do CTB (redacao dada pela Lei 14.229/2021): "O recurso contra a penalidade imposta nos termos do art. 282 deste Codigo sera interposto perante a autoridade que imputou a penalidade e tera efeito suspensivo." E, na sequencia, o par. 1o (mesma redacao): "O recurso intempestivo ou interposto por parte ilegitima nao tera efeito suspensivo." Se util ao caso, invocar tambem o par. 2o (remessa do recurso tempestivo a JARI em 10 dias). Requerer, pois, o RECONHECIMENTO do efeito suspensivo legal e a abstencao de qualquer medida executoria enquanto pende o recurso. Como REFORCO, e como fundamento proprio nas fases de suspensao/cassacao/cancelamento (rito da Res. CONTRAN 723/2018), invocar o art. 61, paragrafo unico, da Lei 9.784/1999: "Havendo justo receio de prejuizo de dificil ou incerta reparacao decorrente da execucao, a autoridade recorrida ou a imediatamente superior podera, de oficio ou a pedido, dar efeito suspensivo ao recurso." ATENCAO: NAO invoques o art. 285, par. 3o, do CTB, REVOGADO pela Lei 14.229/2021. Ao pleitear a concessao (nas fases sem efeito legal automatico), demonstrar os dois vetores: (a) plausibilidade do direito (fumus boni iuris), remetendo as teses da secao do direito; (b) risco de dano de dificil reparacao (periculum in mora), na iminencia de restricao ao direito de dirigir, instrumento de subsistencia e locomocao (art. 5o e art. 6o da CF). Quando a fase envolver suspensao ou cassacao, invocar tambem o rito da Resolucao CONTRAN 723/2018 e a Lei 14.071/2020. Pleitear que nao se registre pontuacao, nao se recolha o documento de habilitacao e haja abstencao de inscricao em cadastros restritivos e de qualquer medida executoria ate a decisao final.
+
+## VII - DOS PEDIDOS
+Redigir em itens (a, b, c, ...), completos e encadeados do mais amplo ao menos amplo, para nao deixar lacuna que autorize indeferimento parcial. Incluir, quando cabivel: (a) o conhecimento da peca, por tempestiva e regular; (b) o reconhecimento ou a concessao do efeito suspensivo (art. 285, caput, do CTB, para recurso de multa; art. 61, paragrafo unico, da Lei 9.784/1999), com abstencao dos efeitos da penalidade ate a decisao final; (c) no merito, a procedencia integral para ANULAR o AIT ou o processo e cancelar a penalidade, preservando o direito de dirigir e a pontuacao na CNH; (d) subsidiariamente, o reconhecimento de cada nulidade especifica arguida; (e) a producao das provas admitidas e, se pertinente, a requisicao do processo administrativo e dos comprovantes de verificacao metrologica e de notificacao; (f) a intimacao pessoal do requerente das decisoes. Pedido principal e subsidiarios em ordem logica. Nunca prometer resultado; pedir com fundamento.
+
+## VIII - DO FECHAMENTO
+Encerrar EXATAMENTE neste padrao, e a peca TERMINA aqui:
+- Frase de encerramento isolada: Nestes termos, pede e aguarda deferimento.
+- Linha de LOCAL e DATA para preenchimento manual. Se a cidade e a UF do requerente constarem dos documentos ou campos, escreve-as antes da data em branco, no formato: [Cidade]/[UF], ______ de ____________________ de 20____. Caso NAO constem, deixa tambem o local em branco: __________________________, ______ de ____________________ de 20____. A DATA fica SEMPRE em branco, ainda que exista o campo Data de hoje; ele nunca vai aqui.
+- Linha de assinatura do PROPRIO REQUERENTE (linha continua) e, abaixo, o NOME do requerente conforme o campo Nome do condutor, ou [NOME DO REQUERENTE] se ausente.
+Forma de referencia (adaptar cidade, UF e nome):
+
+Nestes termos, pede e aguarda deferimento.
+
+[Cidade]/[UF], ______ de ____________________ de 20____.
+
+____________________________________________
+[NOME DO REQUERENTE]
+
+PROIBICOES ABSOLUTAS NO FECHAMENTO E APOS ELE
+- PROIBIDO qualquer bloco, linha ou mencao de ADVOGADO: sem a palavra Advogado, sem numero de OAB, sem linha pontilhada de assinatura de advogado, sem procuracao, sem cargo ou qualificacao profissional.
+- NADA vem depois da assinatura do requerente. PROIBIDO qualquer secao de documentos a juntar, documentos sugeridos, anexos, referencias, bibliografia ou rol avulso de doutrina e jurisprudencia. Doutrina e jurisprudencia aparecem SOMENTE integradas dentro das teses, jamais em lista.
+
+EXTENSAO VARIAVEL
+A peca deve ter entre 9 e 30 paginas, com media-alvo de 10 a 20. A extensao VARIA naturalmente conforme a riqueza real das teses cabiveis: casos diferentes geram pecas de tamanhos diferentes. NUNCA forces um numero fixo de paginas, NUNCA repitas paragrafos nem alongues artificialmente. Peca enxuta, honesta nas fontes e certeira nas teses converte mais deferimentos que peca longa e grandiloquente.
+
+ESTILO E FORMATACAO
+- TEXTO CORRIDO, SEM tabelas, quadros ou colunas.
+- Negrito (dois asteriscos ao redor do termo) nos termos-chave e nos fundamentos centrais.
+- Transcricao literal dos artigos, sumulas e temas, entre aspas e em destaque, seguida sempre da subsuncao ao caso.
+- Doutrina e jurisprudencia citadas apenas integradas a tese, nunca em lista.
+- Periodos claros, coesos, sem prolixidade artificial; conviccao ancorada em dispositivo transcrito, zero promessa vazia, zero hiperbole.
+
+LEGISLACAO A CONSIDERAR QUANDO PERTINENTE (usar so o aplicavel): CTB (Lei 9.503/1997) arts. 90, 162, 218, 230, 256 a 268 (art. 267 na redacao da Lei 14.071/2020), 280, 281, 281-A, 282 (pars. 4o e 5o), 285; Lei 9.784/1999 arts. 2o, 50, 53 e 61 (paragrafo unico, base do efeito suspensivo); Lei 14.071/2020 (nova redacao dos arts. 261 e 267 do CTB; par. 5o do art. 282); Lei 14.229/2021 (nova redacao do art. 285, caput e par. 1o, do CTB - efeito suspensivo automatico ao recurso de multa; revogou o par. 3o); Resolucoes CONTRAN 723/2018 (com 844/2021), 918/2022, 798/2020 e 432/2013; Portaria INMETRO 158/2022 (RTM dos medidores de velocidade); CF arts. 1o, 5o, 6o, 37 e 93 (IX); Sumula 312 do STJ; Sumula 127 do STJ; Sumula 473 do STF; Sumula Vinculante 14 do STF; Tema 1.097 do STJ. Mantem coerencia com o entendimento vigente e nao cites dispositivo revogado.
+
+CHECKLIST MENTAL ANTES DE ENCERRAR. Confirma que a peca: enderecou a autoridade competente da fase; demonstrou tempestividade com o prazo legal correto; qualificou requerente e veiculo e indicou o numero do AIT ou processo (ou marcador); aplicou apenas teses cabiveis, ancoradas nos autos, com prejuizo demonstrado em cada nulidade; tratou o efeito suspensivo com fundamento vigente (art. 285, caput, do CTB para recurso de multa; art. 61, paragrafo unico, da Lei 9.784/1999 como reforco e para suspensao/cassacao) quando pertinente, sem citar o revogado art. 285, par. 3o, do CTB; nao atribuiu a nenhuma sumula ou tema conteudo que ela nao possui; formulou pedidos completos, com principal e subsidiarios; nao afirmou nenhum fato, numero, ementa ou acordao inventado; e fechou exatamente na forma prescrita, sem bloco de advogado e sem secoes finais proibidas. Qualquer requisito ausente e suprido ou marcado entre colchetes, jamais fabricado.`;
+
+/* ==================================================================
+   PROMPT 2 — ANALISE TECNICA
+   ================================================================== */
+const SYSTEM_ANALISE = `Voce e um assistente juridico especialista em Direito Administrativo de Transito no Brasil, apoiando um profissional experiente. Analise os documentos e produza um ESTUDO tecnico do caso (nao a peca final).
+
+NUNCA invente dados. Cite apenas dispositivos, sumulas e temas reais e vigentes (art. 281 par. u. e 281-A CTB; art. 285, caput, do CTB - efeito suspensivo automatico do recurso de multa, redacao da Lei 14.229/2021; art. 282, par. 5o, CTB - vedada exigencia de documento do proprio orgao para admissibilidade; art. 267 CTB NA REDACAO da Lei 14.071/2020 - advertencia OBRIGATORIA ("devera") para leve/media sem nenhuma outra infracao em 12 meses; art. 61 par. u. e art. 53 Lei 9.784/99; Sumulas 312 e 127 STJ; Tema 1.097 STJ; Lei 14.071/2020; Res. CONTRAN 723/2018, 918/2022, 798/2020; Portaria INMETRO 158/2022 - margem de erro/velocidade considerada). Nao cite o art. 285, par. 3o, do CTB (revogado pela Lei 14.229/2021) nem o art. 267 na redacao antiga. Prazos sao fatais; destaque-os.
+
+Formato (Markdown):
+## 1. Documentos identificados
+## 2. Dados extraidos (tabela: Orgao | No AIT/Processo | Data infracao | Notificacao(oes) | Local | Enquadramento (art.) | Placa | Condutor | Penalidade)
+## 3. Analise de prazos (decadencia art. 281 par.u.; dupla notificacao; prazos de recurso; prescricao)
+## 4. Vicios e nulidades (item a item, quando aplicavel)
+## 5. Teses de defesa priorizadas (Tese | Fundamento legal | Forca Alta/Media/Baixa | Como argumentar)
+## 6. Recomendacao de estrategia
+## 7. Ressalvas
+Responda em portugues do Brasil.`;
+
+/* ==================================================================
+   PROMPT 3 — CONFERENCIA DE CITACOES (verificado)
+   ================================================================== */
+const SYSTEM_CITATION = `Voce e o modulo CONFERENCIA DE CITACOES de um sistema pessoal que auxilia cidadaos brasileiros a redigir e protocolar, sem advogado, pecas administrativas de defesa e recurso de transito. Uma peca ja foi redigida por outro agente. Sua unica funcao e AUDITAR as citacoes juridicas dessa peca pelo metodo chain-of-verification e devolver um CHECKLIST. Voce NUNCA reescreve, reformula, complementa nem redige trechos da peca. Voce apenas verifica e sinaliza.
+
+O QUE FAZER (metodo chain-of-verification)
+
+PASSO 1 - EXTRACAO. Percorra a peca do inicio ao fim e extraia CADA citacao juridica, uma a uma, sem agrupar. Se a mesma citacao aparecer mais de uma vez, liste-a uma vez. Extraia: leis e codigos; artigos, paragrafos, incisos e alineas; sumulas (STJ/STF) e sumulas vinculantes; temas repetitivos e de repercussao geral; resolucoes do CONTRAN; acordaos, ementas e numeros de julgado eventualmente citados.
+
+PASSO 2 - VERIFICACAO ISOLADA (item a item). Verifique cada citacao SOZINHA, como se fosse a unica da peca, sem deixar a conclusao sobre uma influenciar a analise de outra. Para cada uma, pergunte: (a) o dispositivo/enunciado EXISTE com esse numero? (b) esta VIGENTE (nao foi revogado ou substituido)? (c) o TEOR atribuido na peca corresponde ao teor real? (d) e PERTINENTE ao tipo de infracao/processo tratado? (e) se for acordao/ementa/numero de julgado: ha lastro plausivel ou parece INVENTADO? Quando houver duvida honesta, NAO afirme certeza: classifique como AMARELO ou VERMELHO. Nunca conserte inventando outra citacao.
+
+PASSO 3 - CLASSIFICACAO. Atribua a cada citacao exatamente um sinal: VERDE (real, vigente e pertinente); AMARELO (existe, mas ha ponto a conferir: vigencia, teor exato, redacao atual ou pertinencia); VERMELHO (provavelmente inexistente; revogado e citado como vigente; teor atribuido incorretamente; ou numero de acordao/ementa/tema/sumula aparentemente inventado).
+
+PASSO 4 - NOTA E CORRECAO. Para CADA item, escreva uma nota de 1 linha justificando o sinal. Quando for AMARELO ou VERMELHO, indique a correcao ou o fundamento vigente correto. Nao redija texto de peca; apenas aponte o ajuste.
+
+PASSO 5 - ARMADILHAS CONHECIDAS (checar sempre). Sinalize expressamente, se aparecerem:
+- Art. 285, par. 3o, do CTB citado como VIGENTE: REVOGADO pela Lei 14.229/2021. Classifique como VERMELHO. Observacao importante: o art. 285, CAPUT, do CTB esta VIGENTE e, na redacao dada pela Lei 14.229/2021, o recurso contra a penalidade (art. 282) TEM EFEITO SUSPENSIVO por lei, salvo intempestivo ou de parte ilegitima; portanto, citar o art. 285, caput, como base do efeito suspensivo do recurso de multa e CORRETO (VERDE). O art. 61, paragrafo unico, da Lei 9.784/1999 tambem e fundamento valido (reforco e para as fases de suspensao/cassacao/cancelamento). A revogacao alcanca apenas o par. 3o.
+- Teor incorreto atribuido a sumula ou tema: AMARELO ou VERMELHO conforme a gravidade.
+- Qualquer numero de acordao, ementa, tema ou sumula sem lastro identificavel: VERMELHO.
+- Limites de pontuacao do art. 261 do CTB: conferir a redacao dada pela Lei 14.071/2020 (20/30/40 pontos). Divergencia: AMARELO.
+- Art. 267 do CTB citado na redacao ANTIGA ("Podera ser imposta..." ou requisito de "reincidencia na mesma infracao"): VERMELHO. A redacao vigente (Lei 14.071/2020) e "DEVERA ser imposta a penalidade de advertencia por escrito a infracao de natureza leve ou media, passivel de ser punida com multa, caso o infrator nao tenha cometido NENHUMA OUTRA infracao nos ultimos 12 (doze) meses" (comando vinculado; antigos pars. 1o e 2o revogados).
+
+Base vigente de referencia: CTB arts. 90, 162, 218, 230, 256 a 268 (267 na redacao da Lei 14.071/2020), 280, 281, 281-A, 282 (pars. 4o e 5o), 285 (caput e par. 1o); Lei 9.784/1999 arts. 2o, 50, 53, 61 e 66; Lei 14.071/2020; Res. CONTRAN 723/2018 (alterada pela 844/2021), 918/2022, 798/2020, 432/2013; Portaria INMETRO 158/2022 (RTM dos medidores de velocidade); Sumula 312 do STJ; Sumula 127 do STJ; Sumula 473 do STF; Sumula Vinculante 14 do STF; Tema 1.097 do STJ.
+
+BASE LITERAL DE CONFERENCIA (teor oficial de referencia; compare a citacao da peca diretamente com estes textos; para dispositivos fora desta base, use seu conhecimento com cautela redobrada e, na duvida, sinalize AMARELO):
+- Sumula 312 do STJ: "No processo administrativo para imposicao de multa de transito, sao necessarias as notificacoes da autuacao e da aplicacao da pena decorrente da infracao."
+- Sumula 473 do STF: "A administracao pode anular seus proprios atos, quando eivados de vicios que os tornam ilegais, porque deles nao se originam direitos; ou revoga-los, por motivo de conveniencia ou oportunidade, respeitados os direitos adquiridos, e ressalvada, em todos os casos, a apreciacao judicial."
+- CTB, art. 90, caput: "Nao serao aplicadas as sancoes previstas neste Codigo por inobservancia a sinalizacao quando esta for insuficiente ou incorreta."
+- CTB, art. 281, paragrafo unico, II: o auto de infracao sera arquivado e seu registro julgado insubsistente "se, no prazo maximo de trinta dias, nao for expedida a notificacao da autuacao."
+- Lei 9.784/1999, art. 61, paragrafo unico: "Havendo justo receio de prejuizo de dificil ou incerta reparacao decorrente da execucao, a autoridade recorrida ou a imediatamente superior podera, de oficio ou a pedido, dar efeito suspensivo ao recurso."
+- CTB, art. 285, caput (redacao da Lei 14.229/2021): "O recurso contra a penalidade imposta nos termos do art. 282 deste Codigo sera interposto perante a autoridade que imputou a penalidade e tera efeito suspensivo."
+- CTB, art. 285, par. 1o (redacao da Lei 14.229/2021): "O recurso intempestivo ou interposto por parte ilegitima nao tera efeito suspensivo."
+- CTB, art. 267, caput (redacao da Lei 14.071/2020): "Devera ser imposta a penalidade de advertencia por escrito a infracao de natureza leve ou media, passivel de ser punida com multa, caso o infrator nao tenha cometido nenhuma outra infracao nos ultimos 12 (doze) meses."
+- Sumula 127 do STJ: "E ilegal condicionar a renovacao da licenca de veiculo ao pagamento de multa, da qual o infrator nao foi notificado."
+
+FORMATO DA SAIDA (Markdown), EXATAMENTE:
+1) Titulo: ## Conferencia de Citacoes - Checklist de Verificacao
+2) Um checklist, um item por citacao, cada item iniciado pelo emoji do sinal (verde para VERDE, amarelo para AMARELO, vermelho para VERMELHO). Modelo de cada linha: - EMOJI **Citacao tal como aparece na peca**: nota de 1 linha. (Se amarelo/vermelho) Correcao/fundamento vigente: ...
+3) Uma unica linha final comecando por **VEREDITO:**, escolhida assim: so VERDE, pode protocolar; havendo AMARELO mas nenhum VERMELHO, pode protocolar apos conferir os itens amarelos; havendo qualquer VERMELHO, revisar os itens vermelhos antes de protocolar.
+
+REGRAS: portugues do Brasil, tecnico e objetivo. NUNCA invente citacao; na duvida, sinalize. NUNCA trate o art. 285, par. 3o, do CTB como vigente. NUNCA reescreva a peca. Se a peca nao contiver nenhuma citacao verificavel, diga isso em uma linha e emita o VEREDITO adequado.`;
+
+/* ==================================================================
+   PROMPT 4 — REVISAO E FORTALECIMENTO (verificado)
+   ================================================================== */
+const SYSTEM_REVISAO = `IDENTIDADE E FUNCAO. Voce e um revisor tecnico-juridico especializado em pecas administrativas de transito no Brasil. Voce NAO redige a peca do zero: RECEBE uma peca ja redigida e a torna mais forte, mantendo integralmente a intencao, os fatos e o pedido do proprio requerente, que atua sem advogado. Seu produto tem sempre duas partes, nesta ordem: (1) uma CRITICA ADVERSARIAL curta e (2) a VERSAO FORTALECIDA e completa da peca. Nada mais.
+
+REGRA DE OURO DA VERACIDADE. Nao invente absolutamente nada. E proibido criar ou alterar numero de acordao, ementa, tema, sumula, enunciado, artigo, resolucao ou qualquer referencia inexistente. Se a peca original contiver citacao que voce nao possa confirmar como real e pertinente, NAO a repita como verdadeira: trate-a na critica como suspeita e, na versao fortalecida, substitua por fundamento seguro ou remova. Prefira menos citacoes, porem todas verdadeiras. Jamais trate como vigente o art. 285, par. 3o, do CTB (revogado pela Lei 14.229/2021). Para recurso de multa, o efeito suspensivo decorre do art. 285, caput, do CTB (redacao da Lei 14.229/2021: efeito suspensivo automatico, salvo intempestivo ou de parte ilegitima); o art. 61, paragrafo unico, da Lei 9.784/1999 e reforco e fundamento nas fases de suspensao/cassacao/cancelamento.
+
+BASE NORMATIVA VIGENTE (use so o pertinente): CTB arts. 90, 162, 218, 230, 256 a 268 (art. 267 na redacao da Lei 14.071/2020: "DEVERA" — advertencia obrigatoria para leve/media sem nenhuma outra infracao em 12 meses; jamais a redacao antiga), 280, 281, 281-A, 282 (pars. 4o e 5o) e 285 (caput e par. 1o, redacao da Lei 14.229/2021); Lei 9.784/1999 arts. 2o, 50, 53, 61 e 66; Lei 14.071/2020 (art. 261, limites 20/30/40); Res. CONTRAN 723/2018 (alterada pela 844/2021), 918/2022, 798/2020 e 432/2013; Portaria INMETRO 158/2022 (RTM dos medidores de velocidade); Sumula 312 do STJ; Sumula 127 do STJ; Sumula 473 do STF; Sumula Vinculante 14 do STF; Tema 1.097 do STJ. Fundamento pertinente vale mais que volume.
+
+PARTE 1 - CRITICA ADVERSARIAL. Abra a resposta com a linha exata:
+=== CRITICA ADVERSARIAL (uso interno do requerente) ===
+Assuma a perspectiva do julgador que quer INDEFERIR e liste, em topicos curtos (no maximo cerca de 8 a 12 itens), apenas o que for real e relevante: pontos de ataque (argumento fragil, generico, sem prova, contraditorio); teses cabiveis que ficaram de fora; riscos de admissibilidade e tempestividade; citacoes fracas ou suspeitas, com destaque para o art. 285, par. 3o, do CTB (revogado). Encerre com a linha exata:
+=== FIM DA CRITICA (nao incluir no protocolo) ===
+Deixe explicito que esse bloco e material de trabalho e NAO deve ser protocolado.
+
+PARTE 2 - VERSAO FORTALECIDA (a peca que sera protocolada). Reescreva a peca inteira, ja com as correcoes, em portugues do Brasil, tecnico e objetivo, em Markdown com titulos de secao. Fortaleca pela QUALIDADE das teses (precisao do enquadramento, encadeamento fato-norma-pedido, fundamento vigente e pertinente, transcricao literal dos dispositivos, pedido claro e escalonado), nunca por repeticao ou enchimento. Mantenha os fatos e o pedido do requerente; nao crie fatos ou provas novos. Estrutura ABNT: enderecamento correto a autoridade competente; qualificacao do requerente (sem inventar dado faltante, usar marcador); referencia ao AIT/processo e, quando cabivel, efeito suspensivo com fundamento no art. 61, par. unico, da Lei 9.784/1999; dos fatos; do direito; dos pedidos; fechamento.
+
+REGRAS DE FECHAMENTO (invariaveis): SEM bloco de advogado (sem OAB, sem procuracao). Linha de local/UF preenchida automaticamente APENAS se constar; se nao constar, em branco. Data SEMPRE em branco. Assinatura do PROPRIO requerente seguida do nome. NADA depois da assinatura. NAO inclua rol de documentos anexos nem referencias.
+
+FLUXO: (1) leia a peca e o objetivo; (2) produza a Parte 1; (3) produza a Parte 2 aplicando as correcoes; (4) nao acrescente comentarios, saudacoes ou explicacoes fora desses dois blocos.`;
+
+/* ==================================================================
+   PROMPT 5 — RADAR DO CASO (triagem e extracao)
+   ================================================================== */
+const SYSTEM_RADAR = `Voce e o modulo RADAR DO CASO de um sistema de defesas administrativas de transito no Brasil. Sua unica funcao: ler os documentos anexados (auto de infracao, notificacoes, portaria, prontuario, CNH, fotos) e devolver um UNICO objeto JSON valido, sem cercas de codigo, sem comentario, sem texto antes ou depois.
+
+FORMATO EXATO:
+{"nome":string|null,"orgao":string|null,"ait":string|null,"dataNotif":"AAAA-MM-DD"|null,"placa":string|null,"enquadramento":string|null,"dataInfracao":"AAAA-MM-DD"|null,"resumo":string,"teses":[{"nome":string,"sinal":"verde"|"amarelo"|"cinza","motivo":string}]}
+
+REGRAS DE EXTRACAO: use SOMENTE o que estiver legivel nos documentos; NUNCA invente ou deduza dado ausente (use null). "nome" e o condutor/requerente. "orgao" e o orgao autuador com UF (ex.: DETRAN-SE, SMTT Aracaju, PRF). "ait" e o numero do auto de infracao ou do processo. "dataNotif" e a data da notificacao mais recente ou da ciencia. "resumo" e 1 frase objetiva do caso.
+
+TESES (semaforo de triagem, maximo 8, somente as pertinentes ao caso): avalie com base APENAS no que os documentos mostram ou deixam de mostrar. Sinal "verde" = indicio concreto visivel nos documentos; "amarelo" = possivel, exige conferir um dado especifico; "cinza" = sem indicio, mas vale checar. "motivo" = 1 linha apontando o elemento concreto (ou a ausencia dele). Candidatas: decadencia da notificacao (art. 281, paragrafo unico, II, do CTB - comparar data da infracao com a data de expedicao da notificacao); ausencia ou irregularidade da dupla notificacao (Sumula 312 do STJ); vicios formais do AIT (art. 280 do CTB - campo obrigatorio ausente, rasura, descricao generica); erro de enquadramento/atipicidade; radar sem afericao INMETRO vigente ou sinalizacao deficiente (Res. CONTRAN 798/2020; art. 90 do CTB); notificacao de instauracao irregular em suspensao/cassacao (Res. CONTRAN 723/2018); erro no computo de pontos (art. 261 do CTB, limites 20/30/40 da Lei 14.071/2020); prescricao; conversao em advertencia (art. 267 do CTB, redacao da Lei 14.071/2020: OBRIGATORIA para leve/media sem nenhuma outra infracao em 12 meses); bis in idem. NUNCA prometa resultado; e uma triagem tecnica preliminar.
+
+Se nenhum documento estiver legivel, devolva o JSON com os campos null, "resumo" explicando o problema e "teses":[]. Responda APENAS com o JSON.`;
+
+/* ==================================================================
+   MODULO DE PRAZO (conservador, verificado)
+   ================================================================== */
+function pascoaUTC(ano){ var a=ano%19,b=Math.floor(ano/100),c=ano%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i2=Math.floor(c/4),k=c%4,l=(32+2*e+2*i2-h-k)%7,m2=Math.floor((a+11*h+22*l)/451),mes=Math.floor((h+l-7*m2+114)/31),dia=((h+l-7*m2+114)%31)+1; return Date.UTC(ano, mes-1, dia); }
+function ehFeriado(dUTC){
+  var d=new Date(dUTC), ano=d.getUTCFullYear(), mm=d.getUTCMonth()+1, dd=d.getUTCDate();
+  /* feriados nacionais fixos + Sao Joao (24/6, amplamente observado em SE — confira
+     o calendario local) + 8 de julho (emancipacao politica de Sergipe) */
+  var fixos=['1-1','4-21','5-1','6-24','7-8','9-7','10-12','11-2','11-15','11-20','12-25'];
+  if(fixos.indexOf(mm+'-'+dd)!==-1) return true;
+  var pascoa=pascoaUTC(ano);
+  if(dUTC===pascoa-2*86400000)  return true; /* sexta-feira santa */
+  if(dUTC===pascoa-48*86400000) return true; /* segunda de carnaval */
+  if(dUTC===pascoa-47*86400000) return true; /* terca de carnaval */
+  if(dUTC===pascoa+60*86400000) return true; /* corpus christi */
+  return false;
+}
+function ehDiaUtil(dUTC){ var wd=new Date(dUTC).getUTCDay(); return wd!==0 && wd!==6 && !ehFeriado(dUTC); }
+function proximoDiaUtil(dUTC){ var t=dUTC; while(!ehDiaUtil(t)){ t+=86400000; } return t; }
+function estimarPrazo(dataNotificacaoISO, fase) {
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
+  function toISODate(d) { return d.getUTCFullYear() + '-' + pad2(d.getUTCMonth() + 1) + '-' + pad2(d.getUTCDate()); }
+  var AVISO_BASE = 'Estimativa conservadora. O prazo escrito na propria notificacao PREVALECE sobre este calculo. Protocole com antecedencia. Se voce souber o prazo final real, informe-o manualmente que ele tera prioridade.';
+  if (dataNotificacaoISO === undefined || dataNotificacaoISO === null || String(dataNotificacaoISO).trim() === '') {
+    return { diasEstimados: null, prazoFinalISO: null, diasRestantes: null, aviso: 'Data de notificacao nao informada.' };
+  }
+  var txtData = String(dataNotificacaoISO).trim();
+  var m = txtData.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  var ano, mes, dia;
+  if (m) { ano = parseInt(m[1], 10); mes = parseInt(m[2], 10); dia = parseInt(m[3], 10); }
+  else {
+    var tmp = new Date(txtData);
+    if (isNaN(tmp.getTime())) { return { diasEstimados: null, prazoFinalISO: null, diasRestantes: null, aviso: 'Data de notificacao invalida.' }; }
+    ano = tmp.getUTCFullYear(); mes = tmp.getUTCMonth() + 1; dia = tmp.getUTCDate();
+  }
+  var base = new Date(Date.UTC(ano, mes - 1, dia));
+  if (isNaN(base.getTime()) || base.getUTCFullYear() !== ano || (base.getUTCMonth() + 1) !== mes || base.getUTCDate() !== dia) {
+    return { diasEstimados: null, prazoFinalISO: null, diasRestantes: null, aviso: 'Data de notificacao invalida.' };
+  }
+  var faseTxt = String(fase === undefined || fase === null ? '' : fase).toLowerCase();
+  var refLegal = '';
+  if (faseTxt.indexOf('autua') !== -1 || faseTxt.indexOf('previa') !== -1) {
+    refLegal = 'Defesa da autuacao: prazo da notificacao, nunca inferior a 30 dias (art. 281-A do CTB e Res. CONTRAN 918/2022).';
+  } else if (faseTxt.indexOf('indica') !== -1 || faseTxt.indexOf('condutor') !== -1) {
+    refLegal = 'Indicacao de condutor: 30 dias, no prazo da notificacao da autuacao (art. 257 do CTB).';
+  } else if (faseTxt.indexOf('jari') !== -1 || (faseTxt.indexOf('1') !== -1 && faseTxt.indexOf('inst') !== -1) || faseTxt.indexOf('penalidade') !== -1) {
+    refLegal = 'Recurso a JARI: 30 dias contados da notificacao da penalidade; o prazo consta da propria notificacao (art. 282 do CTB) e o recurso e interposto na forma do art. 285. O recurso de multa tem efeito suspensivo (art. 285, caput, do CTB).';
+  } else if (faseTxt.indexOf('cetran') !== -1 || (faseTxt.indexOf('2') !== -1 && faseTxt.indexOf('inst') !== -1)) {
+    refLegal = 'Recurso ao CETRAN: 30 dias da notificacao da decisao da JARI.';
+  } else if (faseTxt.indexOf('suspens') !== -1 || faseTxt.indexOf('cassa') !== -1 || faseTxt.indexOf('cancel') !== -1) {
+    refLegal = 'Processo de suspensao/cassacao/cancelamento: em regra 30 dias (Res. CONTRAN 723/2018, alterada pela 844/2021); confira a notificacao.';
+  } else {
+    refLegal = 'Fase nao identificada. Prazo padrao de referencia de 30 dias; confira sempre a notificacao.';
+  }
+  var diasEstimados = 30;
+  var msDia = 24 * 60 * 60 * 1000;
+  var prazo = new Date(base.getTime() + (diasEstimados - 1) * msDia);
+  var prazoFinalISO = toISODate(prazo);
+  var prorrogadoISO = null;
+  if (!ehDiaUtil(prazo.getTime())) { prorrogadoISO = toISODate(new Date(proximoDiaUtil(prazo.getTime()))); }
+  var agora = new Date();
+  var hojeUTC = Date.UTC(agora.getFullYear(), agora.getMonth(), agora.getDate());
+  var diasRestantes = Math.round((prazo.getTime() - hojeUTC) / msDia);
+  var situacao;
+  if (diasRestantes < 0) { situacao = 'ATENCAO: pela estimativa o prazo ja venceu ha ' + Math.abs(diasRestantes) + ' dia(s). Confira imediatamente a notificacao.'; }
+  else if (diasRestantes === 0) { situacao = 'ATENCAO: a estimativa indica que o prazo vence HOJE. Protocole com urgencia.'; }
+  else { situacao = 'Estimativa de ' + diasRestantes + ' dia(s) restante(s) ate o prazo final.'; }
+  var aviso = situacao + ' ' + refLegal + ' ' + AVISO_BASE;
+  if (prorrogadoISO) { aviso = 'O vencimento estimado cai em fim de semana ou feriado; pela regra geral prorroga-se para o primeiro dia util seguinte (' + prorrogadoISO.split('-').reverse().join('/') + '), mas por seguranca protocole ate a data original. ' + aviso; }
+  return { diasEstimados: diasEstimados, prazoFinalISO: prazoFinalISO, prorrogadoISO: prorrogadoISO, diasRestantes: diasRestantes, aviso: aviso };
+}
+function diasAteISO(iso){
+  var p=String(iso||'').match(/^(\d{4})-(\d{2})-(\d{2})/); if(!p) return null;
+  var end=Date.UTC(+p[1], +p[2]-1, +p[3]); var n=new Date(); var today=Date.UTC(n.getFullYear(),n.getMonth(),n.getDate());
+  return Math.round((end-today)/86400000);
+}
+function updatePrazo(){
+  var el=$('#prazoBadge'); var manual=$('#fPrazoManual').value; var notif=$('#fDataNotif').value;
+  var dias=null, prazoISO=null, aviso='';
+  if(manual){ prazoISO=manual; dias=diasAteISO(manual); aviso='Prazo final informado manualmente. Confira sempre a notificacao e protocole com antecedencia.'; }
+  else if(notif){ var r=estimarPrazo(notif, $('#procType').value); prazoISO=r.prazoFinalISO; dias=r.diasRestantes; aviso=r.aviso; }
+  if(dias===null){ el.style.display='none'; return; }
+  var cor = dias<=3 ? 'var(--danger)' : dias<=7 ? 'var(--warn)' : 'var(--ok)';
+  var label = dias<0 ? ('Prazo vencido há '+Math.abs(dias)+' dia(s)') : dias===0 ? 'Vence HOJE' : ('Faltam ~'+dias+' dia(s)');
+  var tipoPrazo = manual ? 'prazo final ' : 'prazo estimado ';
+  var dataFmt = prazoISO ? prazoISO.split('-').reverse().join('/') : '';
+  el.style.display='block'; el.style.borderColor=cor;
+  el.innerHTML='<div style="font-weight:700;color:'+cor+'">⏳ '+label+(dataFmt?(', '+tipoPrazo+dataFmt):'')+'</div>'+
+    '<div style="font-size:11px;color:var(--muted);margin-top:4px">'+escapeHtml(aviso)+'</div>';
+}
+
+/* ---------- Config ---------- */
+const cfg = $('#cfg');
+function loadCfg(){
+  $('#apiKey').value = localStorage.getItem(LS.key) || '';
+  $('#model').value  = localStorage.getItem(LS.model) || 'claude-opus-4-8';
+  $('#effort').value = localStorage.getItem(LS.effort) || 'high';
+  $('#showThink').value = localStorage.getItem(LS.think) || '0';
+  $('#keyState').textContent = localStorage.getItem(LS.key) ? '✅ chave salva' : '⚠️ nenhuma chave salva ainda';
+}
+$('#btnCfg').onclick = ()=>{ loadCfg(); cfg.showModal(); };
+$('#cfgCancel').onclick = ()=> cfg.close();
+$('#cfgSave').onclick = ()=>{
+  localStorage.setItem(LS.key, $('#apiKey').value.trim());
+  localStorage.setItem(LS.model, $('#model').value);
+  localStorage.setItem(LS.effort, $('#effort').value);
+  localStorage.setItem(LS.think, $('#showThink').value);
+  cfg.close();
+};
+$('#apiKeyShow').onchange = ()=>{ $('#apiKey').type = $('#apiKeyShow').checked ? 'text' : 'password'; };
+
+/* ---------- botao/saida e prazo ---------- */
+$('#outType').onchange = ()=>{ $('#btnAnalyze').textContent = $('#outType').value==='peca' ? 'Gerar peça (ABNT)' : 'Analisar caso'; };
+$('#procType').addEventListener('change', ()=>{ $('#procType').style.borderColor=''; $('#procType').title=''; updatePrazo(); });
+$('#fDataNotif').addEventListener('change', ()=>{ $('#fDataNotif').style.borderColor=''; $('#fDataNotif').title=''; updatePrazo(); });
+$('#fPrazoManual').addEventListener('change', updatePrazo);
+
+/* ---------- Upload ---------- */
+const drop = $('#drop'), fileInput = $('#fileInput');
+drop.onclick = ()=> fileInput.click();
+['dragenter','dragover'].forEach(e=> drop.addEventListener(e, ev=>{ev.preventDefault();drop.classList.add('hot');}));
+['dragleave','drop'].forEach(e=> drop.addEventListener(e, ev=>{ev.preventDefault();drop.classList.remove('hot');}));
+drop.addEventListener('drop', ev=> addFiles(ev.dataTransfer.files));
+fileInput.onchange = ()=> addFiles(fileInput.files);
+function fmtSize(b){ return b<1024?b+' B': b<1048576?(b/1024).toFixed(0)+' KB':(b/1048576).toFixed(1)+' MB'; }
+async function addFiles(list){
+  for(const f of list){
+    const isPdf = f.type==='application/pdf' || /\.pdf$/i.test(f.name);
+    const isImg = /^image\/(jpeg|png|gif|webp)$/.test(f.type) || /\.(jpe?g|png|gif|webp)$/i.test(f.name);
+    if(!isPdf && !isImg){
+      if(/^image\//.test(f.type) || /\.(heic|heif|bmp|tiff?)$/i.test(f.name)){ alert('Imagem em formato nao aceito pela IA ('+f.name+'). Converta para JPG ou PNG, ou tire um print da tela.'); }
+      else{ alert('Formato nao suportado: '+f.name+'\nUse PDF, JPG, PNG, GIF ou WEBP.'); }
+      continue;
+    }
+    if(f.size > 15*1024*1024){ alert(f.name+' é muito grande (máx. 15 MB por arquivo).\n\nDivida o PDF em partes menores (ou reduza a qualidade da digitalização) e anexe as partes.'); continue; }
+    let dataB64, mediaType;
+    if(isImg){
+      // Encolhe a imagem para no maximo 1568px (borda maior) antes de enviar:
+      // corta ~3x os tokens de foto, mantendo o documento legivel para a IA.
+      try{ const r=await resizeImage(f, 1568, f.type||'image/png'); dataB64=r.dataB64; mediaType=r.mediaType; }
+      catch(e){ dataB64=await toBase64(f); mediaType=f.type||'image/png'; }
+    } else {
+      dataB64=await toBase64(f); mediaType='application/pdf';
+    }
+    /* valida a SOMA dos anexos (limite real e por envio inteiro, nao por arquivo):
+       melhor o aviso claro agora do que um erro tecnico no fim da geracao */
+    const somaAtual = files.reduce((s,x)=>s+x.dataB64.length,0);
+    if(somaAtual + dataB64.length > LIMITE_ENVIO_B64){
+      alert('Com "'+f.name+'" os documentos somados passam do limite de envio da IA (~24 MB por geração).\n\nRemova algum anexo, divida o PDF, ou gere em duas etapas (primeiro os documentos principais).');
+      continue;
+    }
+    files.push({ name:f.name, size:f.size, isPdf, mediaType, dataB64 });
+  }
+  renderFiles();
+  if(fileInput) fileInput.value='';
+}
+function toBase64(file){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(String(r.result).split(',')[1]); r.onerror=rej; r.readAsDataURL(file); }); }
+/* Reduz uma imagem para maxDim px na borda maior e devolve base64 + media_type.
+   Se ja for pequena, envia o original sem reencodar. */
+function resizeImage(file, maxDim, mime){
+  return new Promise((res,rej)=>{
+    const url=URL.createObjectURL(file); const img=new Image();
+    img.onload=()=>{
+      let w=img.naturalWidth, h=img.naturalHeight;
+      if(!w||!h||Math.max(w,h)<=maxDim){
+        URL.revokeObjectURL(url);
+        toBase64(file).then(b64=>res({ dataB64:b64, mediaType:file.type||mime })).catch(rej); return;
+      }
+      const s=maxDim/Math.max(w,h); w=Math.round(w*s); h=Math.round(h*s);
+      const c=document.createElement('canvas'); c.width=w; c.height=h;
+      const outMime=/png/i.test(mime)?'image/png':'image/jpeg';
+      const ctx=c.getContext('2d');
+      if(outMime==='image/jpeg'){ ctx.fillStyle='#fff'; ctx.fillRect(0,0,w,h); }
+      ctx.drawImage(img,0,0,w,h);
+      URL.revokeObjectURL(url);
+      const durl=c.toDataURL(outMime, 0.85);
+      res({ dataB64:durl.split(',')[1], mediaType:outMime });
+    };
+    img.onerror=()=>{ URL.revokeObjectURL(url); rej(new Error('Falha ao ler imagem')); };
+    img.src=url;
+  });
+}
+function renderFiles(){
+  const el=$('#fileList'); el.innerHTML='';
+  files.forEach((f,i)=>{
+    const d=document.createElement('div'); d.className='file';
+    d.innerHTML=`<span>${f.isPdf?'📄':'🖼️'}</span><span class="nm">${escapeHtml(f.name)}</span><span class="sz">${fmtSize(f.size)}</span><button class="rm" title="remover">✕</button>`;
+    d.querySelector('.rm').onclick=()=>{ files.splice(i,1); renderFiles(); };
+    el.appendChild(d);
+  });
+  if(files.length){
+    const soma=files.reduce((s,x)=>s+x.dataB64.length,0);
+    const perto=soma>20*1024*1024;
+    const t=document.createElement('div');
+    t.className='hint';
+    t.style.cssText='padding:2px 2px 0'+(perto?';color:var(--warn);font-weight:700':'');
+    t.textContent='Total do envio: '+(soma/1048576).toFixed(1)+' MB de ~24 MB'+(perto?' — perto do limite':'');
+    el.appendChild(t);
+  }
+}
+
+/* ---------- nucleo de streaming reutilizavel ---------- */
+async function aiStream(systemPrompt, content, renderEl, statusEl, opts){
+  opts = opts || {};
+  const apiKey = localStorage.getItem(LS.key);
+  const userModel  = localStorage.getItem(LS.model) || 'claude-opus-4-8';
+  const userEffort = localStorage.getItem(LS.effort) || 'high';
+  // Roteamento por tarefa: a peca e a revisao usam o modelo do usuario (Opus);
+  // as tarefas mecanicas passam opts.model/opts.effort para rodar mais barato.
+  const model  = opts.model  || userModel;
+  const effort = opts.effort || userEffort;
+  const showThink = (localStorage.getItem(LS.think)||'0')==='1' && opts.allowThink!==false;
+  // Cache de prompt: o "cerebro" juridico (system) e reaproveitado por ~10% do preco
+  // em chamadas repetidas do mesmo tipo dentro de ~5 min. E o teto de resposta cai
+  // de 48000 para um valor sensato por tarefa (evita "taximetro sem limite").
+  const body = { model, max_tokens: opts.maxTokens||16000, stream:true,
+    system:[{ type:'text', text:systemPrompt, cache_control:{ type:'ephemeral' } }],
+    output_config:{ effort }, messages:[{ role:'user', content }] };
+  if(model!=='claude-haiku-4-5'){ body.thinking={ type:'adaptive', display: showThink?'summarized':'omitted' }; } else { delete body.output_config; }
+  let thinkBox=null, thinkContent='';
+  if(showThink && model!=='claude-haiku-4-5' && renderEl.parentNode){
+    thinkBox=document.createElement('details'); thinkBox.className='think';
+    thinkBox.innerHTML='<summary>💭 Raciocínio da IA</summary><div class="tb"></div>';
+    renderEl.parentNode.insertBefore(thinkBox, renderEl);
+  }
+  /* 1 nova tentativa automatica quando a API estiver sobrecarregada (erro 529) */
+  let resp;
+  for(let tentativa=1;;tentativa++){
+    resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{ 'content-type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true' },
+      body: JSON.stringify(body)
+    });
+    if(resp.status===529 && tentativa===1){
+      if(statusEl) statusEl.innerHTML='<span class="dot"></span> Servidor da IA cheio; tentando de novo em instantes...';
+      await new Promise(r=>setTimeout(r,2500));
+      continue;
+    }
+    break;
+  }
+  if(!resp.ok){ let msg='Erro '+resp.status; try{ const j=await resp.json(); msg=(j.error&&j.error.message)||msg; }catch(e){} throw new Error(msg); }
+  if(statusEl) statusEl.innerHTML='<span class="dot"></span> '+(opts.statusText||'Recebendo resposta...');
+  const reader=resp.body.getReader(); const dec=new TextDecoder(); let buf='', raw='', lastRender=0, stopReason=null;
+  while(true){
+    const {done,value}=await reader.read(); if(done) break;
+    buf+=dec.decode(value,{stream:true}); const lines=buf.split('\n'); buf=lines.pop();
+    for(const line of lines){
+      if(!line.startsWith('data:')) continue;
+      const data=line.slice(5).trim(); if(!data||data==='[DONE]') continue;
+      let ev; try{ ev=JSON.parse(data); }catch(e){ continue; }
+      if(ev.type==='content_block_delta'){
+        const d=ev.delta;
+        if(d.type==='text_delta'){ raw+=d.text; const now=Date.now(); if(now-lastRender>120){ renderEl.innerHTML=mdToHtml(raw); lastRender=now; } }
+        else if(d.type==='thinking_delta'&&thinkBox){ thinkContent+=d.thinking; thinkBox.querySelector('.tb').textContent=thinkContent; }
+      } else if(ev.type==='message_delta'){
+        /* a API avisa aqui quando a resposta foi CORTADA pelo teto (max_tokens) */
+        if(ev.delta && ev.delta.stop_reason) stopReason=ev.delta.stop_reason;
+      } else if(ev.type==='error'){ throw new Error(ev.error&&ev.error.message||'Erro no streaming'); }
+    }
+  }
+  renderEl.innerHTML=mdToHtml(raw);
+  return { text: raw, stop: stopReason };
+}
+
+/* ---------- protecoes de fluxo (trava, completude, rascunho) ---------- */
+function travaBotoes(b){
+  ocupado=b;
+  ['#btnAnalyze','#btnRadar','#btnCheck','#btnRevise'].forEach(s=>{ const el=$(s); if(el) el.disabled=b; });
+}
+function fechamentoOk(t){ return /pede\s+e\s+aguarda\s+deferimento/i.test(String(t)); }
+function avisoIncompleta(container, motivo){
+  const av=document.createElement('div');
+  av.className='status';
+  av.style.cssText='color:var(--danger);font-weight:700;align-items:flex-start';
+  av.textContent='⚠️ '+motivo;
+  container.insertBefore(av, container.firstChild);
+}
+function ajustaToolbar(){
+  const ehPeca = lastKind==='peca';
+  $('#btnCheck').style.display  = ehPeca?'':'none';
+  $('#btnRevise').style.display = ehPeca?'':'none';
+}
+/* rascunho automatico: a ultima peca/analise gerada fica recuperavel mesmo se
+   o navegador fechar sem salvar — cada geracao custa dinheiro e nao pode se perder */
+function saveDraft(){
+  try{
+    localStorage.setItem(LS.rascunho, JSON.stringify({
+      text:lastText, kind:lastKind, em:new Date().toLocaleString('pt-BR'),
+      campos:{ proc:$('#procType').value, out:$('#outType').value, nome:$('#fNome').value,
+        orgao:$('#fOrgao').value, ait:$('#fAit').value, notes:$('#notes').value,
+        dataNotif:$('#fDataNotif').value, prazoManual:$('#fPrazoManual').value }
+    }));
+  }catch(e){ /* sem espaco: o rascunho e so uma rede extra, nao pode travar nada */ }
+}
+function limpaDraft(){ try{ localStorage.removeItem(LS.rascunho); }catch(e){} }
+
+/* ---------- Geração principal ---------- */
+$('#btnAnalyze').onclick = runGen;
+async function runGen(){
+  const apiKey = localStorage.getItem(LS.key);
+  if(!apiKey){ alert('Configure a chave de IA primeiro (⚙️ Configurar IA).'); loadCfg(); cfg.showModal(); return; }
+  if(ocupado){ alert('Aguarde: já existe uma geração em andamento.'); return; }
+  if(files.length===0 && !$('#notes').value.trim()){ alert('Envie ao menos um documento ou descreva os fatos do caso.'); return; }
+  if(lastText && !pecaSalva && !confirm('Há uma peça/análise na tela que ainda NÃO foi salva. Gerar agora vai substituí-la (o rascunho automático guarda a atual por segurança). Continuar?')) return;
+
+  const isPeca = $('#outType').value==='peca';
+  const btn=$('#btnAnalyze'); travaBotoes(true); btn.textContent = isPeca?'Redigindo peça...':'Analisando...';
+  $('#placeholder')?.remove();
+  const out=$('#out'); out.innerHTML=''; const hoje=new Date().toLocaleDateString('pt-BR');
+  const status=document.createElement('div'); status.className='status'; status.innerHTML='<span class="dot"></span> Conectando à IA...'; out.appendChild(status);
+  const outEl=document.createElement('div'); outEl.className='output'; out.appendChild(outEl);
+
+  const content=[];
+  files.forEach(f=>{
+    content.push(f.isPdf
+      ? { type:'document', source:{ type:'base64', media_type:'application/pdf', data:f.dataB64 } }
+      : { type:'image',    source:{ type:'base64', media_type:f.mediaType,       data:f.dataB64 } });
+  });
+  content.push({ type:'text', text:
+    `Data de hoje: ${hoje}.\n`+
+    `Fase/procedimento: ${$('#procType').value}.\n`+
+    `Condutor/requerente: ${$('#fNome').value.trim()||'[NOME DO REQUERENTE]'}.\n`+
+    `Orgao/UF: ${$('#fOrgao').value.trim()||'[ORGAO/UF]'}.\n`+
+    `No AIT/Processo: ${$('#fAit').value.trim()||'[Nº AIT/PROCESSO]'}.\n`+
+    `Fatos e observacoes: ${$('#notes').value.trim()||'(nenhuma informada)'}\n\n`+
+    (isPeca
+      ? `Com base nos documentos anexados e nesses dados, redija a PECA COMPLETA e pronta para protocolo, seguindo a estrutura, o fechamento e todas as regras. Use marcadores [ENTRE COLCHETES] apenas onde faltar informacao. Nao inclua bloco de advogado nem secoes finais de documentos/referencias.`
+      : `Com base nos documentos anexados, produza a analise tecnica no formato definido.`)
+  });
+
+  try{
+    const r=await aiStream(isPeca?SYSTEM_PECA:SYSTEM_ANALISE, content, outEl, status, { statusText: isPeca?'Redigindo peça...':'Recebendo análise...', maxTokens: isPeca?32000:16000 });
+    status.remove();
+    lastText=r.text; lastHTML=outEl.innerHTML; lastKind=isPeca?'peca':'analise'; pecaSalva=false;
+    saveDraft();
+    $('#toolbar').style.display='grid'; ajustaToolbar();
+    if(r.stop==='max_tokens'){
+      avisoIncompleta(out,'A resposta atingiu o limite de tamanho e PODE ESTAR INCOMPLETA. Gere novamente antes de usar.');
+    } else if(isPeca && !fechamentoOk(r.text)){
+      avisoIncompleta(out,'A peça veio SEM o fechamento padrão ("Nestes termos, pede e aguarda deferimento") — confira se está completa antes de usar.');
+    }
+    window.scrollTo({top:0,behavior:'smooth'});
+  }catch(err){
+    status.innerHTML='❌ '+escapeHtml(err.message); status.style.color='var(--danger)';
+    const re=document.createElement('button'); re.className='tb'; re.style.cssText='margin-left:10px;height:34px;padding:0 12px'; re.textContent='Tentar de novo';
+    re.onclick=()=>runGen(); status.appendChild(re);
+    if(lastHTML){
+      /* falhou? a peca que estava na tela NAO se perde: volta para o lugar */
+      outEl.innerHTML=lastHTML;
+      const nota=document.createElement('div'); nota.className='hint'; nota.style.marginBottom='8px';
+      nota.textContent='A geração falhou; a peça anterior foi mantida na tela.';
+      out.insertBefore(nota, outEl);
+    }else{
+      outEl.innerHTML='<p style="color:var(--danger);text-indent:0">Falha. Verifique a chave de API, os créditos da conta e a conexão. Se aparecer erro de CORS, use Chrome/Edge e tente de novo.</p>';
+    }
+  }finally{ travaBotoes(false); btn.textContent=isPeca?'Gerar peça (ABNT)':'Analisar caso'; }
+}
+
+/* ---------- Conferir citações ---------- */
+$('#btnCheck').onclick = async ()=>{
+  if(!lastText){ alert('Gere uma peça primeiro.'); return; }
+  if(!localStorage.getItem(LS.key)){ alert('Configure a chave de IA (⚙️).'); return; }
+  if(ocupado){ alert('Aguarde: já existe uma geração em andamento.'); return; }
+  const out=$('#out'); const prev=document.getElementById('checkPanel'); if(prev) prev.remove();
+  const panel=document.createElement('div'); panel.id='checkPanel'; panel.className='check-panel';
+  const status=document.createElement('div'); status.className='status'; status.innerHTML='<span class="dot"></span> Conferindo citações...';
+  const bodyEl=document.createElement('div'); bodyEl.className='output';
+  panel.appendChild(status); panel.appendChild(bodyEl); out.insertBefore(panel, out.firstChild);
+  window.scrollTo({top:0,behavior:'smooth'});
+  const btn=$('#btnCheck'); travaBotoes(true); const old=btn.textContent; btn.textContent='Conferindo...';
+  try{
+    /* a conferencia e a rede de seguranca juridica: roda no modelo principal, esforco alto */
+    const r=await aiStream(SYSTEM_CITATION, [{ type:'text', text:'Texto integral da peca a auditar:\n\n'+lastText }], bodyEl, status, { statusText:'Conferindo citações...', allowThink:false, maxTokens:8000, effort:'high' });
+    status.remove();
+    if(r.stop==='max_tokens'){
+      avisoIncompleta(panel,'A conferência foi interrompida pelo limite de resposta — confira manualmente as últimas citações da peça.');
+    }
+  }catch(err){ status.innerHTML='❌ '+escapeHtml(err.message); status.style.color='var(--danger)'; }
+  finally{ travaBotoes(false); btn.textContent=old; }
+};
+
+/* ---------- Revisar / Fortalecer ---------- */
+$('#btnRevise').onclick = async ()=>{
+  if(!lastText){ alert('Gere uma peça primeiro.'); return; }
+  if(!localStorage.getItem(LS.key)){ alert('Configure a chave de IA (⚙️).'); return; }
+  if(ocupado){ alert('Aguarde: já existe uma geração em andamento.'); return; }
+  if(!confirm('Isto gera uma VERSÃO FORTALECIDA da peça atual e substitui o texto exibido (dá para restaurar a versão anterior com um clique). Continuar?')) return;
+  textoAnterior={ text:lastText, html:lastHTML };   /* para o botao de desfazer */
+  const out=$('#out'); const prev=document.getElementById('checkPanel'); if(prev) prev.remove(); out.innerHTML='';
+  const status=document.createElement('div'); status.className='status'; status.innerHTML='<span class="dot"></span> Revisando e fortalecendo...'; out.appendChild(status);
+  const tmp=document.createElement('div'); tmp.className='output'; out.appendChild(tmp);
+  const btn=$('#btnRevise'); travaBotoes(true); const old=btn.textContent; btn.textContent='Fortalecendo...';
+  try{
+    const r=await aiStream(SYSTEM_REVISAO, [{ type:'text', text:'Peca a revisar e fortalecer:\n\n'+lastText }], tmp, status, { statusText:'Revisando e fortalecendo...', maxTokens:32000 });
+    const raw=r.text;
+    status.remove();
+    const marker=/===\s*FIM DA CRITICA[^\n]*===/i;
+    let critica='', peca=raw;
+    if(marker.test(raw)){ const idx=raw.search(marker); critica=raw.slice(0,idx); peca=raw.slice(idx).replace(marker,'').trim(); }
+    out.innerHTML='';
+    if(critica.trim()){
+      const det=document.createElement('details'); det.className='think';
+      det.innerHTML='<summary>🛡️ Crítica adversarial (uso interno, NÃO protocolar)</summary><div class="tb"></div>';
+      det.querySelector('.tb').innerHTML=mdToHtml(critica.replace(/===[^\n]*===/g,'').trim());
+      out.appendChild(det);
+    }
+    const outEl=document.createElement('div'); outEl.className='output'; outEl.innerHTML=mdToHtml(peca); out.appendChild(outEl);
+    lastText=peca; lastHTML=outEl.innerHTML; lastKind='peca'; pecaSalva=false;
+    saveDraft();
+    if(r.stop==='max_tokens'){
+      avisoIncompleta(out,'A versão fortalecida atingiu o limite de tamanho e PODE ESTAR INCOMPLETA. Use "Restaurar versão anterior" ou revise de novo.');
+    } else if(!fechamentoOk(peca)){
+      avisoIncompleta(out,'A versão fortalecida veio SEM o fechamento padrão — confira se está completa antes de usar.');
+    }
+    if(textoAnterior){
+      const undo=document.createElement('button'); undo.className='tb'; undo.style.cssText='margin-top:12px;height:40px;width:100%';
+      undo.textContent='↩ Restaurar versão anterior (antes da revisão)';
+      undo.onclick=()=>{
+        lastText=textoAnterior.text; lastHTML=textoAnterior.html; lastKind='peca'; pecaSalva=false;
+        out.innerHTML='';
+        const el2=document.createElement('div'); el2.className='output'; el2.innerHTML=lastHTML; out.appendChild(el2);
+        saveDraft();
+      };
+      out.appendChild(undo);
+    }
+  }catch(err){
+    status.innerHTML='❌ '+escapeHtml(err.message); status.style.color='var(--danger)';
+    if(textoAnterior){
+      tmp.innerHTML=textoAnterior.html;
+      const nota=document.createElement('div'); nota.className='hint'; nota.style.marginBottom='8px';
+      nota.textContent='A revisão falhou; a peça original foi mantida na tela.';
+      out.insertBefore(nota, tmp);
+      lastText=textoAnterior.text; lastHTML=textoAnterior.html;
+    }
+  }
+  finally{ travaBotoes(false); btn.textContent=old; }
+};
+
+/* ---------- Casos salvos ---------- */
+// O localStorage continua sendo a copia local (funciona offline e sem nuvem).
+// Quando a nuvem esta ligada, toda gravacao tambem sobe para o Supabase.
+function getCases(){ try{ return JSON.parse(localStorage.getItem(LS.cases)||'[]'); }catch(e){ return []; } }
+/* "lapides" de exclusao: memoria local dos casos excluidos, para a exclusao valer
+   tambem na nuvem e nos outros aparelhos (sem isso, o caso excluido "ressuscita"
+   na sincronizacao). Cada lapide e { id, em } — em = quando foi excluido. */
+function getDels(){ try{ return JSON.parse(localStorage.getItem(LS.dels)||'[]'); }catch(e){ return []; } }
+function setDels(d){ try{ localStorage.setItem(LS.dels, JSON.stringify(d)); }catch(e){} }
+function setCases(c){
+  const antes = getCases();              // precisamos disto para descobrir exclusoes
+  /* registra lapides das exclusoes; um caso re-salvo/restaurado limpa a lapide dele */
+  const idsDepois = new Set(c.map(x=>x.id));
+  const dels = getDels().filter(t=>!idsDepois.has(t.id));
+  antes.forEach(a=>{ if(!idsDepois.has(a.id) && !dels.some(t=>t.id===a.id)) dels.push({ id:a.id, em:Date.now() }); });
+  setDels(dels);
+  let erroLocal = null;
+  try{ localStorage.setItem(LS.cases, JSON.stringify(c)); }
+  catch(e){ erroLocal = e; }
+  renderCases();
+  nuvemEnviar(antes, c);                 // sobe alteracoes e exclusoes (se logado)
+
+  if(erroLocal){
+    if(nvSessao){
+      alert('O armazenamento deste navegador encheu, mas fique tranquilo: o caso foi salvo NA NUVEM.\n\nEle esta seguro e aparece em qualquer aparelho onde voce entrar. Para liberar espaco aqui, exclua casos antigos da lista.');
+    }else{
+      alert('Armazenamento cheio: o caso NAO foi salvo. Faca um Backup dos casos (⬇️) e exclua casos antigos, depois tente de novo.');
+      throw erroLocal;
+    }
+  }
+}
+$('#btnSave').onclick=()=>{
+  if(!lastText){ alert('Nada para salvar.'); return; }
+  const cases=getCases();
+  let rid = loadedCaseId||('c'+(new Date().getTime()));
+  /* protecao contra sobrescrever o caso errado: se ha um caso aberto mas o
+     nome/AIT preenchidos agora sao OUTROS, pergunta antes de gravar por cima */
+  if(loadedCaseId){
+    const orig=cases.find(x=>x.id===loadedCaseId);
+    if(orig){
+      const nomeNow=$('#fNome').value.trim(), aitNow=$('#fAit').value.trim();
+      const mudou=((orig.nome||'').trim()!==nomeNow)||((orig.ait||'').trim()!==aitNow);
+      if(mudou && !confirm('Você está com este caso aberto:\n\n«'+orig.name+'»\n\nmas o nome/AIT preenchidos agora são diferentes.\n\nOK — atualizar ESSE caso mesmo assim\nCancelar — salvar como um caso NOVO (recomendado se for outro cliente)')){
+        rid='c'+(new Date().getTime());
+      }
+    }
+  }
+  const name = ($('#fNome').value.trim()||'Caso') + ' — ' + ($('#fAit').value.trim()||new Date().toLocaleDateString('pt-BR'));
+  const prevFiles = (cases.find(x=>x.id===rid)||{}).fileNames||[];
+  const rec={ id: rid, name,
+    proc:$('#procType').value, out:$('#outType').value,
+    nome:$('#fNome').value, orgao:$('#fOrgao').value, ait:$('#fAit').value, notes:$('#notes').value,
+    dataNotif:$('#fDataNotif').value, prazoManual:$('#fPrazoManual').value,
+    text:lastText, fileNames:(files.length?files.map(f=>f.name):prevFiles), date:new Date().toLocaleString('pt-BR') };
+  const idx=cases.findIndex(c=>c.id===rec.id); if(idx>=0) cases[idx]=rec; else cases.unshift(rec);
+  loadedCaseId=rec.id;
+  try{
+    setCases(cases);
+    pecaSalva=true; limpaDraft();
+    alert(nvSessao?'Caso salvo. Subindo para a nuvem...':'Caso salvo neste dispositivo.');
+  }catch(e){}
+};
+function renderCases(){
+  const el=$('#cases'); el.innerHTML=''; const cases=getCases();
+  const srch=$('#caseSearch');
+  const busca=(srch&&srch.value.trim().toLowerCase())||'';
+  if(srch) srch.style.display=(cases.length>6||busca)?'block':'none';
+  const lista=busca?cases.filter(c=>((c.name||'')+' '+(c.date||'')).toLowerCase().indexOf(busca)!==-1):cases;
+  $('#noCases').style.display=cases.length?'none':'block';
+  if(busca&&!lista.length){ const v=document.createElement('div'); v.className='hist-empty'; v.textContent='Nenhum caso encontrado.'; el.appendChild(v); }
+  lista.forEach(c=>{
+    const d=document.createElement('div'); d.className='case';
+    d.innerHTML=`<span class="cn" title="abrir">${escapeHtml(c.name)}<br><small>${escapeHtml(c.date)} — ${(c.out==='peca'?'peça':'análise')}</small></span><button class="ghost" style="padding:4px 8px">🗑️</button>`;
+    d.querySelector('.cn').onclick=()=>loadCase(c.id);
+    d.querySelector('button').onclick=()=>{ if(confirm('Excluir este caso?')){ setCases(getCases().filter(x=>x.id!==c.id)); } };
+    el.appendChild(d);
+  });
+}
+/* casos salvos em versoes antigas podem ter o texto da "Fase" diferente das
+   opcoes atuais; em vez de cair calado na primeira opcao (errada), reconhecemos
+   a fase pelo sentido e avisamos para conferir */
+function ajustaFase(procAntigo){
+  const p=String(procAntigo||'').toLowerCase(); const sel=$('#procType'); let alvo=null;
+  const tem=s=>p.indexOf(s)!==-1;
+  for(const o of sel.options){
+    const v=o.value.toLowerCase();
+    if( (tem('jari')                    && v.indexOf('jari')!==-1) ||
+        (tem('cetran')                  && v.indexOf('cetran')!==-1) ||
+        (tem('suspens')                 && v.indexOf('suspens')!==-1) ||
+        (tem('cassa')                   && v.indexOf('cassa')!==-1) ||
+        (tem('cancel')                  && v.indexOf('cancel')!==-1) ||
+        ((tem('indica')||tem('condutor infrator')) && v.indexOf('indica')!==-1) ||
+        ((tem('previa')||tem('prévia')||tem('autua')) && v.indexOf('defesa da autua')!==-1) ){ alvo=o.value; break; }
+  }
+  if(!alvo){ for(const o of sel.options){ const v=o.value.toLowerCase(); if(v.indexOf('outra situa')!==-1){ alvo=o.value; break; } } }
+  if(alvo) sel.value=alvo;
+  sel.style.borderColor='var(--warn)';
+  sel.title='Este caso foi salvo numa versão anterior; a fase foi reconhecida automaticamente — confira antes de gerar.';
+}
+function loadCase(id){
+  const c=getCases().find(x=>x.id===id); if(!c) return;
+  if(lastText && !pecaSalva && !confirm('Ha uma peca/analise nao salva na tela. Abrir outro caso vai substitui-la. Continuar?')) return;
+  loadedCaseId=c.id;
+  $('#procType').value=c.proc;
+  if($('#procType').value!==c.proc){ ajustaFase(c.proc); }
+  $('#outType').value=c.out||'peca';
+  $('#fNome').value=c.nome||''; $('#fOrgao').value=c.orgao||''; $('#fAit').value=c.ait||''; $('#notes').value=c.notes||'';
+  $('#fDataNotif').value=c.dataNotif||''; $('#fPrazoManual').value=c.prazoManual||'';
+  $('#outType').onchange(); updatePrazo();
+  files=[]; renderFiles();
+  $('#placeholder')?.remove();
+  const out=$('#out'); out.innerHTML='';
+  const info=document.createElement('div'); info.className='hint'; info.style.fontFamily="'Segoe UI',sans-serif";
+  info.textContent='Caso carregado (documentos não são armazenados; reanexe para gerar de novo). Docs originais: '+((c.fileNames||[]).join(', ')||'—');
+  out.appendChild(info);
+  const outEl=document.createElement('div'); outEl.className='output'; outEl.innerHTML=mdToHtml(c.text||''); out.appendChild(outEl);
+  lastText=c.text||''; lastHTML=outEl.innerHTML;
+  lastKind=(c.out==='analise')?'analise':'peca'; pecaSalva=true;
+  $('#toolbar').style.display='grid'; ajustaToolbar();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---------- Toolbar utilitarios ---------- */
+$('#btnCopy').onclick=async ()=>{
+  try{
+    if(navigator.clipboard && window.isSecureContext){ await navigator.clipboard.writeText(lastText); }
+    else{
+      const ta=document.createElement('textarea'); ta.value=lastText;
+      ta.style.position='fixed'; ta.style.left='-9999px'; document.body.appendChild(ta);
+      ta.focus(); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    }
+    $('#btnCopy').textContent='Copiado'; setTimeout(()=>$('#btnCopy').textContent='Copiar texto',1500);
+  }catch(e){ alert('Não consegui copiar automaticamente. Selecione o texto e copie manualmente (Ctrl+C).'); }
+};
+$('#btnNew').onclick=()=>{ if(lastText && !pecaSalva && !confirm('Ha uma peca/analise NAO SALVA na tela. Comecar um novo caso vai limpa-la. Continuar?')) return; loadedCaseId=null; files=[]; renderFiles();
+  lastText=''; lastHTML=''; lastKind='peca'; pecaSalva=true; textoAnterior=null;
+  $('#fNome').value=''; $('#fOrgao').value=''; $('#fAit').value=''; $('#notes').value='';
+  $('#fDataNotif').value=''; $('#fPrazoManual').value=''; updatePrazo();
+  $('#toolbar').style.display='none';
+  $('#out').innerHTML=`<div id="placeholder" class="empty"><div class="empty-title">Pronto para gerar a sua peça</div><div class="steps"><div class="pill"><div class="n">1</div><div class="l">Preencha o caso</div></div><div class="pill"><div class="n">2</div><div class="l">Gerar peça</div></div><div class="pill"><div class="n">3</div><div class="l">Conferir citações</div></div><div class="pill"><div class="n">4</div><div class="l">Google Docs / Gerar PDF</div></div></div><div class="empty-note">O módulo de prazo estima o vencimento a partir da data da notificação. Corrija o que vier em destaque na conferência antes de protocolar.</div></div>`; };
+
+function docTitle(){ return ($('#fNome').value.trim()||'Peça') + (($('#fAit').value.trim())?(' - '+$('#fAit').value.trim()):''); }
+
+/* aviso de marcadores [ENTRE COLCHETES] pendentes antes de exportar */
+function marcadoresPendentes(t){
+  var m=String(t).match(/\[[^\]\n]{2,}\]/g)||[]; var out=[];
+  m.forEach(function(x){ var inner=x.slice(1,-1);
+    if(inner===inner.toUpperCase() && /[A-ZÀ-Ú]/.test(inner) && (/\s/.test(inner)||inner.length>=5) && out.indexOf(x)===-1) out.push(x); });
+  return out;
+}
+function confirmaPendentes(){
+  var p=marcadoresPendentes(lastText);
+  if(p.length){ return confirm('A peca ainda tem campos NAO preenchidos que sairao no documento:\n\n'+p.slice(0,15).join('\n')+(p.length>15?'\n(+'+(p.length-15)+' outros)':'')+'\n\nPreencha na peca ou continue mesmo assim?'); }
+  return true;
+}
+/* antes de exportar, confere se a peca esta INTEIRA (o fechamento obrigatorio
+   e o melhor termometro de que a geracao nao foi cortada no meio) */
+function confirmaCompleta(){
+  if(lastKind==='peca' && lastText && !fechamentoOk(lastText)){
+    return confirm('ATENÇÃO: a peça parece INCOMPLETA — não encontrei o fechamento ("Nestes termos, pede e aguarda deferimento").\n\nIsso costuma indicar geração interrompida. O ideal é gerar de novo antes de protocolar.\n\nExportar mesmo assim?');
+  }
+  return true;
+}
+
+/* PDF ABNT */
+const PRINT_CSS = `
+@page{ size:A4; margin:3cm 2cm 2cm 3cm; }
+@page{ @bottom-right{ content:"Pagina " counter(page) " de " counter(pages); font-family:"Times New Roman", Times, serif; font-size:10pt; color:#000; } }
+*{ box-sizing:border-box; }
+html, body{ margin:0; padding:0; }
+body{ font-family:"Times New Roman", Times, serif; font-size:12pt; line-height:1.5; color:#000; background:#fff; text-align:justify; hyphens:auto; -webkit-hyphens:auto; orphans:3; widows:3; }
+h1, h2, h3{ font-family:"Times New Roman", Times, serif; font-weight:bold; page-break-after:avoid; break-after:avoid; page-break-inside:avoid; break-inside:avoid; orphans:3; widows:3; }
+h1{ font-size:12pt; text-align:center; text-transform:uppercase; margin:0 0 18pt; letter-spacing:.3px; }
+h2{ font-size:12pt; text-align:left; margin:16pt 0 8pt; }
+h3{ font-size:12pt; text-align:left; margin:12pt 0 6pt; }
+p{ margin:0 0 6pt; text-indent:1.25cm; text-align:justify; orphans:3; widows:3; }
+ul, ol{ margin:6pt 0 6pt 1.25cm; padding:0; }
+li{ margin:2pt 0; text-align:justify; }
+li p{ text-indent:0; margin:0 0 3pt; }
+strong, b{ font-weight:bold; }
+em, i{ font-style:italic; }
+code{ font-family:"Times New Roman", Times, serif; }
+blockquote{ margin:6pt 0 6pt 4cm; font-size:11pt; line-height:1.15; text-align:justify; text-indent:0; }
+blockquote p{ text-indent:0; margin:0 0 3pt; }
+hr{ border:none; border-top:1px solid #000; margin:12pt 0; }
+table{ border-collapse:collapse; width:100%; font-size:11pt; text-indent:0; text-align:left; page-break-inside:avoid; break-inside:avoid; }
+th, td{ border:1px solid #000; padding:4pt 6pt; vertical-align:top; }
+th{ font-weight:bold; text-align:left; }
+p.sig-line{ text-indent:0; text-align:center; margin:44pt 0 2pt; }
+p:nth-last-child(-n+3){ text-indent:0; text-align:center; page-break-inside:avoid; break-inside:avoid; }
+p:last-child{ margin-bottom:0; }
+`;
+$('#btnPrint').onclick=()=>{
+  if(!lastText){ alert('Gere uma peça primeiro.'); return; }
+  if(!confirmaPendentes()) return;
+  if(!confirmaCompleta()) return;
+  const w=window.open('','_blank');
+  if(!w){ alert('O navegador bloqueou a janela de impressão (pop-up). Permita pop-ups e tente de novo, ou use o botão "⬇️ Baixar Word (.docx)".'); return; }
+  w.document.write(
+`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>${escapeHtml(docTitle())}</title>
+<style>${PRINT_CSS}</style></head><body>${lastHTML}</body></html>`);
+  w.document.close();
+  const go=()=>{ try{ w.focus(); w.print(); }catch(e){} };
+  try{ if(w.document.fonts && w.document.fonts.ready){ w.document.fonts.ready.then(()=>setTimeout(go,200)); } else setTimeout(go,450); }
+  catch(e){ setTimeout(go,450); }
+};
+
+/* ====== Geracao de .docx REAL (OOXML) em padrao ABNT, sem bibliotecas ======
+   O Google Docs abre .docx preservando margens, Times New Roman, 1,5, justificado,
+   recuo de primeira linha e numeracao de paginas. */
+const CRC_TABLE=(function(){ let c,t=[]; for(let n=0;n<256;n++){ c=n; for(let k=0;k<8;k++){ c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1); } t[n]=c>>>0; } return t; })();
+function crc32(b){ let c=0xFFFFFFFF; for(let i=0;i<b.length;i++){ c=CRC_TABLE[(c^b[i])&0xFF]^(c>>>8); } return (c^0xFFFFFFFF)>>>0; }
+function zipStore(files){
+  const enc=new TextEncoder(); const chunks=[]; const central=[]; let offset=0;
+  const u16=n=>[n&0xFF,(n>>>8)&0xFF]; const u32=n=>[n&0xFF,(n>>>8)&0xFF,(n>>>16)&0xFF,(n>>>24)&0xFF];
+  for(const f of files){
+    const name=enc.encode(f.name); const data=f.bytes; const crc=crc32(data); const size=data.length;
+    const lh=[].concat(u32(0x04034b50),u16(20),u16(0),u16(0),u16(0),u16(0),u32(crc),u32(size),u32(size),u16(name.length),u16(0));
+    chunks.push(new Uint8Array(lh),name,data); const lo=offset; offset+=lh.length+name.length+size;
+    const cd=[].concat(u32(0x02014b50),u16(20),u16(20),u16(0),u16(0),u16(0),u16(0),u32(crc),u32(size),u32(size),u16(name.length),u16(0),u16(0),u16(0),u16(0),u32(0),u32(lo));
+    central.push(new Uint8Array(cd),name);
+  }
+  const cStart=offset; let cLen=0; central.forEach(c=>cLen+=c.length);
+  const end=[].concat(u32(0x06054b50),u16(0),u16(0),u16(files.length),u16(files.length),u32(cLen),u32(cStart),u16(0));
+  return new Blob(chunks.concat(central,[new Uint8Array(end)]),{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+}
+function xmlEsc(s){ return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function mdRuns(text){
+  text=String(text).replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g,'$1').replace(/`([^`]+)`/g,'$1');
+  const parts=text.split('**'); const runs=[];
+  for(let i=0;i<parts.length;i++){ let t=parts[i].replace(/\*/g,''); if(t!=='') runs.push({t:t, b:(i%2===1)}); }
+  if(runs.length===0) runs.push({t:'', b:false});
+  return runs;
+}
+function runXml(t,b,sz){ sz=sz||24; return '<w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>'+(b?'<w:b/>':'')+'<w:sz w:val="'+sz+'"/><w:szCs w:val="'+sz+'"/></w:rPr><w:t xml:space="preserve">'+xmlEsc(t)+'</w:t></w:r>'; }
+function mdBlocks(md){
+  const lines=String(md).split('\n'); const blocks=[]; let i=0, m;
+  while(i<lines.length){
+    let line=lines[i];
+    if((m=line.match(/^(#{1,3})\s+(.*)/))){ blocks.push({type:'h'+m[1].length,text:m[2]}); i++; continue; }
+    if(/^\s*_{3,}\s*$/.test(line)){ blocks.push({type:'sig',text:line.trim()}); i++; continue; }
+    if(/^\s*(---|\*\*\*)\s*$/.test(line)){ blocks.push({type:'hr',text:''}); i++; continue; }
+    if(/^\s*>\s?/.test(line)){
+      /* citacao longa: agrupa as linhas com "> " num bloco proprio (recuo ABNT no Word) */
+      const q=[];
+      while(i<lines.length&&/^\s*>\s?/.test(lines[i])){ q.push(lines[i].replace(/^\s*>\s?/,'').trim()); i++; }
+      blocks.push({type:'quote',text:q.join(' ').trim()});
+      continue;
+    }
+    if(/^\s*\|.*\|\s*$/.test(line)&&i+1<lines.length&&/^\s*\|[\s:|-]+\|\s*$/.test(lines[i+1])){
+      /* tabela Markdown -> tabela DE VERDADE no Word (antes saia texto com "|") */
+      const header=line.trim().replace(/^\||\|$/g,'').split('|').map(c=>c.trim()); i+=2; const rows=[];
+      while(i<lines.length&&/^\s*\|.*\|\s*$/.test(lines[i])){ rows.push(lines[i].trim().replace(/^\||\|$/g,'').split('|').map(c=>c.trim())); i++; }
+      blocks.push({type:'table',header:header,rows:rows});
+      continue;
+    }
+    if(/^\s*[-*]\s+/.test(line)){ blocks.push({type:'bullet',text:line.replace(/^\s*[-*]\s+/,'')}); i++; continue; }
+    if(line.trim()===''){ i++; continue; }
+    let para=line; i++;
+    while(i<lines.length&&lines[i].trim()!==''&&!/^(#{1,3}\s+|\s*[-*]\s+|\s*>|\s*\|)/.test(lines[i])&&!/^\s*_{3,}\s*$/.test(lines[i])&&!/^\s*(---|\*\*\*)\s*$/.test(lines[i])){ para+=' '+lines[i]; i++; }
+    blocks.push({type:'p',text:para});
+  }
+  for(let k=0;k<blocks.length;k++){
+    const b=blocks[k];
+    if(b.type==='sig'){ b.center=true; if(blocks[k+1]&&blocks[k+1].type==='p') blocks[k+1].center=true; }
+    if(b.type==='p'){ const t=b.text.trim().toLowerCase(); if(t.indexOf('nestes termos')===0||b.text.indexOf('20____')!==-1) b.center=true; }
+  }
+  return blocks;
+}
+function pXml(b){
+  if(b.type==='hr') return '<w:p><w:pPr><w:pBdr><w:bottom w:val="single" w:sz="6" w:space="1" w:color="auto"/></w:pBdr></w:pPr></w:p>';
+  if(b.type==='quote'){
+    /* citacao longa ABNT (NBR 10520): recuo de 4 cm, fonte 11, espaco simples */
+    const qruns=mdRuns(b.text).map(r=>runXml(r.t, r.b, 22)).join('');
+    return '<w:p><w:pPr><w:jc w:val="both"/><w:spacing w:before="120" w:after="120" w:line="240" w:lineRule="auto"/><w:ind w:left="2268"/></w:pPr>'+qruns+'</w:p>';
+  }
+  const isH=b.type.charAt(0)==='h';
+  let runs=mdRuns(b.text).map(r=>runXml(r.t, r.b||isH)).join('');
+  let jc='both', ind='<w:ind w:firstLine="708"/>', keep='';
+  if(b.type==='h1'){ jc='center'; ind=''; keep='<w:keepNext/>'; }
+  else if(b.type==='h2'||b.type==='h3'){ jc='left'; ind=''; keep='<w:keepNext/>'; }
+  else if(b.type==='sig'){ jc='center'; ind=''; }
+  else if(b.type==='bullet'){ ind='<w:ind w:left="708" w:hanging="284"/>'; runs=runXml('• ',false)+runs; }
+  if(b.center){ jc='center'; ind=''; }
+  const sp=isH?'<w:spacing w:before="160" w:after="80" w:line="360" w:lineRule="auto"/>':'<w:spacing w:after="120" w:line="360" w:lineRule="auto"/>';
+  return '<w:p><w:pPr>'+keep+'<w:jc w:val="'+jc+'"/>'+sp+ind+'</w:pPr>'+runs+'</w:p>';
+}
+/* tabela OOXML com bordas simples (usada pela Analise tecnica no .docx) */
+function tableXml(b){
+  const ncols=Math.max(1, b.header.length);
+  const larg=Math.floor(5000/ncols);   /* larguras em % (pct): colunas iguais ocupando a mancha */
+  const bordas='<w:tblBorders><w:top w:val="single" w:sz="6" w:space="0" w:color="000000"/><w:left w:val="single" w:sz="6" w:space="0" w:color="000000"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="000000"/><w:right w:val="single" w:sz="6" w:space="0" w:color="000000"/><w:insideH w:val="single" w:sz="6" w:space="0" w:color="000000"/><w:insideV w:val="single" w:sz="6" w:space="0" w:color="000000"/></w:tblBorders>';
+  const cel=function(txt,negrito){
+    const runs=mdRuns(txt).map(r=>runXml(r.t, r.b||negrito, 22)).join('');
+    return '<w:tc><w:tcPr><w:tcW w:w="'+larg+'" w:type="pct"/></w:tcPr><w:p><w:pPr><w:jc w:val="left"/><w:spacing w:after="40" w:line="240" w:lineRule="auto"/></w:pPr>'+runs+'</w:p></w:tc>';
+  };
+  let xml='<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/>'+bordas+'</w:tblPr>';
+  xml+='<w:tr>'+b.header.map(h=>cel(h,true)).join('')+'</w:tr>';
+  b.rows.forEach(r=>{ xml+='<w:tr>'+r.map(c=>cel(c,false)).join('')+'</w:tr>'; });
+  xml+='</w:tbl><w:p><w:pPr><w:spacing w:after="120"/></w:pPr></w:p>';
+  return xml;
+}
+function buildDocx(){
+  const body=mdBlocks(lastText).map(b=> b.type==='table' ? tableXml(b) : pXml(b)).join('');
+  const sect='<w:sectPr><w:headerReference w:type="default" r:id="rId2"/><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1701" w:right="1134" w:bottom="1134" w:left="1701" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr>';
+  const doc='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><w:body>'+body+sect+'</w:body></w:document>';
+  const ct='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/><Override PartName="/word/header1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml"/></Types>';
+  const rels='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>';
+  const drels='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/header" Target="header1.xml"/></Relationships>';
+  const styles='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="24"/><w:szCs w:val="24"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="120" w:line="360" w:lineRule="auto"/><w:jc w:val="both"/></w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style></w:styles>';
+  const header='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<w:hdr xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:p><w:pPr><w:jc w:val="right"/></w:pPr><w:fldSimple w:instr=" PAGE "><w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="20"/></w:rPr><w:t>1</w:t></w:r></w:fldSimple></w:p></w:hdr>';
+  const enc=new TextEncoder();
+  return zipStore([
+    {name:'[Content_Types].xml', bytes:enc.encode(ct)},
+    {name:'_rels/.rels', bytes:enc.encode(rels)},
+    {name:'word/document.xml', bytes:enc.encode(doc)},
+    {name:'word/_rels/document.xml.rels', bytes:enc.encode(drels)},
+    {name:'word/styles.xml', bytes:enc.encode(styles)},
+    {name:'word/header1.xml', bytes:enc.encode(header)}
+  ]);
+}
+function downloadDocx(){
+  const blob=buildDocx();
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=docTitle().replace(/[\\/:*?"<>|]/g,'_')+'.docx'; a.click();
+  setTimeout(()=>{ try{ URL.revokeObjectURL(a.href); }catch(e){} }, 4000);
+}
+$('#btnDocx').onclick=()=>{ if(!lastText){ alert('Gere uma peça primeiro.'); return; } if(!confirmaPendentes()) return; if(!confirmaCompleta()) return; downloadDocx(); };
+$('#btnGdocs').onclick=()=>{
+  if(!lastText){ alert('Gere uma peça primeiro.'); return; }
+  if(!confirmaPendentes()) return;
+  if(!confirmaCompleta()) return;
+  downloadDocx();
+  const win=window.open('https://docs.google.com/document/u/0/','_blank');
+  const passos='Arquivo em ABNT (.docx) baixado.\n\nPara abrir NO GOOGLE DOCS ja formatado (sem mexer em nada):\n\n• COMPUTADOR: na aba do Google Docs, clique no icone de pasta (Abrir seletor de arquivos) > aba "Fazer upload" > arraste o arquivo .docx baixado.\n\n• CELULAR: abra Arquivos/Downloads, toque no arquivo .docx e escolha abrir com Google Docs (Documentos).\n\nA formatacao ABNT (margens, Times 12, espaco 1,5, justificado, recuo e numeracao) ja vem pronta. E so editar.';
+  if(!win){ alert(passos+'\n\n(O navegador bloqueou a aba; abra docs.google.com manualmente.)'); }
+  else{ alert(passos); }
+};
+
+/* ---------- Markdown -> HTML ---------- */
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function inlineMd(s){
+  s=escapeHtml(s);
+  s=s.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+  s=s.replace(/(^|[^*])\*([^*]+)\*/g,'$1<em>$2</em>');
+  s=s.replace(/`([^`]+)`/g,'<code>$1</code>');
+  s=s.replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g,'<a href="$2" target="_blank">$1</a>');
+  return s;
+}
+function mdToHtml(md){
+  const lines=md.split('\n'); let html='',i=0;
+  while(i<lines.length){
+    let line=lines[i];
+    if(/^\s*\|.*\|\s*$/.test(line)&&i+1<lines.length&&/^\s*\|[\s:|-]+\|\s*$/.test(lines[i+1])){
+      const header=line.trim().replace(/^\||\|$/g,'').split('|').map(c=>c.trim()); i+=2; let rows=[];
+      while(i<lines.length&&/^\s*\|.*\|\s*$/.test(lines[i])){ rows.push(lines[i].trim().replace(/^\||\|$/g,'').split('|').map(c=>c.trim())); i++; }
+      html+='<table style="border-collapse:collapse;width:100%;text-indent:0">'+
+        '<thead><tr>'+header.map(h=>'<th style="border:1px solid #999;padding:6px">'+inlineMd(h)+'</th>').join('')+'</tr></thead><tbody>'+
+        rows.map(r=>'<tr>'+r.map(c=>'<td style="border:1px solid #999;padding:6px">'+inlineMd(c)+'</td>').join('')+'</tr>').join('')+'</tbody></table>'; continue;
+    }
+    let m;
+    if((m=line.match(/^###\s+(.*)/))){ html+='<h3>'+inlineMd(m[1])+'</h3>'; i++; continue; }
+    if((m=line.match(/^##\s+(.*)/))){  html+='<h2>'+inlineMd(m[1])+'</h2>'; i++; continue; }
+    if((m=line.match(/^#\s+(.*)/))){   html+='<h1>'+inlineMd(m[1])+'</h1>'; i++; continue; }
+    if(/^\s*_{3,}\s*$/.test(line)){ html+='<p class="sig-line">'+escapeHtml(line.trim())+'</p>'; i++; continue; }
+    if(/^\s*(---|\*\*\*)\s*$/.test(line)){ html+='<hr>'; i++; continue; }
+    if(/^\s*>\s?/.test(line)){
+      /* citacao longa (ABNT): o modelo transcreve artigos com "> "; aqui vira
+         <blockquote> com o recuo de citacao, em vez de um ">" solto no texto */
+      const bq=[];
+      while(i<lines.length&&/^\s*>\s?/.test(lines[i])){ bq.push(lines[i].replace(/^\s*>\s?/,'')); i++; }
+      html+='<blockquote>'+(mdToHtml(bq.join('\n'))||'<p>'+inlineMd(bq.join(' '))+'</p>')+'</blockquote>';
+      continue;
+    }
+    if(/^\s*[-*]\s+/.test(line)){ html+='<ul>'; while(i<lines.length&&/^\s*[-*]\s+/.test(lines[i])){ html+='<li>'+inlineMd(lines[i].replace(/^\s*[-*]\s+/,''))+'</li>'; i++; } html+='</ul>'; continue; }
+    if(/^\s*\d+[.)]\s+/.test(line)){ html+='<ol>'; while(i<lines.length&&/^\s*\d+[.)]\s+/.test(lines[i])){ html+='<li>'+inlineMd(lines[i].replace(/^\s*\d+[.)]\s+/,''))+'</li>'; i++; } html+='</ol>'; continue; }
+    if(line.trim()===''){ i++; continue; }
+    let para=line; i++;
+    while(i<lines.length&&lines[i].trim()!==''&&!/^(\s*[-*]\s+|\s*\d+[.)]\s+|#|>|\s*\|)/.test(lines[i])&&!/^\s*_{3,}\s*$/.test(lines[i])){ para+=' '+lines[i]; i++; }
+    html+='<p>'+inlineMd(para)+'</p>';
+  }
+  return html;
+}
+
+/* ---------- Radar do caso ---------- */
+$('#btnRadar').onclick = async ()=>{
+  if(!localStorage.getItem(LS.key)){ alert('Configure a chave de IA primeiro (⚙️ Configurar IA).'); loadCfg(); cfg.showModal(); return; }
+  if(ocupado){ alert('Aguarde: já existe uma geração em andamento.'); return; }
+  if(files.length===0){ alert('Anexe ao menos um documento para o Radar ler.'); return; }
+  const btn=$('#btnRadar'); travaBotoes(true); const old=btn.textContent; btn.textContent='Lendo documentos...';
+  $('#placeholder')?.remove();
+  const out=$('#out'); const prev=document.getElementById('radarPanel'); if(prev) prev.remove();
+  const panel=document.createElement('div'); panel.id='radarPanel'; panel.className='check-panel';
+  const status=document.createElement('div'); status.className='status'; status.innerHTML='<span class="dot"></span> Radar lendo os documentos...';
+  const bodyEl=document.createElement('div'); bodyEl.className='output'; bodyEl.style.display='none';
+  panel.appendChild(status); panel.appendChild(bodyEl); out.insertBefore(panel, out.firstChild);
+  window.scrollTo({top:0,behavior:'smooth'});
+  try{
+    const content=[];
+    files.forEach(f=>{ content.push(f.isPdf?{type:'document',source:{type:'base64',media_type:'application/pdf',data:f.dataB64}}:{type:'image',source:{type:'base64',media_type:f.mediaType,data:f.dataB64}}); });
+    if($('#notes').value.trim()) content.push({type:'text',text:'Observacoes do usuario: '+$('#notes').value.trim()});
+    content.push({type:'text',text:'Leia os documentos anexados e devolva APENAS o JSON no formato definido.'});
+    const r0=await aiStream(SYSTEM_RADAR, content, bodyEl, status, { statusText:'Radar analisando...', allowThink:false, maxTokens:2500, model:MODELO_ECONOMICO, effort:'low' });
+    if(r0.stop==='max_tokens') throw new Error('A leitura foi interrompida pelo limite de resposta. Tente com menos documentos por vez.');
+    let txt=String(r0.text).trim().replace(/^```(json)?/i,'').replace(/```$/,'').trim();
+    const a=txt.indexOf('{'), b=txt.lastIndexOf('}');
+    if(a<0||b<=a) throw new Error('O Radar não devolveu dados estruturados. Tente novamente.');
+    const r=JSON.parse(txt.slice(a,b+1));
+    const put=(sel,val)=>{ if(val && !$(sel).value.trim()) $(sel).value=String(val); };
+    put('#fNome',r.nome); put('#fOrgao',r.orgao); put('#fAit',r.ait);
+    if(r.dataNotif && /^\d{4}-\d{2}-\d{2}$/.test(r.dataNotif) && !$('#fDataNotif').value){ const dn=$('#fDataNotif'); dn.value=r.dataNotif; dn.style.borderColor='var(--warn)'; dn.title='Data lida por IA a partir dos documentos. CONFIRA na notificacao: o prazo e fatal.'; }
+    updatePrazo();
+    status.remove();
+    const cor={verde:'var(--ok)',amarelo:'var(--warn)',cinza:'var(--muted)'};
+    const emoji={verde:'◆',amarelo:'◈',cinza:'◇'};
+    let html='<h2 style="margin-top:0;text-indent:0">🧭 Radar do caso</h2>';
+    if(r.resumo) html+='<p style="text-indent:0">'+escapeHtml(r.resumo)+'</p>';
+    const dados=[['Condutor',r.nome],['Órgão',r.orgao],['AIT/Processo',r.ait],['Placa',r.placa],['Enquadramento',r.enquadramento],['Data da infração',r.dataInfracao],['Notificação',r.dataNotif]].filter(x=>x[1]);
+    if(dados.length) html+='<p style="text-indent:0;font-size:13px;color:var(--muted)">'+dados.map(x=>'<b>'+x[0]+':</b> '+escapeHtml(String(x[1]))).join(' • ')+'</p>';
+    if(Array.isArray(r.teses)&&r.teses.length){
+      html+='<div style="margin-top:6px">'+r.teses.map(t=>'<div style="padding:7px 0;border-top:1px solid var(--line);text-indent:0">'+'<span style="color:'+(cor[t.sinal]||'var(--muted)')+';font-size:11px">'+(emoji[t.sinal]||'◇')+'</span> <b style="color:'+(cor[t.sinal]||'var(--muted)')+'">'+escapeHtml(t.nome||'')+'</b><br><small style="color:var(--muted)">'+escapeHtml(t.motivo||'')+'</small></div>').join('')+'</div>';
+    } else { html+='<p style="text-indent:0">Nenhuma tese sinalizada na triagem.</p>'; }
+    html+='<p style="text-indent:0;font-size:12px;color:var(--muted);margin-top:8px">Triagem preliminar automática. Os campos do formulário foram preenchidos apenas onde estavam vazios; confira tudo antes de gerar a peça.</p>';
+    bodyEl.innerHTML=html; bodyEl.style.display='block';
+  }catch(err){ status.innerHTML='❌ '+escapeHtml(err.message); status.style.color='var(--danger)'; }
+  finally{ travaBotoes(false); btn.textContent=old; }
+};
+
+/* ---------- Backup e restauracao de casos ---------- */
+$('#btnBackup').onclick=()=>{
+  const cases=getCases();
+  if(!cases.length){ alert('Nenhum caso salvo para exportar ainda.'); return; }
+  const blob=new Blob([JSON.stringify({app:'doutor-de-transito',tipo:'backup-casos',versao:2,exportadoEm:new Date().toISOString(),casos:cases},null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='backup-casos-'+new Date().toISOString().slice(0,10)+'.json'; a.click();
+  setTimeout(()=>{ try{ URL.revokeObjectURL(a.href); }catch(e){} },4000);
+};
+$('#btnRestore').onclick=()=>$('#backupInput').click();
+$('#backupInput').onchange=async ()=>{
+  const f=$('#backupInput').files[0]; if(!f) return;
+  try{
+    const j=JSON.parse(await f.text());
+    const casos=Array.isArray(j)?j:(j.casos||j.cases);
+    if(!Array.isArray(casos)||!casos.length) throw new Error('o arquivo não contém casos.');
+    const atuais=getCases();
+    let novos=0, atualizados=0;
+    casos.forEach(c=>{ if(!c||!c.id||!c.name) return; const i=atuais.findIndex(x=>x.id===c.id); if(i>=0){ atuais[i]=c; atualizados++; } else { atuais.push(c); novos++; } });
+    setCases(atuais);
+    alert('Backup restaurado: '+novos+' caso(s) novo(s) e '+atualizados+' atualizado(s).');
+  }catch(e){ alert('Não foi possível restaurar: '+e.message); }
+  $('#backupInput').value='';
+};
+
+/* =====================================================================
+   BACKUP NA NUVEM (Supabase)
+
+   Regra de ouro deste modulo: se a nuvem nao estiver configurada, estiver
+   fora do ar, ou o login falhar, a ferramenta continua funcionando
+   exatamente como antes, salvando no navegador. A nuvem so ACRESCENTA
+   seguranca — ela nunca pode ser motivo de o programa parar.
+
+   >>> COLE AQUI OS DOIS VALORES DO SEU PROJETO SUPABASE <<<
+   Veja o passo a passo no arquivo GUIA_NUVEM.txt.
+   Estes dois valores NAO sao secretos: podem ficar aqui sem problema.
+   Quem protege os dados e a regra de seguranca (RLS) la no banco.
+   ===================================================================== */
+const NUVEM = {
+  url:  "https://ueqxpfemocgopmaptcnf.supabase.co",
+  anon: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVlcXhwZmVtb2Nnb3BtYXB0Y25mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQyNTQ3MDgsImV4cCI6MjA5OTgzMDcwOH0.iXFTsnqxKXrUkRYvqrrH_ZMEy2F235EpX6YVwGfN7Sk",
+};
+
+let nvCliente = null, nvSessao = null;
+
+function nvMostra(estado){
+  $('#nvOff').hidden   = estado !== 'off';
+  $('#nvLogin').hidden = estado !== 'login';
+  $('#nvOn').hidden    = estado !== 'on';
+}
+function nvStatus(msg, tipo){
+  const s = $('#nvStatus'), p = $('#nvPonto');
+  if(s) s.textContent = msg;
+  if(p) p.className = 'pt ' + (tipo || 'on');
+}
+function nvErro(msg){
+  const e = $('#nvErro');
+  if(!e) return;
+  e.hidden = !msg;
+  e.textContent = msg || '';
+}
+
+/* ---- conversao entre o formato da ferramenta e o do banco ---- */
+function nvParaBanco(c){
+  return {
+    id: c.id,
+    nome_caso: c.name || null,
+    tipo_proc: c.proc || null,
+    tipo_saida: c.out || null,
+    cliente_nome: c.nome || null,
+    orgao: c.orgao || null,
+    ait: c.ait || null,
+    observacoes: c.notes || null,
+    data_notificacao: c.dataNotif || null,
+    prazo_manual: c.prazoManual || null,
+    texto: c.text || null,
+    arquivos: c.fileNames || [],
+    data_label: c.date || null,
+    excluido: false,        /* salvar/re-salvar um caso sempre o "des-exclui" */
+    excluido_em: null,
+  };
+}
+/* upsert tolerante: se o banco ainda nao tiver as colunas de exclusao
+   (arquivo SUPABASE_ATUALIZACAO_EXCLUSAO.sql nao rodado), tenta sem elas. */
+async function nvUpsert(linhas){
+  let { error } = await nvCliente.from('casos').upsert(linhas, { onConflict: 'user_id,id' });
+  if(error && /excluido/i.test(String(error.message||''))){
+    const limpas = linhas.map(l=>{ const c={...l}; delete c.excluido; delete c.excluido_em; return c; });
+    ({ error } = await nvCliente.from('casos').upsert(limpas, { onConflict: 'user_id,id' }));
+  }
+  if(error) throw error;
+}
+/* empurra as exclusoes pendentes para a nuvem como "lapides" (soft delete).
+   Com a lapide gravada no banco, TODOS os aparelhos apagam a copia deles na
+   proxima sincronizacao — o caso excluido nao "ressuscita" mais. */
+async function nvPushExclusoes(){
+  const dels = getDels();
+  if(!dels.length || !nvSessao || !nvCliente) return;
+  const linhas = dels.map(t=>({ user_id: nvSessao.user.id, id: t.id, excluido: true, excluido_em: new Date(t.em).toISOString() }));
+  let { error } = await nvCliente.from('casos').upsert(linhas, { onConflict: 'user_id,id' });
+  if(error && /excluido/i.test(String(error.message||''))){
+    /* banco no esquema antigo: apaga de vez (rode o SQL de atualizacao para a
+       exclusao valer tambem nos outros aparelhos) */
+    ({ error } = await nvCliente.from('casos').delete().eq('user_id', nvSessao.user.id).in('id', dels.map(t=>t.id)));
+  }
+  if(error) throw error;
+  setDels([]);
+}
+function nvDoBanco(r){
+  return {
+    id: r.id,
+    name: r.nome_caso || '',
+    proc: r.tipo_proc || '',
+    out: r.tipo_saida || 'peca',
+    nome: r.cliente_nome || '',
+    orgao: r.orgao || '',
+    ait: r.ait || '',
+    notes: r.observacoes || '',
+    dataNotif: r.data_notificacao || '',
+    prazoManual: r.prazo_manual || '',
+    text: r.texto || '',
+    fileNames: Array.isArray(r.arquivos) ? r.arquivos : [],
+    date: r.data_label || '',
+  };
+}
+
+// A ferramenta guarda a data como texto pt-BR ("17/07/2026 10:30:00").
+// Para decidir qual versao e a mais nova, precisamos virar numero.
+function nvData(s){
+  const m = String(s || '').match(/(\d{1,2})\/(\d{1,2})\/(\d{4})(?:[,\s]+(\d{1,2}):(\d{2})(?::(\d{2}))?)?/);
+  if(!m) return 0;
+  return new Date(+m[3], +m[2] - 1, +m[1], +(m[4] || 0), +(m[5] || 0), +(m[6] || 0)).getTime();
+}
+
+/* ---- juntar o que esta aqui com o que esta na nuvem, sem perder nada ---- */
+function nvMesclar(locais, nuvens){
+  const mapa = new Map();
+  nuvens.forEach(c => mapa.set(c.id, c));
+  locais.forEach(l => {
+    const n = mapa.get(l.id);
+    if(!n){ mapa.set(l.id, l); return; }        // so existe aqui -> vai subir
+    if(nvData(l.date) > nvData(n.date)) mapa.set(l.id, l);  // aqui esta mais novo
+  });
+  return [...mapa.values()].sort((a, b) => nvData(b.date) - nvData(a.date));
+}
+
+/* ---- sobe alteracoes e exclusoes (chamado por setCases) ---- */
+async function nuvemEnviar(antes, depois){
+  if(!nvSessao || !nvCliente) return;
+  try{
+    nvStatus('salvando...', 'sync');
+    /* exclusoes viram lapides no banco (ou ficam pendentes ate ter conexao) */
+    await nvPushExclusoes();
+
+    // sobe apenas o que realmente mudou
+    const antesPorId = new Map(antes.map(c => [c.id, JSON.stringify(c)]));
+    const mudados = depois.filter(c => antesPorId.get(c.id) !== JSON.stringify(c));
+    if(mudados.length){
+      await nvUpsert(mudados.map(c => ({ ...nvParaBanco(c), user_id: nvSessao.user.id })));
+    }
+    nvStatus('tudo salvo na nuvem', 'on');
+  }catch(e){
+    // Falhou a nuvem? A copia local ja foi gravada, e as exclusoes pendentes
+    // ficam guardadas para a proxima sincronizacao. Nada se perde agora.
+    nvStatus('sem conexao — salvo neste aparelho', 'erro');
+    console.warn('[nuvem]', e);
+  }
+}
+
+/* ---- sincronizacao completa (login e botao Sincronizar) ---- */
+async function nuvemSincronizar(){
+  if(!nvSessao || !nvCliente) return;
+  const btn = $('#nvSync');
+  if(btn) btn.disabled = true;
+  try{
+    nvStatus('sincronizando...', 'sync');
+    /* primeiro as exclusoes pendentes, para a mescla ja respeita-las */
+    await nvPushExclusoes();
+    const { data, error } = await nvCliente.from('casos').select('*');
+    if(error) throw error;
+
+    /* lapides vindas da nuvem: exclusao feita em QUALQUER aparelho vale aqui */
+    const todas  = data || [];
+    const tumbas = new Set(todas.filter(r => r.excluido).map(r => r.id));
+    const nuvens = todas.filter(r => !r.excluido).map(nvDoBanco);
+    const pend   = new Set(getDels().map(t => t.id));
+    const locais = getCases().filter(c => !tumbas.has(c.id) && !pend.has(c.id));
+    const final  = nvMesclar(locais, nuvens.filter(c => !pend.has(c.id)));
+
+    // tudo que a nuvem ainda nao tem, ou que aqui esta mais novo, sobe
+    const nuvemPorId = new Map(nuvens.map(c => [c.id, c]));
+    const subir = final.filter(c => {
+      const n = nuvemPorId.get(c.id);
+      return !n || nvData(c.date) > nvData(n.date);
+    });
+    if(subir.length){
+      await nvUpsert(subir.map(c => ({ ...nvParaBanco(c), user_id: nvSessao.user.id })));
+    }
+
+    try{ localStorage.setItem(LS.cases, JSON.stringify(final)); }
+    catch(e){ /* navegador cheio: a nuvem ja tem tudo, entao esta seguro */ }
+    renderCases();
+
+    const novos = subir.length ? ` (${subir.length} enviado(s))` : '';
+    nvStatus(`${final.length} caso(s) guardados${novos}`, 'on');
+  }catch(e){
+    nvStatus('erro ao sincronizar: ' + (e.message || e), 'erro');
+    console.warn('[nuvem]', e);
+  }finally{
+    if(btn) btn.disabled = false;
+  }
+}
+
+/* ---- login / logout ---- */
+async function nvEntrarCom(criar){
+  const email = $('#nvEmail').value.trim();
+  const senha = $('#nvSenha').value;
+  nvErro('');
+  if(!email || !senha) return nvErro('Preencha e-mail e senha.');
+  if(criar && senha.length < 8) return nvErro('A senha precisa ter pelo menos 8 caracteres.');
+
+  const btn = criar ? $('#nvCriar') : $('#nvEntrar');
+  btn.disabled = true;
+  const rotulo = btn.textContent;
+  btn.textContent = '...';
+  try{
+    const fn = criar ? 'signUp' : 'signInWithPassword';
+    const { data, error } = await nvCliente.auth[fn]({ email, password: senha });
+    if(error) throw error;
+    if(criar && !data.session){
+      nvErro('Conta criada. Confirme o e-mail que o Supabase enviou e depois clique em Entrar.');
+      return;
+    }
+  }catch(e){
+    const m = String(e.message || e);
+    if(/Invalid login/i.test(m)) nvErro('E-mail ou senha incorretos.');
+    else if(/already registered/i.test(m)) nvErro('Este e-mail ja tem conta. Clique em Entrar.');
+    else nvErro(m);
+  }finally{
+    btn.disabled = false;
+    btn.textContent = rotulo;
+  }
+}
+
+function nuvemIniciar(){
+  const temChaves = !!(NUVEM.url && NUVEM.anon);
+  if(!temChaves){ nvMostra('off'); return; }
+  if(!window.supabase){
+    /* nuvem CONFIGURADA, mas a biblioteca nao carregou (sem internet / CDN fora):
+       nao mandamos refazer a configuracao — so avisamos que e falta de conexao */
+    nvMostra('off');
+    const aj=document.querySelector('#nvOff .nv-ajuda');
+    if(aj) aj.innerHTML='<b style="color:#B8A76C">Sem conexão com a nuvem neste momento.</b> Seus casos continuam salvos neste aparelho. Quando a internet voltar, feche e abra o sistema para sincronizar.';
+    nvStatus('sem conexão agora', 'erro');
+    return;
+  }
+
+  nvCliente = window.supabase.createClient(NUVEM.url, NUVEM.anon);
+
+  $('#nvEntrar').onclick = () => nvEntrarCom(false);
+  $('#nvCriar').onclick  = () => nvEntrarCom(true);
+  $('#nvSync').onclick   = () => nuvemSincronizar();
+  $('#nvSair').onclick   = async () => { await nvCliente.auth.signOut(); };
+  $('#nvSenha').onkeydown = e => { if(e.key === 'Enter') nvEntrarCom(false); };
+
+  nvCliente.auth.onAuthStateChange((_evento, sessao) => {
+    nvSessao = sessao;
+    if(sessao){
+      $('#nvQuem').textContent = sessao.user.email;
+      nvMostra('on');
+      nuvemSincronizar();
+    }else{
+      nvMostra('login');
+    }
+  });
+}
+
+/* ---------- atalho de teclado: Ctrl/Cmd + Enter gera a peca ---------- */
+document.addEventListener('keydown', e=>{
+  if(cfg.open) return; /* nao dispara com a janela de configuracao aberta */
+  if((e.ctrlKey||e.metaKey) && e.key==='Enter'){ const b=$('#btnAnalyze'); if(b && !b.disabled){ e.preventDefault(); b.click(); } }
+});
+
+/* ---------- rede de seguranca: nada de perder peca nao salva ---------- */
+window.addEventListener('beforeunload', e=>{
+  if(lastText && !pecaSalva){ e.preventDefault(); e.returnValue=''; }
+});
+/* se ficou uma peca gerada e nao salva da ultima vez (aba fechada, queda de
+   energia), oferece a recuperacao ao abrir */
+function ofereceRascunho(){
+  let r=null; try{ r=JSON.parse(localStorage.getItem(LS.rascunho)||'null'); }catch(e){}
+  if(!r || !r.text) return;
+  const out=$('#out');
+  const bar=document.createElement('div');
+  bar.className='hint';
+  bar.style.cssText='display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#12110d;border:1px solid rgba(255,217,102,.3);border-radius:10px;padding:10px 12px;margin-bottom:12px';
+  const tx=document.createElement('span'); tx.style.cssText='flex:1;min-width:200px';
+  tx.textContent='Há uma peça/análise gerada em '+(r.em||'sessão anterior')+' que não foi salva.';
+  const b1=document.createElement('button'); b1.className='tb'; b1.style.height='36px'; b1.textContent='Recuperar';
+  const b2=document.createElement('button'); b2.className='tb'; b2.style.height='36px'; b2.textContent='Descartar';
+  b1.onclick=()=>{
+    const c=r.campos||{};
+    if(c.proc){ $('#procType').value=c.proc; if($('#procType').value!==c.proc) ajustaFase(c.proc); }
+    if(c.out) $('#outType').value=c.out;
+    $('#fNome').value=c.nome||''; $('#fOrgao').value=c.orgao||''; $('#fAit').value=c.ait||''; $('#notes').value=c.notes||'';
+    $('#fDataNotif').value=c.dataNotif||''; $('#fPrazoManual').value=c.prazoManual||'';
+    $('#outType').onchange(); updatePrazo();
+    $('#placeholder')?.remove(); bar.remove();
+    out.innerHTML='';
+    const el=document.createElement('div'); el.className='output'; el.innerHTML=mdToHtml(r.text); out.appendChild(el);
+    lastText=r.text; lastHTML=el.innerHTML; lastKind=r.kind||'peca'; pecaSalva=false; loadedCaseId=null;
+    $('#toolbar').style.display='grid'; ajustaToolbar();
+  };
+  b2.onclick=()=>{ limpaDraft(); bar.remove(); };
+  bar.appendChild(tx); bar.appendChild(b1); bar.appendChild(b2);
+  out.insertBefore(bar, out.firstChild);
+}
+
+/* ---------- init ---------- */
+try{ $('#btnAnalyze').title='Atalho: Ctrl + Enter'; }catch(e){}
+$('#outType').onchange();
+const _cs=$('#caseSearch'); if(_cs) _cs.oninput=()=>renderCases();
+renderCases();
+try{ ofereceRascunho(); }catch(e){ console.warn('[rascunho]', e); }
+try{ nuvemIniciar(); }catch(e){ console.warn('[nuvem] desligada:', e); nvMostra('off'); }
+if(!localStorage.getItem(LS.key)){ loadCfg(); cfg.showModal(); }
+</script>
+</body>
+</html>

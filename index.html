@@ -1,0 +1,1612 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Doutor Detrânsito — Defenda seu direito de dirigir</title>
+<meta name="description" content="Está prestes a perder a CNH por suspensão, cassação ou cancelamento? Consulte seu veículo, faça uma análise técnica gratuita e receba a defesa pronta para assinar e protocolar.">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root{
+    /* ===== PALETA OFICIAL Doutor Detransito — preto + ouro ===== */
+    --bg:#0a0a0a;          /* fundo base */
+    --bg2:#0c0b09;         /* seção alternada / rodapé */
+    --card:#14130f;        /* superfície de card */
+    --card2:#171613;       /* card elevado / campo */
+    --line:rgba(255,217,102,0.22);   /* bordas */
+    --line2:rgba(255,217,102,0.35);  /* borda em destaque */
+
+    --gold:#FFD966;
+    --gold-lt:#FFE071;
+    --gold-dk:#E8B93B;
+    --gold-ink:#141414;    /* texto sobre dourado */
+
+    --txt:#F3EBD3;
+    --muted:#CFC3A0;
+    --muted2:#8f886e;
+
+    --ok:#FFD966;
+    --danger:#E8B93B;
+    --wa:#FFD966;
+
+    --font:Helvetica,Arial,sans-serif;
+    --font-display:'Cormorant Garamond',Georgia,serif;
+    --r:16px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;background:var(--bg)}
+  body{margin:0;font-family:var(--font);background:var(--bg);color:var(--txt);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3{line-height:1.12;margin:0}
+  h1,h2{font-family:var(--font-display);font-weight:700;letter-spacing:.02em}
+  h3{font-family:var(--font);font-weight:800;letter-spacing:-.01em}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+  .gold{color:var(--gold)}
+
+  svg.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+  svg.ic.fill{fill:currentColor;stroke:none}
+  svg.ic.lg{width:26px;height:26px}
+  svg.ic.xl{width:32px;height:32px}
+
+  /* ---------- Botões ---------- */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:inherit;font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase;border-radius:11px;padding:15px 26px;border:1.5px solid transparent;cursor:pointer;transition:transform .16s,box-shadow .16s,background .16s;text-align:center}
+  .btn:hover{transform:translateY(-2px)}
+  .btn.gold{background:linear-gradient(180deg,#FFE071,#E8B93B);color:#141414;box-shadow:0 8px 28px rgba(255,217,102,0.2)}
+  .btn.gold:hover{background:linear-gradient(180deg,#FFEDA0,#F2C94C);box-shadow:0 10px 34px rgba(255,217,102,0.3)}
+  .btn.ghost{background:transparent;border-color:var(--line2);color:var(--txt)}
+  .btn.ghost:hover{border-color:var(--gold);color:var(--gold)}
+  .btn.wa{background:linear-gradient(180deg,#FFE071,#E8B93B);color:#141414;box-shadow:0 8px 28px rgba(255,217,102,0.2)}
+  .btn.wa:hover{background:linear-gradient(180deg,#FFEDA0,#F2C94C)}
+  .btn.block{width:100%}
+  .btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+
+  /* ---------- Header ---------- */
+  header.nav{position:sticky;top:0;z-index:60;background:rgba(10,10,10,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .nav .wrap{display:flex;align-items:center;gap:20px;height:76px}
+  .nav .logo img{height:46px;width:auto;display:block}
+  .nav nav{margin-left:auto;display:flex;gap:26px;align-items:center}
+  .nav nav a{color:var(--muted);font-weight:600;font-size:14.5px;transition:color .15s}
+  .nav nav a:hover{color:var(--gold)}
+  .nav .cta{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(180deg,#FFE071,#E8B93B);color:#141414;padding:11px 18px;border-radius:10px;font-weight:700;font-size:14px;box-shadow:0 8px 28px rgba(255,217,102,0.2)}
+  .nav .cta:hover{color:var(--gold-ink)}
+  .menu-btn{display:none;margin-left:auto;background:none;border:none;color:var(--txt);cursor:pointer;padding:6px}
+  @media(max-width:1000px){
+    .nav nav{display:none}
+    .menu-btn{display:block}
+    .nav nav.open{display:flex;position:absolute;top:76px;left:0;right:0;background:var(--bg2);border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;padding:18px 22px 22px;gap:16px}
+    .nav nav.open .cta{justify-content:center}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative;overflow:hidden;padding:70px 0 78px;background:
+      radial-gradient(ellipse 900px 420px at 50% 0%,rgba(255,217,102,.10),transparent 62%),
+      linear-gradient(180deg,#0d0c09,#0a0a0a)}
+  .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+  .hero .grid{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+  @media(max-width:1000px){.hero .grid{grid-template-columns:1fr;gap:44px}}
+
+  .hero h1{font-size:clamp(38px,5.4vw,60px);text-transform:uppercase;letter-spacing:.045em;margin-bottom:14px;color:#FFD966}
+  .hero .sub{font-size:clamp(18px,2.2vw,23px);font-weight:600;color:var(--muted);margin:0 0 26px}
+  .hero .sub b{color:var(--gold);font-weight:800}
+
+  .chips{display:flex;gap:26px;flex-wrap:wrap;margin-bottom:26px}
+  .chip{display:inline-flex;align-items:center;gap:9px;font-size:14.5px;font-weight:600;color:var(--txt)}
+  .chip .ic{color:var(--gold)}
+
+  .hero .lead{font-size:14.5px;color:var(--muted);margin:0 0 14px;font-weight:600}
+  .hero .actions{display:flex;gap:14px;flex-wrap:wrap}
+  .trust{display:flex;gap:22px;margin-top:28px;flex-wrap:wrap}
+  .trust span{display:inline-flex;align-items:center;gap:8px;color:var(--muted2);font-size:13px;font-weight:600}
+  .trust .ic{width:16px;height:16px;color:var(--gold)}
+
+  /* arte do hero */
+  .hero-art{position:relative;min-height:400px;display:grid;place-items:center}
+  @media(max-width:1000px){.hero-art{min-height:320px}}
+  .qmark{position:absolute;right:2%;top:50%;transform:translateY(-52%);font-size:clamp(260px,34vw,430px);font-weight:800;line-height:1;color:transparent;-webkit-text-stroke:3px var(--gold);opacity:.5;pointer-events:none;user-select:none}
+  .hero-foto{position:relative;z-index:1;width:100%;max-width:460px;border-radius:20px;display:block;filter:grayscale(.25) contrast(1.05) brightness(.92);mask-image:radial-gradient(circle at 50% 45%,#000 58%,transparent 88%);-webkit-mask-image:radial-gradient(circle at 50% 45%,#000 58%,transparent 88%)}
+  .hero-badge{position:absolute;right:0;bottom:6%;z-index:3;background:rgba(20,19,15,.92);border:1px solid var(--line);border-radius:14px;padding:16px 18px;max-width:210px;backdrop-filter:blur(10px);box-shadow:0 24px 50px rgba(0,0,0,.6)}
+  .hero-badge b{display:flex;align-items:center;gap:8px;font-size:14.5px;color:var(--txt)}
+  .hero-badge b .ic{color:var(--gold);width:17px;height:17px}
+  .hero-badge p{margin:7px 0 0;font-size:12.5px;color:var(--muted);line-height:1.55}
+  @media(max-width:1000px){.hero-badge{position:static;margin-top:18px;max-width:none}}
+
+  /* ---------- Seções ---------- */
+  section{padding:78px 0;position:relative}
+  .alt{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .sec-h{text-align:center;max-width:660px;margin:0 auto 46px}
+  .sec-h h2{font-size:clamp(26px,3.4vw,36px);margin-bottom:10px}
+  .sec-h p{color:var(--muted);font-size:16px;margin:0}
+
+  /* ---------- Como funciona (4 passos) ---------- */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;align-items:stretch}
+  .steps .sep{display:grid;place-items:center;color:var(--muted2);width:26px}
+  .steps-row{display:flex;align-items:stretch;gap:6px}
+  @media(max-width:980px){.steps-row{flex-direction:column;gap:14px}.steps-row .sep{display:none}}
+  .step{flex:1;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px 20px 24px;transition:border-color .18s,transform .18s}
+  .step:hover{border-color:var(--gold-dk);transform:translateY(-3px)}
+  .step .n{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--card2);border:1px solid var(--line);color:var(--gold);font-weight:800;font-size:13px;letter-spacing:.04em}
+  .step .art{display:grid;place-items:center;height:74px;color:var(--gold);margin:6px 0 4px}
+  .step .art .ic{width:38px;height:38px;stroke-width:1.3}
+  .step h3{font-size:16.5px;text-align:center;margin-bottom:8px}
+  .step p{margin:0;text-align:center;color:var(--muted);font-size:13.5px;line-height:1.6}
+  .steps-cta{display:grid;place-items:center;margin-top:38px}
+
+  /* ---------- Serviços ---------- */
+  .servicos{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media(max-width:900px){.servicos{grid-template-columns:1fr}}
+  .servico{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;display:flex;gap:16px;transition:border-color .18s,transform .18s}
+  .servico:hover{border-color:var(--gold-dk);transform:translateY(-3px)}
+  .servico .ic-box{color:var(--gold);flex:none;padding-top:2px}
+  .servico .ic-box .ic{width:34px;height:34px;stroke-width:1.3}
+  .servico h3{font-size:17px;margin-bottom:7px}
+  .servico p{margin:0 0 14px;color:var(--muted);font-size:13.5px;line-height:1.6}
+  .servico .more{display:inline-flex;align-items:center;gap:7px;color:var(--gold);font-weight:700;font-size:13.5px;cursor:pointer}
+  .servico .more .ic{width:15px;height:15px;transition:transform .18s}
+  .servico:hover .more .ic{transform:translateX(4px)}
+
+  /* ---------- Painel de análise ---------- */
+  .painel{background:linear-gradient(180deg,#14130f,#0f0e0b);border:1px solid var(--line);border-radius:22px;padding:34px;display:grid;grid-template-columns:.85fr 1.15fr;gap:38px;align-items:center}
+  @media(max-width:980px){.painel{grid-template-columns:1fr;gap:28px;padding:26px}}
+  .painel-esq{display:flex;gap:20px;align-items:flex-start}
+  @media(max-width:520px){.painel-esq{flex-direction:column;gap:14px}}
+  .emblema{flex:none;width:82px;height:82px;display:grid;place-items:center;color:var(--gold)}
+  .emblema .ic{width:74px;height:74px;stroke-width:1}
+  .painel h2{font-size:clamp(21px,2.6vw,26px);margin-bottom:6px}
+  .painel .desc{color:var(--muted);font-size:14.5px;margin:0 0 16px}
+  .checks{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px}
+  .checks li{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--txt)}
+  .checks .ic{width:16px;height:16px;color:var(--gold)}
+
+  /* ---------- Formulário ---------- */
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:560px){.form-grid{grid-template-columns:1fr}}
+  .full{grid-column:1/-1}
+  .campo{position:relative}
+  .campo input,.campo select,.campo textarea{width:100%;padding:14px 15px;border:1px solid var(--line);border-radius:11px;background:var(--card2);color:var(--txt);font:inherit;font-size:14.5px;transition:border-color .15s}
+  .campo input::placeholder,.campo textarea::placeholder{color:var(--muted2)}
+  .campo input:focus,.campo select:focus,.campo textarea:focus{outline:none;border-color:var(--gold)}
+  .campo input.erro{border-color:var(--danger)}
+  .campo .hint{font-size:11.5px;color:var(--muted2);margin:5px 2px 0}
+  .campo label.flt{display:block;font-size:12px;font-weight:700;color:var(--muted);margin:0 2px 6px;letter-spacing:.03em;text-transform:uppercase}
+  .nota{font-size:11.5px;color:var(--muted2);text-align:center;margin:12px 0 0}
+  .consent{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:var(--muted);margin:4px 0 2px;line-height:1.55}
+  .consent input{margin-top:3px;accent-color:var(--gold);flex:none}
+
+  /* ---- Registro / login (Supabase Auth) ---- */
+  .auth-abas{display:flex;gap:6px;background:var(--card2);border:1px solid var(--line);border-radius:11px;padding:4px;margin-bottom:16px}
+  .auth-abas button{flex:1;font:inherit;font-weight:700;font-size:13.5px;padding:9px;border-radius:8px;border:none;background:none;color:var(--muted);cursor:pointer;transition:.15s}
+  .auth-abas button.on{background:linear-gradient(180deg,#FFE071,#E8B93B);color:#141414}
+  .auth-topo{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--muted);margin-bottom:14px;line-height:1.55}
+  .auth-topo .ic{width:16px;height:16px;color:var(--gold);flex:none}
+  .logado{display:flex;align-items:center;gap:10px;background:var(--card2);border:1px solid var(--line);border-radius:11px;padding:11px 14px;margin-bottom:14px;font-size:13px}
+  .logado .pt{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:none}
+  .logado .quem{flex:1;color:var(--muted);min-width:0}
+  .logado .quem b{color:var(--txt);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .logado button{font:inherit;font-size:12px;font-weight:700;padding:6px 11px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer}
+  .logado button:hover{border-color:var(--gold);color:var(--gold)}
+
+  /* Bloco do login gov.br — destacado de propósito: o cliente precisa
+     perceber claramente o que está informando e por quê. */
+  .govbr{background:var(--card2);border:1px solid var(--line2);border-radius:13px;padding:16px;margin:4px 0}
+  .govbr-h{display:flex;align-items:center;gap:8px;font-weight:800;font-size:13.5px;color:var(--gold);margin-bottom:6px}
+  .govbr-h .ic{width:16px;height:16px}
+  .govbr-p{font-size:12.5px;color:var(--muted);margin:0 0 13px;line-height:1.55}
+  .govbr-nota{font-size:11.5px;color:var(--muted2);margin:11px 0 0;line-height:1.6}
+  .govbr-nota b{color:var(--txt)}
+  .govbr-nota a{color:var(--gold);font-weight:700}
+
+  /* ---------- Resultado da consulta ---------- */
+  .res{margin-top:22px;display:none}
+  .res-box{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .res-head{display:flex;align-items:center;gap:11px;margin-bottom:14px}
+  .res-head .ic{width:22px;height:22px}
+  .res-head h3{font-size:17px}
+  .res.ok .res-head{color:var(--ok)} .res.warn .res-head{color:var(--gold)} .res.err .res-head{color:var(--danger)}
+  .kv{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-bottom:14px}
+  .kv div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .kv b{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted2);font-weight:700;margin-bottom:2px}
+  .kv span{font-size:14px;color:var(--txt);font-weight:600;word-break:break-word}
+  .tabela{overflow-x:auto;margin-bottom:14px;border:1px solid var(--line);border-radius:10px}
+  .tabela table{border-collapse:collapse;width:100%;min-width:520px;font-size:13px}
+  .tabela th{background:var(--card);text-align:left;padding:10px 12px;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted2);border-bottom:1px solid var(--line);white-space:nowrap}
+  .tabela td{padding:10px 12px;border-bottom:1px solid var(--line);color:var(--txt);vertical-align:top}
+  .tabela tr:last-child td{border-bottom:none}
+  .res-grupo{margin-bottom:16px}
+  .res-grupo>h4{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--gold);margin:0 0 8px;font-weight:800}
+  .res-cta{margin-top:16px;padding:18px;background:linear-gradient(180deg,rgba(255,217,102,.13),rgba(255,217,102,.04));border:1px solid rgba(255,217,102,.35);border-radius:13px;text-align:center}
+  .res-cta b{color:var(--gold-lt);font-size:15px}
+  .res-cta p{margin:5px 0 13px;font-size:13px;color:var(--muted)}
+  .statusline{display:flex;gap:10px;align-items:center;color:var(--muted);font-size:14px}
+  .spin{width:16px;height:16px;border:2.5px solid var(--line2);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;flex:none}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* ---------- Ferramenta IA ---------- */
+  .tool{max-width:820px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px}
+  @media(max-width:560px){.tool{padding:20px}}
+  .tool label.flt{display:block;font-size:12px;font-weight:700;color:var(--muted);margin:16px 2px 6px;letter-spacing:.03em;text-transform:uppercase}
+  .tool label.flt:first-of-type{margin-top:0}
+  .drop{border:2px dashed var(--line2);border-radius:13px;padding:26px;text-align:center;color:var(--muted);cursor:pointer;background:var(--card2);display:flex;flex-direction:column;align-items:center;gap:6px;transition:.15s}
+  .drop:hover,.drop.hot{border-color:var(--gold);color:var(--txt)}
+  .drop .ic{width:26px;height:26px;color:var(--gold)}
+  .drop small{color:var(--muted2);font-size:12px}
+  .files{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+  .file{display:flex;gap:9px;align-items:center;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:13px}
+  .file .ic{color:var(--gold)}
+  .file .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .file .rm{border:none;background:none;color:var(--danger);cursor:pointer;display:grid;place-items:center;padding:2px}
+  .out{margin-top:20px;background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:20px;display:none}
+  .out h2{color:var(--gold);font-size:17px;margin:14px 0 6px}
+  .out h2:first-child{margin-top:0}
+  .out h3{font-size:14.5px;margin:12px 0 4px}
+  .out ul{padding-left:20px;margin:6px 0;color:var(--muted)}
+  .out li{margin:3px 0}
+  .out p{margin:6px 0;color:var(--muted);font-size:14px}
+  .out b{color:var(--txt)}
+  .out code{background:var(--card);padding:1px 5px;border-radius:4px;font-size:12.5px}
+
+  /* ---------- Planos ---------- */
+  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+  @media(max-width:900px){.plans{grid-template-columns:1fr}}
+  .plan{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px;display:flex;flex-direction:column;transition:.18s}
+  .plan:hover{transform:translateY(-3px);border-color:var(--line2)}
+  .plan.feat{border:1.5px solid var(--gold);box-shadow:0 20px 50px rgba(255,217,102,.14);position:relative}
+  .plan.feat:hover{border-color:var(--gold)}
+  .plan .flag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:linear-gradient(180deg,#FFE071,#E8B93B);color:#141414;font-weight:800;font-size:11px;letter-spacing:.06em;padding:6px 15px;border-radius:20px;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+  .plan h3{font-size:19px;margin-bottom:4px}
+  .plan .price{font-size:34px;font-weight:800;margin:10px 0;color:var(--txt)}
+  .plan .price small{font-size:14px;font-weight:600;color:var(--muted)}
+  .plan .price .from{font-size:11.5px;font-weight:700;color:var(--muted2);display:block;text-transform:uppercase;letter-spacing:.06em}
+  .plan ul{list-style:none;padding:0;margin:14px 0 22px;flex:1}
+  .plan li{padding:10px 0 10px 26px;position:relative;color:var(--txt);font-size:13.5px;border-top:1px solid var(--line);line-height:1.5}
+  .plan li:first-child{border-top:none}
+  .plan li .ck{position:absolute;left:0;top:12px;width:15px;height:15px;color:var(--gold)}
+  .plan li.no{color:var(--muted2)} .plan li.no .ck{color:var(--muted2)}
+
+  /* ---------- FAQ ---------- */
+  .faq details{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:2px 20px;margin-bottom:11px;transition:border-color .18s}
+  .faq details[open]{border-color:var(--gold-dk)}
+  .faq summary{cursor:pointer;font-weight:700;padding:16px 0;font-size:15px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary .chev{transition:.2s;color:var(--gold);flex:none;width:18px;height:18px}
+  .faq details[open] summary .chev{transform:rotate(180deg)}
+  .faq p{color:var(--muted);margin:0 0 16px;font-size:14px}
+  .faq p a{color:var(--gold);font-weight:600}
+
+  /* ---------- Diferenciais ---------- */
+  .difs{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  @media(max-width:980px){.difs{grid-template-columns:repeat(2,1fr);gap:26px}}
+  @media(max-width:560px){.difs{grid-template-columns:1fr}}
+  .dif{display:flex;gap:14px;align-items:flex-start}
+  .dif .bolha{flex:none;width:46px;height:46px;border-radius:50%;border:1px solid var(--gold-dk);display:grid;place-items:center;color:var(--gold);background:rgba(255,217,102,.07)}
+  .dif .bolha .ic{width:20px;height:20px}
+  .dif b{display:block;font-size:14.5px;margin-bottom:4px}
+  .dif p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.6}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--bg2);border-top:1px solid var(--line);padding:56px 0 0}
+  footer .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:32px}
+  @media(max-width:900px){footer .cols{grid-template-columns:1fr 1fr;gap:34px}}
+  @media(max-width:560px){footer .cols{grid-template-columns:1fr}}
+  footer .marca img{height:64px;width:auto;display:block;margin-bottom:14px}
+  footer .marca p{margin:0;font-size:13px;color:var(--muted);max-width:290px;line-height:1.65}
+  footer h4{font-size:14.5px;margin-bottom:14px;color:var(--txt)}
+  footer .fnav{display:flex;flex-direction:column;gap:9px}
+  footer .fnav a{color:var(--muted);font-size:13.5px;transition:color .15s;display:inline-flex;align-items:center;gap:9px}
+  footer .fnav a:hover{color:var(--gold)}
+  footer .fnav a .ic{width:16px;height:16px;color:var(--gold);flex:none}
+  footer .disc{border-top:1px solid var(--line);margin-top:44px;padding:22px 0;font-size:11.5px;line-height:1.7;color:var(--muted2)}
+  footer .bottom{border-top:1px solid var(--line);padding:18px 0;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted2)}
+  footer .bottom .ic{width:14px;height:14px;color:var(--gold);vertical-align:-2px}
+
+  .wa-float{position:fixed;right:20px;bottom:20px;z-index:70;background:linear-gradient(180deg,#FFE071,#E8B93B);color:#141414;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;box-shadow:0 12px 30px rgba(255,217,102,.35);animation:bob 2.6s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  .wa-float svg{width:29px;height:29px}
+
+  dialog{border:none;border-radius:18px;max-width:640px;width:92%;padding:0;color:var(--txt);background:var(--card);border:1px solid var(--line)}
+  dialog::backdrop{background:rgba(0,0,0,.72)}
+  dialog .dh{padding:16px 22px;border-bottom:1px solid var(--line);font-weight:800;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  dialog .db{padding:20px 22px;max-height:68vh;overflow:auto;font-size:13.5px;color:var(--muted)}
+  dialog .db h4{color:var(--gold);margin:16px 0 4px;font-size:14px}
+  dialog .db h4:first-child{margin-top:0}
+  dialog .x{cursor:pointer;border:none;background:none;color:var(--muted);display:grid;place-items:center;padding:4px}
+  dialog .x:hover{color:var(--txt)}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.vis{opacity:1;transform:none}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+    .reveal{opacity:1;transform:none}
+  }
+
+  /* ===== Sistema visual oficial: cards, marca e ajustes ===== */
+  .step,.servico,.plan,.tool,.faq details,.kv div,.res-box,.out,.file,.logado,.auth-abas,.govbr,dialog{
+    background:linear-gradient(180deg,#14130f,#0f0e0b)}
+  .step,.servico,.plan,.tool{box-shadow:0 10px 40px rgba(0,0,0,0.45)}
+  .step:hover,.servico:hover{border-color:var(--gold)}
+  .nav .logo{display:flex;align-items:center;gap:13px}
+  .logo-svg{height:46px;width:auto;display:block;flex:none;filter:drop-shadow(0 8px 22px rgba(0,0,0,0.65))}
+  .logo-txt{font-family:var(--font-display);font-weight:700;font-size:23px;color:#FFD966;letter-spacing:.09em;white-space:nowrap;line-height:1}
+  footer .marca a{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  footer .marca .logo-svg{height:60px}
+  footer .marca .logo-txt{font-size:20px}
+  .sec-h h2{color:#FFD966}
+  @media(max-width:1000px){ .logo-txt{font-size:19px} .logo-svg{height:40px} }
+  @media(max-width:400px){ .logo-txt{display:none} }
+</style>
+</head>
+<body>
+
+<!-- Sprite de ícones -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 8.6-4-1-7-4.1-7-8.6V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-shield-x" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 8.6-4-1-7-4.1-7-8.6V6z"/><line x1="9.6" y1="9.6" x2="14.4" y2="14.4"/><line x1="14.4" y1="9.6" x2="9.6" y2="14.4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-check-c" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="16 9.5 10.8 15 8 12.4"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4l9 15.5H3z"/><line x1="12" y1="10" x2="12" y2="14"/><line x1="12" y1="17.2" x2="12" y2="17.3"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><polyline points="12 7.5 12 12 15 14"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 17h14"/><path d="M3.5 17v-3.6l1.8-4.2A2 2 0 0 1 7.1 8h9.8a2 2 0 0 1 1.8 1.2l1.8 4.2V17"/><circle cx="7.5" cy="17" r="1.6"/><circle cx="16.5" cy="17" r="1.6"/><line x1="4" y1="13.2" x2="20" y2="13.2"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><polyline points="14 3 14 8 19 8"/><line x1="8.5" y1="13" x2="15.5" y2="13"/><line x1="8.5" y1="16.5" x2="13" y2="16.5"/></symbol>
+  <symbol id="i-doc-edit" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7"/><polyline points="14 3 14 8 19 8"/><line x1="8.5" y1="12.5" x2="13" y2="12.5"/><path d="M20.4 13.6a1.5 1.5 0 0 1 0 2.1l-4.3 4.3-2.6.6.6-2.6 4.3-4.3a1.5 1.5 0 0 1 2 0z"/></symbol>
+  <symbol id="i-img" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="9" cy="9.5" r="1.6"/><path d="M5 17l4.5-4.5L14 17l3-3 2 2"/></symbol>
+  <symbol id="i-cloud-up" viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1-.4-8A5.5 5.5 0 0 1 17.3 9.5 3.8 3.8 0 0 1 17 18"/><polyline points="9.5 13.5 12 11 14.5 13.5"/><line x1="12" y1="11" x2="12" y2="19"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.2" y1="16.2" x2="21" y2="21"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15.5V4"/><polyline points="7.5 8.5 12 4 16.5 8.5"/><path d="M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.1.8-4.5 4.2 1.2 6L12 17.9 6.6 19.6l1.2-6L3.3 9.4l6.1-.8z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3.5 7 12 13 20.5 7"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 20a7 7 0 0 1 14 0"/></symbol>
+  <symbol id="i-headset" viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2.8" y="13.5" width="4" height="6" rx="1.6"/><rect x="17.2" y="13.5" width="4" height="6" rx="1.6"/><path d="M19.2 19.5v.5a2.5 2.5 0 0 1-2.5 2.5H13"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></symbol>
+  <symbol id="i-x-c" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="9.2" y1="9.2" x2="14.8" y2="14.8"/><line x1="14.8" y1="9.2" x2="9.2" y2="14.8"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></symbol>
+  <symbol id="i-chev-r" viewBox="0 0 24 24"><polyline points="9 5 16 12 9 19"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><line x1="4" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M21.5 3.5L2.5 10.2l7.3 2.9 2.9 7.4z"/><line x1="21.5" y1="3.5" x2="9.8" y2="13.1"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><line x1="12" y1="4" x2="12" y2="20"/><line x1="7" y1="20" x2="17" y2="20"/><path d="M6 6l-3 6a3 3 0 0 0 6 0z"/><path d="M18 6l3 6a3 3 0 0 1-6 0z"/><line x1="5" y1="6" x2="19" y2="6"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-9.2A3.9 3.9 0 0 1 12 8.3a3.9 3.9 0 0 1 7 2.5C19 15.6 12 20 12 20z"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.5 3.5h3l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.5 5.7a2 2 0 0 1 2-2.2z"/></symbol>
+  <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-7.7 13.7L3 21l4.5-1.2A9 9 0 1 0 12 3z"/><path d="M9 8.2c-.3 0-.6.1-.8.4-.3.3-.9.9-.9 2.1s.9 2.5 1 2.6c.1.2 1.7 2.7 4.2 3.7 2.1.8 2.5.7 2.9.6.4 0 1.3-.5 1.5-1.1.2-.5.2-1 .1-1.1-.1-.1-.3-.2-.6-.3l-1.4-.7c-.2-.1-.4-.1-.5.1l-.6.8c-.1.2-.3.2-.5.1-.7-.3-1.4-.6-2.1-1.6-.2-.3.2-.5.4-.9.1-.1 0-.3 0-.4l-.6-1.4c-.2-.4-.4-.4-.6-.4z" fill="currentColor" stroke="none"/></symbol>
+</svg>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#topo"><svg class="logo-svg" viewBox="44 54 392 424" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="lenteOuro" cx="0.38" cy="0.32" r="0.85">
+                <stop offset="0" stop-color="#FFFBE8"></stop>
+                <stop offset="0.45" stop-color="#FFD966"></stop>
+                <stop offset="1" stop-color="#C0942A"></stop>
+              </radialGradient>
+            </defs>
+            <rect x="202" y="436" width="76" height="12" rx="5" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <rect x="186" y="446" width="108" height="18" rx="9" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+                        <rect x="205" y="138" width="70" height="306" rx="8" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <path d="M104,170 Q240,128 376,170" fill="none" stroke="#FFD966" stroke-width="39" stroke-linecap="round"></path>
+            <path d="M104,170 Q240,128 376,170" fill="none" stroke="#141414" stroke-width="34" stroke-linecap="round"></path>
+            <path d="M104,160 Q150,146 196,141" fill="none" stroke="#FFD966" stroke-width="3"></path>
+            <path d="M284,141 Q330,146 376,160" fill="none" stroke="#FFD966" stroke-width="3"></path>
+            <path d="M104,180 Q150,166 196,161" fill="none" stroke="#FFD966" stroke-width="3"></path>
+            <path d="M284,161 Q330,166 376,180" fill="none" stroke="#FFD966" stroke-width="3"></path>
+            <line x1="213" y1="174" x2="213" y2="390" stroke="#FFD966" stroke-width="3"></line>
+            <line x1="267" y1="174" x2="267" y2="390" stroke="#FFD966" stroke-width="3"></line>
+            <g stroke="#FFD966" stroke-width="5">
+              <line x1="111.4" y1="167.8" x2="127" y2="163.6"></line>
+              <line x1="142.2" y1="159.9" x2="157.8" y2="156.7"></line>
+              <line x1="173" y1="154.1" x2="188.6" y2="151.9"></line>
+              <line x1="291.4" y1="151.9" x2="307" y2="154.1"></line>
+              <line x1="322.2" y1="156.7" x2="337.8" y2="159.9"></line>
+              <line x1="353" y1="163.6" x2="368.6" y2="167.8"></line>
+            </g>
+            <line x1="240" y1="178" x2="240" y2="381" stroke="#FFD966" stroke-width="6" stroke-dasharray="20 14"></line>
+            <rect x="214" y="396" width="52" height="8" rx="2" fill="#FFD966"></rect>
+            <rect x="214" y="410" width="52" height="8" rx="2" fill="#FFD966"></rect>
+            <rect x="214" y="424" width="52" height="8" rx="2" fill="#FFD966"></rect>
+            <g stroke="#FFD966" stroke-width="4.5" stroke-linecap="round">
+              <line x1="104" y1="184" x2="66" y2="264"></line>
+              <line x1="104" y1="184" x2="142" y2="264"></line>
+              <line x1="376" y1="184" x2="338" y2="264"></line>
+              <line x1="376" y1="184" x2="414" y2="264"></line>
+            </g>
+            <circle cx="104" cy="184" r="4.5" fill="#FFD966"></circle>
+            <circle cx="376" cy="184" r="4.5" fill="#FFD966"></circle>
+            <circle cx="66" cy="264" r="3" fill="#FFD966"></circle>
+            <circle cx="142" cy="264" r="3" fill="#FFD966"></circle>
+            <circle cx="338" cy="264" r="3" fill="#FFD966"></circle>
+            <circle cx="414" cy="264" r="3" fill="#FFD966"></circle>
+            <rect x="58" y="262" width="92" height="34" rx="16" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <rect x="330" y="262" width="92" height="34" rx="16" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <circle cx="78" cy="279" r="11" fill="url(#lenteOuro)" stroke="#141414" stroke-width="2"></circle>
+            <circle cx="104" cy="279" r="11" fill="url(#lenteOuro)" stroke="#141414" stroke-width="2"></circle>
+            <circle cx="130" cy="279" r="11" fill="url(#lenteOuro)" stroke="#141414" stroke-width="2"></circle>
+            <circle cx="350" cy="279" r="11" fill="url(#lenteOuro)" stroke="#141414" stroke-width="2"></circle>
+            <circle cx="376" cy="279" r="11" fill="url(#lenteOuro)" stroke="#141414" stroke-width="2"></circle>
+            <circle cx="402" cy="279" r="11" fill="url(#lenteOuro)" stroke="#141414" stroke-width="2"></circle>
+                                    <g transform="rotate(-20 258 107)">
+              <rect x="254" y="100" width="78" height="14" rx="7" fill="#141414" stroke="#FFD966" stroke-width="2"></rect>
+              <line x1="314" y1="101.5" x2="314" y2="112.5" stroke="#FFD966" stroke-width="2.5"></line>
+              <line x1="321" y1="101.5" x2="321" y2="112.5" stroke="#FFD966" stroke-width="2.5"></line>
+              <rect x="330" y="95" width="14" height="23" rx="7" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            </g>
+            <rect x="223" y="92" width="34" height="50" rx="8" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <rect x="229" y="99" width="22" height="36" rx="5" fill="none" stroke="#FFD966" stroke-width="2"></rect>
+            <rect x="216" y="82" width="48" height="15" rx="7" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <rect x="214" y="136" width="52" height="15" rx="7" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+          </svg><span class="logo-txt">DOUTOR DETRÂNSITO</span></a>
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menu"><svg class="ic lg"><use href="#i-menu"/></svg></button>
+    <nav id="nav">
+      <a href="#topo">Início</a>
+      <a href="#como">Como Funciona</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#analise">Análise Grátis</a>
+      <a href="#planos">Planos</a>
+      <a href="#duvidas">Dúvidas</a>
+      <a class="cta" id="navWa"><svg class="ic"><use href="#i-whatsapp"/></svg> Falar no WhatsApp</a>
+    </nav>
+  </div>
+</header>
+
+<a class="wa-float" id="waFloat" title="Falar no WhatsApp" aria-label="Falar no WhatsApp"><svg><use href="#i-whatsapp"/></svg></a>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="topo">
+  <div class="wrap grid">
+    <div>
+      <h1>Prestes a perder<br>a sua <span class="gold">CNH?</span></h1>
+      <p class="sub">Defenda o seu <b>direito de dirigir.</b></p>
+
+      <div class="chips">
+        <span class="chip"><svg class="ic"><use href="#i-doc"/></svg> Recursos de Multas</span>
+        <span class="chip"><svg class="ic"><use href="#i-car"/></svg> Suspensão</span>
+        <span class="chip"><svg class="ic"><use href="#i-x-c"/></svg> Cassação</span>
+      </div>
+
+      <p class="lead">Análise gratuita do seu caso.</p>
+      <div class="actions">
+        <a class="btn gold" href="#analise"><svg class="ic"><use href="#i-search"/></svg> Fazer análise gratuita</a>
+        <a class="btn ghost" id="heroWa"><svg class="ic"><use href="#i-whatsapp"/></svg> Falar com especialista</a>
+      </div>
+
+      <div class="trust">
+        <span><svg class="ic"><use href="#i-check-c"/></svg> Especialistas em Direito de Trânsito</span>
+        <span><svg class="ic"><use href="#i-check-c"/></svg> +5.000 casos analisados</span>
+        <span><svg class="ic"><use href="#i-check-c"/></svg> Atendimento 100% online</span>
+      </div>
+    </div>
+
+    <div class="hero-art">
+      <span class="qmark" aria-hidden="true">?</span>
+      <!-- Opcional: coloque uma foto chamada hero.jpg nesta pasta. Se não existir, some sozinha. -->
+      <img class="hero-foto" id="heroFoto" src="hero.jpg" alt="" onerror="this.remove()">
+      <div class="hero-badge">
+        <b><svg class="ic"><use href="#i-shield"/></svg> Sua CNH</b>
+        <p>é importante.<br>Nós defendemos o que é seu.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COMO FUNCIONA ================= -->
+<section id="como" class="alt">
+  <div class="wrap">
+    <div class="sec-h reveal">
+      <h2>Como <span class="gold">funciona?</span></h2>
+      <p>Simples, rápido e 100% online.</p>
+    </div>
+    <div class="steps-row reveal">
+      <div class="step">
+        <span class="n">01</span>
+        <div class="art"><svg class="ic"><use href="#i-doc-edit"/></svg></div>
+        <h3>Cadastro</h3>
+        <p>Preencha seus dados e conte sua situação.</p>
+      </div>
+      <div class="sep"><svg class="ic" style="width:16px;height:16px"><use href="#i-chev-r"/></svg></div>
+      <div class="step">
+        <span class="n">02</span>
+        <div class="art"><svg class="ic"><use href="#i-cloud-up"/></svg></div>
+        <h3>Envie seus documentos</h3>
+        <p>Anexe os documentos relacionados ao seu caso.</p>
+      </div>
+      <div class="sep"><svg class="ic" style="width:16px;height:16px"><use href="#i-chev-r"/></svg></div>
+      <div class="step">
+        <span class="n">03</span>
+        <div class="art"><svg class="ic"><use href="#i-search"/></svg></div>
+        <h3>Análise especializada</h3>
+        <p>Nossos especialistas analisam o seu caso com atenção.</p>
+      </div>
+      <div class="sep"><svg class="ic" style="width:16px;height:16px"><use href="#i-chev-r"/></svg></div>
+      <div class="step">
+        <span class="n">04</span>
+        <div class="art"><svg class="ic"><use href="#i-shield"/></svg></div>
+        <h3>Defesa estratégica</h3>
+        <p>Elaboramos o melhor recurso para proteger seu direito.</p>
+      </div>
+    </div>
+    <div class="steps-cta reveal">
+      <a class="btn gold" href="#analise"><svg class="ic"><use href="#i-search"/></svg> Fazer análise gratuita</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVIÇOS ================= -->
+<section id="servicos">
+  <div class="wrap">
+    <div class="sec-h reveal">
+      <h2>Nossos <span class="gold">serviços</span></h2>
+      <p>Soluções completas para sua defesa.</p>
+    </div>
+    <div class="servicos reveal">
+      <div class="servico">
+        <div class="ic-box"><svg class="ic"><use href="#i-doc"/></svg></div>
+        <div>
+          <h3>Recursos de Multas</h3>
+          <p>Defesa contra multas indevidas e pontos na CNH.</p>
+          <a class="more" href="#analise">Saiba mais <svg class="ic"><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+      <div class="servico">
+        <div class="ic-box"><svg class="ic"><use href="#i-car"/></svg></div>
+        <div>
+          <h3>Suspensão da CNH</h3>
+          <p>Recursos para suspensão do direito de dirigir.</p>
+          <a class="more" href="#analise">Saiba mais <svg class="ic"><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+      <div class="servico">
+        <div class="ic-box"><svg class="ic"><use href="#i-shield-x"/></svg></div>
+        <div>
+          <h3>Cassação da CNH</h3>
+          <p>Defesa especializada contra cassação da habilitação.</p>
+          <a class="more" href="#analise">Saiba mais <svg class="ic"><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ANÁLISE GRATUITA (consulta placa + renavam) ================= -->
+<section id="analise" class="alt">
+  <div class="wrap">
+    <div class="painel reveal">
+      <div class="painel-esq">
+        <div class="emblema"><svg class="ic"><use href="#i-shield"/></svg></div>
+        <div>
+          <h2>Análise gratuita do seu caso</h2>
+          <p class="desc">Consulte o seu veículo e descubra como podemos te ajudar.</p>
+          <ul class="checks">
+            <li><svg class="ic"><use href="#i-check-c"/></svg> Consulta e análise 100% gratuitas</li>
+            <li><svg class="ic"><use href="#i-check-c"/></svg> Resultado na hora, direto na tela</li>
+            <li><svg class="ic"><use href="#i-check-c"/></svg> Atendimento humanizado</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <!-- ============ PASSO 1: criar conta ou entrar ============ -->
+        <div id="authBox">
+          <div class="auth-abas">
+            <button type="button" id="abaCriar" class="on">Criar conta</button>
+            <button type="button" id="abaEntrar">Já tenho conta</button>
+          </div>
+
+          <div class="auth-topo">
+            <svg class="ic"><use href="#i-shield"/></svg>
+            <span id="authExplica">Crie sua conta para receber o resultado da consulta e poder consultá-lo de novo quando quiser, sem pagar nada.</span>
+          </div>
+
+          <form class="form-grid" id="formAuth" novalidate>
+            <div class="campo" data-so-cadastro>
+              <label class="flt" for="regNome">Nome completo</label>
+              <input id="regNome" type="text" placeholder="Seu nome completo" autocomplete="name">
+            </div>
+            <div class="campo" data-so-cadastro>
+              <label class="flt" for="regCpf">CPF</label>
+              <input id="regCpf" type="text" placeholder="000.000.000-00" maxlength="14" inputmode="numeric" autocomplete="off">
+              <p class="hint">É o mesmo CPF do seu login gov.br.</p>
+            </div>
+            <div class="campo" data-so-cadastro>
+              <label class="flt" for="regNasc">Data de nascimento</label>
+              <input id="regNasc" type="date">
+            </div>
+            <div class="campo" data-so-cadastro>
+              <label class="flt" for="regTel">WhatsApp</label>
+              <input id="regTel" type="tel" placeholder="(00) 00000-0000" inputmode="tel" autocomplete="tel" maxlength="16">
+            </div>
+            <div class="campo">
+              <label class="flt" for="regEmail">E-mail</label>
+              <input id="regEmail" type="email" placeholder="voce@email.com" autocomplete="email">
+            </div>
+            <div class="campo">
+              <label class="flt" for="regSenha">Senha</label>
+              <input id="regSenha" type="password" placeholder="mínimo 8 caracteres" autocomplete="current-password">
+              <p class="hint" data-so-cadastro>Esta é a senha do <b>nosso site</b> — não é a do gov.br.</p>
+            </div>
+            <div class="full">
+              <button type="submit" class="btn gold block" id="btnAuth">Criar conta e continuar</button>
+              <p class="erro-msg" id="authErro" hidden></p>
+              <p class="nota">Seus dados são usados só para a sua defesa. Você pode pedir a exclusão a qualquer momento.</p>
+            </div>
+          </form>
+        </div>
+
+        <!-- ============ PASSO 2: consulta (só depois de entrar) ============ -->
+        <div id="consultaBox" hidden>
+          <div class="logado">
+            <span class="pt"></span>
+            <span class="quem"><b id="logadoNome">—</b><span id="logadoEmail"></span></span>
+            <button type="button" id="btnSair">Sair</button>
+          </div>
+
+          <form class="form-grid" id="formConsulta" novalidate>
+          <div class="campo">
+            <label class="flt" for="placa">Placa do veículo</label>
+            <input id="placa" name="placa" type="text" placeholder="ABC1D23" maxlength="8" autocomplete="off" inputmode="text">
+          </div>
+          <div class="campo">
+            <label class="flt" for="renavam">Renavam</label>
+            <input id="renavam" name="renavam" type="text" placeholder="00000000000" maxlength="11" autocomplete="off" inputmode="numeric">
+            <p class="hint">11 dígitos, no documento do veículo (CRLV).</p>
+          </div>
+          <div class="campo" id="campoCodigo" hidden>
+            <label class="flt" for="codigo_seguranca">Código de segurança do CRLV</label>
+            <input id="codigo_seguranca" name="codigo_seguranca" type="text" placeholder="000000000000" maxlength="14" autocomplete="off" inputmode="numeric">
+            <p class="hint">Alguns estados exigem. Está impresso no CRLV.</p>
+          </div>
+
+          <!-- Acesso ao SENATRAN. O portal do gov.br só devolve as infrações
+               do próprio titular, por isso o login é do cliente.
+               O CPF não é pedido de novo: vem do cadastro. -->
+          <div class="govbr full">
+            <div class="govbr-h"><svg class="ic"><use href="#i-lock"/></svg> Acesso ao SENATRAN (gov.br)</div>
+            <p class="govbr-p">As multas ficam no portal do gov.br e só o titular tem acesso. Por isso a consulta usa o seu login — do mesmo jeito que você entraria no site do SENATRAN. Usaremos o CPF <b id="govbrCpf">—</b>, do seu cadastro.</p>
+            <div class="campo">
+              <label class="flt" for="login_senha">Sua senha do gov.br</label>
+              <input id="login_senha" name="login_senha" type="password" placeholder="senha do gov.br" autocomplete="new-password">
+            </div>
+            <p class="govbr-nota">
+              <b>Não guardamos a sua senha.</b> Ela é usada só para esta consulta e descartada em seguida —
+              não fica salva no seu navegador, nem em banco de dados, nem em registro nenhum.
+              Se preferir não informar,
+              <a href="#ferramenta">envie a foto da notificação</a> que analisamos do mesmo jeito.
+            </p>
+          </div>
+
+          <label class="consent full">
+            <input type="checkbox" id="consent">
+            <span id="consentTexto">Autorizo o uso do meu login do gov.br <b>exclusivamente</b> para esta consulta de infrações, e o contato sobre o meu caso. Estou ciente de que o resultado tem <b>caráter preliminar</b> e <b>não garante resultado</b>.</span>
+          </label>
+
+          <div class="full">
+            <button type="submit" class="btn gold block" id="btnConsultar">Enviar para análise <svg class="ic"><use href="#i-send"/></svg></button>
+            <p class="erro-msg" id="consultaErro" hidden></p>
+            <p class="nota">Seus dados estão 100% seguros. Não compartilhamos suas informações.</p>
+          </div>
+          </form>
+
+          <div class="res" id="resConsulta"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FERRAMENTA IA ================= -->
+<section id="ferramenta">
+  <div class="wrap">
+    <div class="sec-h reveal">
+      <h2>Já tem a <span class="gold">notificação</span> em mãos?</h2>
+      <p>Envie os documentos e receba um diagnóstico técnico em minutos: prazos, vícios encontrados e a força da sua defesa.</p>
+    </div>
+    <div class="tool reveal">
+      <label class="flt" for="tipo">Tipo do seu caso</label>
+      <div class="campo">
+        <select id="tipo">
+          <option value="processo administrativo de SUSPENSÃO do direito de dirigir">Suspensão do direito de dirigir</option>
+          <option value="processo administrativo de CASSAÇÃO da CNH">Cassação da CNH</option>
+          <option value="processo de CANCELAMENTO/nulidade da habilitação">Cancelamento da habilitação</option>
+          <option value="recurso de multa (autuação / JARI / CETRAN)">Recurso de multa</option>
+        </select>
+      </div>
+
+      <label class="flt">Documentos (foto ou PDF)</label>
+      <div class="drop" id="drop">
+        <svg class="ic"><use href="#i-upload"/></svg>
+        <span>Toque para enviar ou arraste aqui</span>
+        <small>Notificação, auto de infração, portaria, prontuário, CNH…</small>
+      </div>
+      <input type="file" id="fileInput" accept=".pdf,image/*" multiple hidden>
+      <div class="files" id="fileList"></div>
+
+      <label class="flt" for="notes">Conte rapidamente o que aconteceu (opcional)</label>
+      <div class="campo">
+        <textarea id="notes" rows="3" placeholder="Ex.: não fui notificado da multa; recebi a portaria dia tal; dependo do carro para trabalhar..."></textarea>
+      </div>
+
+      <label class="consent" style="margin-top:16px">
+        <input type="checkbox" id="consentIA">
+        <span>Autorizo o tratamento dos meus dados para esta análise e estou ciente de que o diagnóstico tem <b>caráter preliminar</b> e <b>não garante resultado</b>.</span>
+      </label>
+
+      <button class="btn gold block" id="btnAnalisar" style="margin-top:14px"><svg class="ic"><use href="#i-search"/></svg> Gerar meu diagnóstico gratuito</button>
+
+      <div class="out" id="out"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PLANOS ================= -->
+<section id="planos" class="alt">
+  <div class="wrap">
+    <div class="sec-h reveal">
+      <h2>Escolha como quer a sua <span class="gold">defesa</span></h2>
+      <p>Preços transparentes. Obrigação de <b>meio</b> — trabalhamos pela melhor defesa técnica possível, sem prometer resultado.</p>
+    </div>
+    <div class="plans reveal">
+      <div class="plan">
+        <h3>Análise Técnica</h3>
+        <div class="price">Grátis</div>
+        <ul>
+          <li><svg class="ic ck"><use href="#i-check"/></svg> Diagnóstico dos vícios do seu caso</li>
+          <li><svg class="ic ck"><use href="#i-check"/></svg> Alerta de prazos</li>
+          <li><svg class="ic ck"><use href="#i-check"/></svg> Indicação das teses de defesa</li>
+          <li class="no"><svg class="ic ck"><use href="#i-x"/></svg> Peça pronta para protocolar</li>
+        </ul>
+        <a class="btn ghost block" href="#analise">Fazer agora</a>
+      </div>
+      <div class="plan">
+        <h3>Recurso de Multa</h3>
+        <div class="price"><span class="from">a partir de</span>R$ 97 <small>/ recurso</small></div>
+        <ul>
+          <li><svg class="ic ck"><use href="#i-check"/></svg> Peça de defesa/recurso completa</li>
+          <li><svg class="ic ck"><use href="#i-check"/></svg> Fundamentação técnica e no CTB</li>
+          <li><svg class="ic ck"><use href="#i-check"/></svg> Pronta para você assinar e protocolar</li>
+          <li><svg class="ic ck"><use href="#i-check"/></svg> Orientação de protocolo</li>
+        </ul>
+        <a class="btn ghost block" data-plano="Recurso de Multa (R$ 97)">Quero este</a>
+      </div>
+      <div class="plan feat">
+        <div class="flag"><svg class="ic fill" style="width:13px;height:13px"><use href="#i-star"/></svg> MAIS PROCURADO</div>
+        <h3>Defesa da CNH</h3>
+        <div class="price"><span class="from">a partir de</span>R$ 497</div>
+        <ul>
+          <li><svg class="ic ck"><use href="#i-check"/></svg> <b>Suspensão, cassação e cancelamento</b></li>
+          <li><svg class="ic ck"><use href="#i-check"/></svg> Defesa prévia + recurso à JARI e CETRAN</li>
+          <li><svg class="ic ck"><use href="#i-check"/></svg> Análise completa do prontuário e da pontuação</li>
+          <li><svg class="ic ck"><use href="#i-check"/></svg> Peça robusta pronta para protocolar</li>
+          <li><svg class="ic ck"><use href="#i-check"/></svg> Acompanhamento e orientação por WhatsApp</li>
+        </ul>
+        <a class="btn gold block" data-plano="Defesa da CNH — Suspensão/Cassação/Cancelamento (a partir de R$ 497)">Defender minha CNH</a>
+      </div>
+    </div>
+    <p style="text-align:center;color:var(--muted2);margin:22px 0 0;font-size:13px">Valores podem variar conforme a complexidade do caso. O valor exato é confirmado após a análise gratuita.</p>
+  </div>
+</section>
+
+<!-- ================= DÚVIDAS ================= -->
+<section id="duvidas">
+  <div class="wrap" style="max-width:840px">
+    <div class="sec-h reveal">
+      <h2>Perguntas <span class="gold">frequentes</span></h2>
+      <p>O que as pessoas mais perguntam antes de começar.</p>
+    </div>
+    <div class="faq reveal">
+      <details><summary>Vocês são um escritório de advocacia? <svg class="ic chev"><use href="#i-chev"/></svg></summary><p>Não. O Doutor Detrânsito é um serviço de <b>assistência técnica em trânsito</b> e uma <b>ferramenta de autoatendimento</b>. Na esfera administrativa de trânsito (Detran, JARI, CETRAN) <b>não é obrigatório advogado</b> — o próprio condutor pode apresentar sua defesa. Nós ajudamos você a montar a peça técnica; <b>você</b> assina e protocola.</p></details>
+      <details><summary>Vocês garantem que eu não vou perder a CNH? <svg class="ic chev"><use href="#i-chev"/></svg></summary><p>Não existe garantia de resultado — quem decide é o órgão de trânsito. Nosso compromisso é entregar a <b>melhor defesa técnica possível</b> dentro do prazo (obrigação de meio). Prometer resultado seria enganoso e é proibido pelo Código de Defesa do Consumidor.</p></details>
+      <details><summary>A consulta e a análise são realmente gratuitas? <svg class="ic chev"><use href="#i-chev"/></svg></summary><p>Sim. A consulta do veículo e o diagnóstico técnico do seu caso são 100% gratuitos e sem compromisso. Você só contrata se quiser a peça de defesa completa.</p></details>
+      <details><summary>Preciso informar minha senha do gov.br? <svg class="ic chev"><use href="#i-chev"/></svg></summary><p><b>Nunca.</b> Não pedimos e não aceitamos a sua senha do gov.br em hipótese alguma. A consulta usa apenas dados do documento do veículo (placa e Renavam). Se algum site pedir a sua senha do gov.br, desconfie.</p></details>
+      <details><summary>Como funciona o protocolo da defesa? <svg class="ic chev"><use href="#i-chev"/></svg></summary><p>A defesa é apresentada ao órgão indicado na sua notificação (Detran/JARI/CETRAN), presencialmente ou pelo portal do órgão. Entregamos a peça pronta e <b>orientamos você em cada passo</b> do protocolo.</p></details>
+      <details><summary>Quais documentos eu preciso enviar? <svg class="ic chev"><use href="#i-chev"/></svg></summary><p>O que você tiver: a notificação/portaria do processo, o auto de infração, o prontuário da CNH e um documento com foto. Quanto mais completo, melhor a análise.</p></details>
+      <details><summary>Meus dados estão seguros? <svg class="ic chev"><use href="#i-chev"/></svg></summary><p>Sim. Tratamos seus dados conforme a <b>LGPD</b>, usamos apenas para elaborar a sua defesa e você pode solicitar a exclusão a qualquer momento. Veja a <a id="lnkPriv" href="#">Política de Privacidade</a>.</p></details>
+      <details><summary>O prazo já está acabando, dá tempo? <svg class="ic chev"><use href="#i-chev"/></svg></summary><p>Provavelmente sim — por isso a análise é rápida. Faça o diagnóstico agora e, se preferir, <a id="lnkWa" href="#">chame no WhatsApp</a> para agilizarmos.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DIFERENCIAIS ================= -->
+<section class="alt" style="padding:52px 0">
+  <div class="wrap">
+    <div class="difs reveal">
+      <div class="dif">
+        <span class="bolha"><svg class="ic"><use href="#i-headset"/></svg></span>
+        <div><b>Atendimento 100% online</b><p>Sem burocracia, resolva tudo de onde estiver.</p></div>
+      </div>
+      <div class="dif">
+        <span class="bolha"><svg class="ic"><use href="#i-user"/></svg></span>
+        <div><b>Especialistas em Trânsito</b><p>Especialistas na área de direito de trânsito.</p></div>
+      </div>
+      <div class="dif">
+        <span class="bolha"><svg class="ic"><use href="#i-star"/></svg></span>
+        <div><b>Experiência comprovada</b><p>Mais de 5.000 casos analisados com sucesso.</p></div>
+      </div>
+      <div class="dif">
+        <span class="bolha"><svg class="ic"><use href="#i-lock"/></svg></span>
+        <div><b>Sigilo e segurança</b><p>Seus dados e informações sempre protegidos.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div class="marca">
+        <a href="#topo"><svg class="logo-svg" viewBox="44 54 392 424" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="lenteOuro2" cx="0.38" cy="0.32" r="0.85">
+                <stop offset="0" stop-color="#FFFBE8"></stop>
+                <stop offset="0.45" stop-color="#FFD966"></stop>
+                <stop offset="1" stop-color="#C0942A"></stop>
+              </radialGradient>
+            </defs>
+            <rect x="202" y="436" width="76" height="12" rx="5" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <rect x="186" y="446" width="108" height="18" rx="9" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+                        <rect x="205" y="138" width="70" height="306" rx="8" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <path d="M104,170 Q240,128 376,170" fill="none" stroke="#FFD966" stroke-width="39" stroke-linecap="round"></path>
+            <path d="M104,170 Q240,128 376,170" fill="none" stroke="#141414" stroke-width="34" stroke-linecap="round"></path>
+            <path d="M104,160 Q150,146 196,141" fill="none" stroke="#FFD966" stroke-width="3"></path>
+            <path d="M284,141 Q330,146 376,160" fill="none" stroke="#FFD966" stroke-width="3"></path>
+            <path d="M104,180 Q150,166 196,161" fill="none" stroke="#FFD966" stroke-width="3"></path>
+            <path d="M284,161 Q330,166 376,180" fill="none" stroke="#FFD966" stroke-width="3"></path>
+            <line x1="213" y1="174" x2="213" y2="390" stroke="#FFD966" stroke-width="3"></line>
+            <line x1="267" y1="174" x2="267" y2="390" stroke="#FFD966" stroke-width="3"></line>
+            <g stroke="#FFD966" stroke-width="5">
+              <line x1="111.4" y1="167.8" x2="127" y2="163.6"></line>
+              <line x1="142.2" y1="159.9" x2="157.8" y2="156.7"></line>
+              <line x1="173" y1="154.1" x2="188.6" y2="151.9"></line>
+              <line x1="291.4" y1="151.9" x2="307" y2="154.1"></line>
+              <line x1="322.2" y1="156.7" x2="337.8" y2="159.9"></line>
+              <line x1="353" y1="163.6" x2="368.6" y2="167.8"></line>
+            </g>
+            <line x1="240" y1="178" x2="240" y2="381" stroke="#FFD966" stroke-width="6" stroke-dasharray="20 14"></line>
+            <rect x="214" y="396" width="52" height="8" rx="2" fill="#FFD966"></rect>
+            <rect x="214" y="410" width="52" height="8" rx="2" fill="#FFD966"></rect>
+            <rect x="214" y="424" width="52" height="8" rx="2" fill="#FFD966"></rect>
+            <g stroke="#FFD966" stroke-width="4.5" stroke-linecap="round">
+              <line x1="104" y1="184" x2="66" y2="264"></line>
+              <line x1="104" y1="184" x2="142" y2="264"></line>
+              <line x1="376" y1="184" x2="338" y2="264"></line>
+              <line x1="376" y1="184" x2="414" y2="264"></line>
+            </g>
+            <circle cx="104" cy="184" r="4.5" fill="#FFD966"></circle>
+            <circle cx="376" cy="184" r="4.5" fill="#FFD966"></circle>
+            <circle cx="66" cy="264" r="3" fill="#FFD966"></circle>
+            <circle cx="142" cy="264" r="3" fill="#FFD966"></circle>
+            <circle cx="338" cy="264" r="3" fill="#FFD966"></circle>
+            <circle cx="414" cy="264" r="3" fill="#FFD966"></circle>
+            <rect x="58" y="262" width="92" height="34" rx="16" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <rect x="330" y="262" width="92" height="34" rx="16" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <circle cx="78" cy="279" r="11" fill="url(#lenteOuro2)" stroke="#141414" stroke-width="2"></circle>
+            <circle cx="104" cy="279" r="11" fill="url(#lenteOuro2)" stroke="#141414" stroke-width="2"></circle>
+            <circle cx="130" cy="279" r="11" fill="url(#lenteOuro2)" stroke="#141414" stroke-width="2"></circle>
+            <circle cx="350" cy="279" r="11" fill="url(#lenteOuro2)" stroke="#141414" stroke-width="2"></circle>
+            <circle cx="376" cy="279" r="11" fill="url(#lenteOuro2)" stroke="#141414" stroke-width="2"></circle>
+            <circle cx="402" cy="279" r="11" fill="url(#lenteOuro2)" stroke="#141414" stroke-width="2"></circle>
+                                    <g transform="rotate(-20 258 107)">
+              <rect x="254" y="100" width="78" height="14" rx="7" fill="#141414" stroke="#FFD966" stroke-width="2"></rect>
+              <line x1="314" y1="101.5" x2="314" y2="112.5" stroke="#FFD966" stroke-width="2.5"></line>
+              <line x1="321" y1="101.5" x2="321" y2="112.5" stroke="#FFD966" stroke-width="2.5"></line>
+              <rect x="330" y="95" width="14" height="23" rx="7" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            </g>
+            <rect x="223" y="92" width="34" height="50" rx="8" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <rect x="229" y="99" width="22" height="36" rx="5" fill="none" stroke="#FFD966" stroke-width="2"></rect>
+            <rect x="216" y="82" width="48" height="15" rx="7" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+            <rect x="214" y="136" width="52" height="15" rx="7" fill="#141414" stroke="#FFD966" stroke-width="2.5"></rect>
+          </svg><span class="logo-txt">DOUTOR DETRÂNSITO</span></a>
+        <p>Assistência técnica em processos administrativos de trânsito. Defendemos o seu direito de dirigir com tecnologia e conhecimento especializado.</p>
+      </div>
+      <div>
+        <h4>Links rápidos</h4>
+        <div class="fnav">
+          <a href="#topo">Início</a>
+          <a href="#servicos">Serviços</a>
+          <a href="#como">Como Funciona</a>
+          <a href="#analise">Análise Grátis</a>
+          <a href="#planos">Planos</a>
+          <a href="#duvidas">Dúvidas</a>
+        </div>
+      </div>
+      <div>
+        <h4>Serviços</h4>
+        <div class="fnav">
+          <a href="#servicos">Recursos de Multas</a>
+          <a href="#servicos">Suspensão da CNH</a>
+          <a href="#servicos">Cassação da CNH</a>
+          <a href="cadastro.html">Enviar documentos</a>
+        </div>
+      </div>
+      <div>
+        <h4>Fale conosco</h4>
+        <div class="fnav">
+          <a id="footWa"><svg class="ic"><use href="#i-whatsapp"/></svg> <span id="footTel">(79) 9 9999-9999</span></a>
+          <a id="footMail"><svg class="ic"><use href="#i-mail"/></svg> <span id="footEmail">contato@doutordetransito.com.br</span></a>
+          <a style="cursor:default"><svg class="ic"><use href="#i-clock"/></svg> Atendimento: Seg a Sex – 08h às 18h</a>
+          <a id="lnkTermos" href="#"><svg class="ic"><use href="#i-doc"/></svg> Termos de Uso</a>
+          <a id="lnkPriv2" href="#"><svg class="ic"><use href="#i-lock"/></svg> Política de Privacidade</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="disc">
+      <b style="color:var(--muted)">Doutor Detrânsito</b> — [Razão Social / CNPJ a preencher]. Serviço de <b>assistência técnica em trânsito</b> e ferramenta de autoatendimento. <b>Não é escritório de advocacia</b> e não presta serviços privativos de advogado (Lei nº 8.906/94). A representação na esfera administrativa de trânsito não exige advogado (CTB, Lei nº 9.503/97). As análises têm <b>caráter técnico e preliminar</b>, <b>não constituem consultoria jurídica</b> e <b>não garantem resultado</b>. Os prazos são de responsabilidade do contratante e devem ser conferidos junto ao órgão de trânsito. A consulta de veículo utiliza dados públicos dos órgãos de trânsito e pode não refletir alterações recentes — confira sempre no órgão.
+    </div>
+    <div class="bottom">
+      <span>© <span id="ano"></span> Doutor Detrânsito. Todos os direitos reservados.</span>
+      <span>Desenvolvido com <svg class="ic fill"><use href="#i-heart"/></svg> e propósito.</span>
+    </div>
+  </div>
+</footer>
+
+<dialog id="dlgTermos">
+  <div class="dh">Termos de Uso <button class="x" data-close aria-label="Fechar"><svg class="ic"><use href="#i-x"/></svg></button></div>
+  <div class="db">
+    <p><b style="color:var(--gold)">Rascunho — revisar com advogado antes de publicar.</b></p>
+    <h4>1. O que é este serviço</h4><p>O Doutor Detrânsito é uma ferramenta de autoatendimento e assistência técnica que auxilia o usuário a elaborar defesas e recursos administrativos de trânsito. O usuário é o responsável por revisar, assinar e protocolar a peça junto ao órgão competente.</p>
+    <h4>2. Ausência de garantia de resultado</h4><p>O serviço é de meio, não de resultado. A decisão cabe exclusivamente ao órgão de trânsito. Nenhuma comunicação deve ser interpretada como promessa de cancelamento de multa ou de preservação da habilitação.</p>
+    <h4>3. Natureza técnica e preliminar</h4><p>As análises têm caráter técnico e preliminar e podem conter imprecisões; recomenda-se a conferência dos dados e dos prazos.</p>
+    <h4>4. Consulta de veículo</h4><p>A consulta por placa e Renavam acessa dados públicos disponibilizados pelos órgãos de trânsito. O usuário declara ser o proprietário do veículo ou ter autorização para consultá-lo. Não solicitamos senha do gov.br nem credenciais de acesso a sistemas públicos.</p>
+    <h4>5. Prazos</h4><p>O acompanhamento e o cumprimento dos prazos legais são de responsabilidade do usuário.</p>
+    <h4>6. Pagamento e reembolso</h4><p>Os valores e a política de reembolso serão informados na contratação, observado o direito de arrependimento do art. 49 do CDC quando aplicável.</p>
+  </div>
+</dialog>
+
+<dialog id="dlgPriv">
+  <div class="dh">Política de Privacidade (LGPD) <button class="x" data-close aria-label="Fechar"><svg class="ic"><use href="#i-x"/></svg></button></div>
+  <div class="db">
+    <p><b style="color:var(--gold)">Rascunho — revisar com advogado/DPO antes de publicar.</b></p>
+    <h4>Dados que coletamos</h4><p>Dados do veículo informados por você (placa e Renavam), documentos e informações que você envia (ex.: notificações, auto de infração, prontuário, CNH) e dados de contato (nome e WhatsApp).</p>
+    <h4>O que NÃO coletamos</h4><p>Não solicitamos, não coletamos e não armazenamos senhas do gov.br, do Detran ou de qualquer sistema público. Nenhum serviço legítimo deve pedir essa senha a você.</p>
+    <h4>Finalidade e base legal</h4><p>Usamos seus dados exclusivamente para elaborar a análise e a defesa (execução de contrato e exercício regular de direitos, art. 7º da LGPD). Marketing apenas com seu consentimento.</p>
+    <h4>Compartilhamento</h4><p>Para gerar a consulta e a análise, os dados podem ser processados por prestadores de tecnologia sob contrato de proteção de dados, podendo haver transferência internacional com as salvaguardas da LGPD.</p>
+    <h4>Seus direitos</h4><p>Você pode acessar, corrigir e solicitar a exclusão dos seus dados a qualquer momento pelos nossos canais de contato.</p>
+    <h4>Retenção</h4><p>Mantemos os dados apenas pelo tempo necessário à prestação do serviço e às obrigações legais.</p>
+  </div>
+</dialog>
+
+<script>
+"use strict";
+/* ============ CONFIGURAÇÃO (edite aqui) ============ */
+const CFG = {
+  marca: "Doutor Detrânsito",
+  whatsapp: "5599999999999",                 // <-- TROQUE: 55 + DDD + número (só dígitos)
+  telefoneExibicao: "(79) 9 9999-9999",      // <-- TROQUE: como aparece no rodapé
+  email: "contato@doutordetransito.com.br",  // <-- TROQUE pelo seu e-mail
+  checkout: { "Recurso de Multa (R$ 97)": "", "Defesa da CNH — Suspensão/Cassação/Cancelamento (a partir de R$ 497)": "" },
+  modeloIA: "claude-sonnet-5",
+  // Peça o "código de segurança do CRLV" no formulário? Alguns Detrans exigem.
+  pedirCodigoSeguranca: false,
+};
+
+/* ---- Banco de dados (Supabase) ----
+   Estes dois valores NÃO são secretos: podem ficar aqui. Quem protege os
+   dados dos clientes é a regra de segurança (RLS) lá no banco — veja o
+   arquivo SUPABASE_SCHEMA_SITE.sql. */
+const NUVEM = {
+  url:  "https://ueqxpfemocgopmaptcnf.supabase.co",
+  anon: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVlcXhwZmVtb2Nnb3BtYXB0Y25mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQyNTQ3MDgsImV4cCI6MjA5OTgzMDcwOH0.iXFTsnqxKXrUkRYvqrrH_ZMEy2F235EpX6YVwGfN7Sk",
+};
+/* =================================================== */
+
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const waLink = msg => `https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(msg)}`;
+const waGeral = () => waLink(`Olá! Vim pelo site do ${CFG.marca} e quero ajuda com meu caso de trânsito.`);
+
+$('#ano').textContent = new Date().getFullYear();
+["heroWa","navWa","waFloat","footWa","lnkWa"].forEach(id => { const e = $('#'+id); if (e) e.href = waGeral(); });
+$('#footMail').href = "mailto:" + CFG.email;
+$('#footEmail').textContent = CFG.email;
+$('#footTel').textContent = CFG.telefoneExibicao;
+if (CFG.pedirCodigoSeguranca) $('#campoCodigo').hidden = false;
+
+/* ---------- Menu mobile ---------- */
+$('#menuBtn').onclick = () => $('#nav').classList.toggle('open');
+$$('#nav a').forEach(a => a.onclick = () => $('#nav').classList.remove('open'));
+
+/* ---------- Modais ---------- */
+$('#lnkTermos').onclick = e => { e.preventDefault(); $('#dlgTermos').showModal(); };
+$('#lnkPriv').onclick   = e => { e.preventDefault(); $('#dlgPriv').showModal(); };
+$('#lnkPriv2').onclick  = e => { e.preventDefault(); $('#dlgPriv').showModal(); };
+$$('[data-close]').forEach(b => b.onclick = () => b.closest('dialog').close());
+
+/* ---------- Planos ---------- */
+$$('[data-plano]').forEach(b => {
+  b.onclick = () => {
+    const plano = b.getAttribute('data-plano');
+    const link = CFG.checkout[plano];
+    if (link) window.open(link, '_blank');
+    else window.open(waLink(`Olá! Tenho interesse no plano: ${plano}. Pode me ajudar?`), '_blank');
+  };
+});
+
+/* ---------- Reveal on scroll ---------- */
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } }), { threshold: .12 });
+$$('.reveal').forEach(el => io.observe(el));
+
+/* =========================================================
+   REGISTRO E LOGIN (Supabase Auth)
+
+   O cliente precisa ter conta antes de consultar. Assim ele recebe o
+   resultado, pode rever depois sem custo, e você deixa de perder o lead
+   de quem não clica no WhatsApp.
+
+   A senha DO SITE é cuidada pelo Supabase (com hash) — ela nunca passa
+   pelo nosso código. E não tem nada a ver com a senha do gov.br, que é
+   outra coisa e não é guardada em lugar nenhum.
+   ========================================================= */
+let sb = null, sessao = null, perfil = null;
+let modoAuth = 'criar';   // 'criar' | 'entrar'
+
+const supaLigado = () => !!(NUVEM.url && NUVEM.anon && window.supabase);
+
+function authErro(msg){
+  const e = $('#authErro');
+  e.hidden = !msg;
+  e.innerHTML = msg ? `<svg class="ic"><use href="#i-alert"/></svg> ${msg}` : '';
+}
+
+function trocaModo(modo){
+  modoAuth = modo;
+  $('#abaCriar').classList.toggle('on', modo === 'criar');
+  $('#abaEntrar').classList.toggle('on', modo === 'entrar');
+  $$('[data-so-cadastro]').forEach(el => el.hidden = modo !== 'criar');
+  $('#btnAuth').textContent = modo === 'criar' ? 'Criar conta e continuar' : 'Entrar e continuar';
+  $('#authExplica').textContent = modo === 'criar'
+    ? 'Crie sua conta para receber o resultado da consulta e poder consultá-lo de novo quando quiser, sem pagar nada.'
+    : 'Entre na sua conta para consultar e ver o histórico das suas consultas.';
+  authErro('');
+}
+
+function mostraLogado(){
+  const logado = !!sessao;
+  $('#authBox').hidden = logado;
+  $('#consultaBox').hidden = !logado;
+  if(logado){
+    $('#logadoNome').textContent = perfil?.nome || 'Cadastro incompleto';
+    $('#logadoEmail').textContent = sessao.user.email;
+    $('#govbrCpf').textContent = perfil?.cpf ? mascaraCpf(perfil.cpf) : '—';
+  }
+}
+
+const mascaraCpf = d => String(d).replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+
+async function carregaPerfil(){
+  if(!sessao) { perfil = null; return; }
+  const { data, error } = await sb.from('perfis').select('*').eq('id', sessao.user.id).maybeSingle();
+  if(error) console.warn('[perfil]', error.message);
+  perfil = data || null;
+}
+
+$('#abaCriar').onclick  = () => trocaModo('criar');
+$('#abaEntrar').onclick = () => trocaModo('entrar');
+
+$('#regCpf').addEventListener('input', e => {
+  const d = e.target.value.replace(/\D/g, '').slice(0, 11);
+  e.target.value = d
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})\.(\d{3})(\d)/, '$1.$2.$3')
+    .replace(/(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
+});
+$('#regTel').addEventListener('input', e => {
+  const d = e.target.value.replace(/\D/g, '').slice(0, 11);
+  e.target.value = d.length <= 10
+    ? d.replace(/(\d{0,2})(\d{0,4})(\d{0,4})/, (_, a, b, c) => [a && `(${a}`, a.length === 2 ? ') ' : '', b, c && `-${c}`].join('')).trim()
+    : d.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+});
+
+$('#formAuth').addEventListener('submit', async ev => {
+  ev.preventDefault();
+  authErro('');
+  if(!supaLigado()) return authErro('Cadastro indisponível no momento. Fale com a gente pelo WhatsApp.');
+
+  const email = $('#regEmail').value.trim();
+  const senha = $('#regSenha').value;
+  if(!email || !senha) return authErro('Preencha e-mail e senha.');
+
+  const btn = $('#btnAuth');
+  const rotulo = btn.textContent;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span> Aguarde...';
+
+  try{
+    if(modoAuth === 'entrar'){
+      const { error } = await sb.auth.signInWithPassword({ email, password: senha });
+      if(error) throw error;
+      return;   // onAuthStateChange cuida do resto
+    }
+
+    // --- criar conta ---
+    const nome = $('#regNome').value.trim();
+    const cpf  = $('#regCpf').value.replace(/\D/g, '');
+    const nasc = $('#regNasc').value;
+    const tel  = $('#regTel').value.trim();
+
+    if(!nome) return authErro('Informe seu nome completo.');
+    if(!cpfValido(cpf)) return authErro('Confira o seu CPF.');
+    if(!nasc) return authErro('Informe sua data de nascimento.');
+    if(!idadeValida(nasc)) return authErro('Confira a data de nascimento.');
+    if(senha.length < 8) return authErro('A senha do site precisa ter pelo menos 8 caracteres.');
+
+    const { data, error } = await sb.auth.signUp({ email, password: senha });
+    if(error) throw error;
+
+    if(!data.session){
+      // O projeto está exigindo confirmação de e-mail.
+      return authErro('Conta criada. Confirme o e-mail que enviamos e depois clique em "Já tenho conta" para entrar.');
+    }
+
+    const { error: e2 } = await sb.from('perfis').insert({
+      id: data.session.user.id, nome, cpf, data_nascimento: nasc, telefone: tel || null,
+    });
+    if(e2) throw e2;
+  }catch(e){
+    const m = String(e.message || e);
+    if(/Invalid login/i.test(m)) authErro('E-mail ou senha incorretos.');
+    else if(/already registered|User already/i.test(m)) authErro('Este e-mail já tem conta. Clique em "Já tenho conta".');
+    else if(/Password should be/i.test(m)) authErro('A senha precisa ter pelo menos 8 caracteres.');
+    else if(/duplicate key/i.test(m)) authErro('Este cadastro já existe. Clique em "Já tenho conta".');
+    else authErro(m);
+  }finally{
+    btn.disabled = false;
+    btn.textContent = rotulo;
+  }
+});
+
+$('#btnSair').onclick = async () => { await sb.auth.signOut(); };
+
+// Nascimento coerente: nem no futuro, nem gente de 150 anos.
+function idadeValida(iso){
+  const d = new Date(iso + 'T00:00:00');
+  if(isNaN(d)) return false;
+  const hoje = new Date();
+  const anos = (hoje - d) / (365.25 * 24 * 3600 * 1000);
+  return anos > 0 && anos < 120;
+}
+
+function iniciaAuth(){
+  if(!supaLigado()){
+    // Sem Supabase o site não quebra: some o cadastro e a consulta segue
+    // sem histórico, como antes.
+    $('#authBox').hidden = true;
+    $('#consultaBox').hidden = false;
+    $('#btnSair').closest('.logado').hidden = true;
+    return;
+  }
+  sb = window.supabase.createClient(NUVEM.url, NUVEM.anon);
+  sb.auth.onAuthStateChange(async (_evento, s) => {
+    sessao = s;
+    await carregaPerfil();
+    mostraLogado();
+  });
+  trocaModo('criar');
+}
+
+/* =========================================================
+   CONSULTA DE VEÍCULO (placa + renavam) — via /api/consulta
+   O token da Infosimples fica NO SERVIDOR. Nunca no navegador.
+   ========================================================= */
+const RE_PLACA = /^[A-Z]{3}[0-9][0-9A-Z][0-9]{2}$/;   // ABC1234 (antiga) e ABC1D23 (Mercosul)
+
+// Confere os dígitos verificadores do CPF. Cada consulta é paga: não vale
+// gastar uma chamada com CPF digitado errado.
+function cpfValido(cpf){
+  const d = String(cpf).replace(/\D/g, '');
+  if (d.length !== 11 || /^(\d)\1{10}$/.test(d)) return false;
+  const dv = (base, peso) => {
+    let soma = 0;
+    for (let i = 0; i < base.length; i++) soma += Number(base[i]) * (peso - i);
+    const r = (soma * 10) % 11;
+    return r === 10 ? 0 : r;
+  };
+  return dv(d.slice(0,9), 10) === Number(d[9]) && dv(d.slice(0,10), 11) === Number(d[10]);
+}
+
+// Máscaras leves
+$('#placa').addEventListener('input', e => {
+  e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 7);
+});
+$('#renavam').addEventListener('input', e => {
+  e.target.value = e.target.value.replace(/\D/g, '').slice(0, 11);
+});
+$('#codigo_seguranca').addEventListener('input', e => {
+  e.target.value = e.target.value.replace(/\D/g, '');
+});
+$('#login_cpf').addEventListener('input', e => {
+  const d = e.target.value.replace(/\D/g, '').slice(0, 11);
+  e.target.value = d
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})\.(\d{3})(\d)/, '$1.$2.$3')
+    .replace(/(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
+});
+$('#tel').addEventListener('input', e => {
+  const d = e.target.value.replace(/\D/g, '').slice(0, 11);
+  e.target.value = d.length <= 10
+    ? d.replace(/(\d{0,2})(\d{0,4})(\d{0,4})/, (_, a, b, c) => [a && `(${a}`, a.length === 2 ? ') ' : '', b, c && `-${c}`].join('')).trim()
+    : d.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+});
+
+function marcaErro(el, erro) { el.classList.toggle('erro', !!erro); }
+
+$('#formConsulta').addEventListener('submit', async ev => {
+  ev.preventDefault();
+
+  const placa = $('#placa').value.trim().toUpperCase();
+  const renavam = $('#renavam').value.trim();
+  const codigo = $('#codigo_seguranca').value.trim();
+  const loginSenha = $('#login_senha').value;
+
+  // Nome, WhatsApp e CPF vêm do cadastro — não pedimos duas vezes.
+  const nome = perfil?.nome || '';
+  const tel = perfil?.telefone || '';
+  const loginCpf = perfil?.cpf || '';
+
+  // Validação no cliente: cada consulta é paga, então não deixamos passar lixo.
+  const placaOk = RE_PLACA.test(placa);
+  const renavamOk = /^\d{9,11}$/.test(renavam);
+  marcaErro($('#placa'), !placaOk);
+  marcaErro($('#renavam'), !renavamOk);
+  if (!placaOk) return aviso('Confira a placa. Use o formato ABC1234 ou ABC1D23.');
+  if (!renavamOk) return aviso('Confira o Renavam. São de 9 a 11 dígitos, sem pontos.');
+  if (!cpfValido(loginCpf)) return aviso('Seu cadastro está sem CPF válido. Saia e crie a conta de novo, ou fale com a gente.');
+  if (!loginSenha) return aviso('Informe a senha do gov.br para consultarmos as infrações.');
+  if (!$('#consent').checked) return aviso('Marque a autorização para continuar.');
+
+  const btn = $('#btnConsultar');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span> Consultando...';
+
+  const res = $('#resConsulta');
+  res.className = 'res';
+  res.style.display = 'block';
+  res.innerHTML = '<div class="res-box"><div class="statusline"><span class="spin"></span> Consultando os dados do seu veículo nos órgãos de trânsito...</div></div>';
+  res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  try {
+    const params = { placa, renavam, login_cpf: loginCpf, login_senha: loginSenha };
+    if (codigo) params.codigo_seguranca = codigo;
+
+    const r = await fetch('/api/consulta', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(params),
+    });
+    const j = await r.json();
+
+    // A senha some da tela e da memória assim que sai daqui.
+    $('#login_senha').value = '';
+
+    if (!r.ok || j.code !== 200) {
+      const motivo = j.code_message || j.error || (Array.isArray(j.errors) && j.errors.join(' ')) || ('Erro ' + r.status);
+      return falhaConsulta(motivo, { placa, renavam, nome, tel });
+    }
+
+    // Deu certo. Guarda no banco (para o cliente rever depois sem pagar
+    // outra consulta) e leva para o painel.
+    //
+    // REGRA: a senha do gov.br NUNCA entra aqui, nem no banco, nem no
+    // sessionStorage. Se um dia alguem adicionar campos a estes objetos,
+    // conferir de novo que nenhuma credencial entrou junto.
+    await salvaConsulta(placa, renavam, j);
+
+    sessionStorage.setItem('dd_consulta', JSON.stringify({
+      quando: new Date().toISOString(),
+      lead: { placa, renavam, nome, tel },
+      resposta: j,
+    }));
+    window.location.href = 'painel.html';
+    return;
+  } catch (err) {
+    falhaConsulta(err.message, { placa, renavam, nome, tel });
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = 'Enviar para análise <svg class="ic"><use href="#i-send"/></svg>';
+  }
+});
+
+function aviso(msg) {
+  const e = $('#consultaErro');
+  if (e) { e.hidden = false; e.innerHTML = `<svg class="ic"><use href="#i-alert"/></svg> ${esc(msg)}`; }
+  else alert(msg);
+  return false;
+}
+
+/** Guarda a consulta no banco. Se falhar, NÃO atrapalha o cliente:
+ *  ele já tem o resultado na tela e segue para o painel do mesmo jeito. */
+async function salvaConsulta(placa, renavam, resposta) {
+  if (!sb || !sessao) return;
+  try {
+    const itens = Array.isArray(resposta.data) ? resposta.data : [];
+    let total = 0, soma = 0;
+    itens.forEach(item => {
+      Object.entries(item || {}).forEach(([k, v]) => {
+        if (!Array.isArray(v) || !v.length || typeof v[0] !== 'object') return;
+        if (!/multa|infra|debito|autua|penalidade/i.test(k)) return;
+        total += v.length;
+        v.forEach(m => {
+          const bruto = m.valor ?? m.valor_infracao ?? m.valor_total ?? 0;
+          const s = String(bruto).replace(/R\$\s*/i, '').trim();
+          const n = /,\d{1,2}$/.test(s) ? Number(s.replace(/\./g, '').replace(',', '.')) : Number(s);
+          if (isFinite(n)) soma += n;
+        });
+      });
+    });
+
+    const { error } = await sb.from('consultas').insert({
+      user_id: sessao.user.id,
+      placa, renavam,
+      total_multas: total,
+      valor_total: Number(soma.toFixed(2)),
+      resultado: resposta,
+      // Evidência de consentimento: quando, e o texto exato que ele aceitou.
+      consentimento_em: new Date().toISOString(),
+      consentimento_texto: ($('#consentTexto')?.innerText || '').trim(),
+    });
+    if (error) console.warn('[consulta] nao salvou:', error.message);
+  } catch (e) {
+    console.warn('[consulta] nao salvou:', e.message);
+  }
+}
+
+function falhaConsulta(motivo, lead) {
+  const res = $('#resConsulta');
+  res.className = 'res err';
+  res.innerHTML = `
+    <div class="res-box">
+      <div class="res-head"><svg class="ic"><use href="#i-alert"/></svg><h3>Não conseguimos consultar automaticamente</h3></div>
+      <p style="color:var(--muted);font-size:13.5px;margin:0 0 4px">${esc(motivo)}</p>
+      <p style="color:var(--muted2);font-size:12.5px;margin:0">Isso acontece quando o sistema do órgão está fora do ar ou os dados não batem. Sem problema — um especialista faz a consulta manualmente para você.</p>
+      <div class="res-cta">
+        <b>Fale com um especialista agora</b>
+        <p>Levamos o seu caso adiante mesmo sem a consulta automática.</p>
+        <a class="btn wa" target="_blank" href="${waLink(msgLead(lead, 'A consulta automática falhou no site. Podem verificar meu caso manualmente?'))}"><svg class="ic"><use href="#i-whatsapp"/></svg> Falar no WhatsApp</a>
+      </div>
+    </div>`;
+}
+
+function msgLead(l, extra) {
+  return `Olá! Vim pelo site do ${CFG.marca}.\nNome: ${l.nome}\nWhatsApp: ${l.tel}\nPlaca: ${l.placa}\nRenavam: ${l.renavam}\n${extra}`;
+}
+
+/* --- Rótulos amigáveis para as chaves que a Infosimples devolve --- */
+const ROTULOS = {
+  placa: 'Placa', renavam: 'Renavam', chassi: 'Chassi', marca_modelo: 'Marca / Modelo',
+  ano_fabricacao: 'Ano de fabricação', ano_modelo: 'Ano do modelo', cor: 'Cor',
+  situacao: 'Situação', categoria: 'Categoria', especie: 'Espécie', tipo: 'Tipo',
+  municipio: 'Município', uf: 'UF', proprietario: 'Proprietário', nome: 'Proprietário',
+  combustivel: 'Combustível', potencia: 'Potência', restricao_1: 'Restrição 1',
+  restricao_2: 'Restrição 2', restricao_3: 'Restrição 3', restricao_4: 'Restrição 4',
+  licenciamento_situacao: 'Licenciamento', exercicio: 'Exercício',
+  total: 'Total', valor_total: 'Valor total', quantidade: 'Quantidade',
+  pontos: 'Pontos', pontuacao: 'Pontuação',
+};
+const rotulo = k => ROTULOS[k] || k.replace(/_/g, ' ').replace(/^\w/, c => c.toUpperCase());
+
+// Chaves que não interessam ao usuário final
+const OCULTAR = /^(normalizado_|site_receipt|.*_codigo$|.*_detalhes$)/;
+
+const ehVazio = v => v === null || v === undefined || v === '' ||
+  (Array.isArray(v) && v.length === 0) ||
+  (typeof v === 'object' && !Array.isArray(v) && Object.keys(v).length === 0);
+
+function fmtValor(v) {
+  if (typeof v === 'boolean') return v ? 'Sim' : 'Não';
+  return String(v);
+}
+
+/** Renderiza o retorno da Infosimples sem depender do formato exato de cada Detran. */
+function renderConsulta(j, lead) {
+  const res = $('#resConsulta');
+  const dados = Array.isArray(j.data) ? j.data : [];
+  if (!dados.length) {
+    res.className = 'res ok';
+    res.innerHTML = `<div class="res-box">
+      <div class="res-head"><svg class="ic"><use href="#i-check-c"/></svg><h3>Nada encontrado para este veículo</h3></div>
+      <p style="color:var(--muted);font-size:13.5px;margin:0">A consulta não retornou registros. Confira os dados ou fale com a gente para checarmos manualmente.</p>
+      ${blocoCta(lead, 'Nada encontrado na consulta automática.')}
+    </div>`;
+    return;
+  }
+
+  let html = '';
+  let achouPendencia = false;
+
+  dados.forEach(item => {
+    const escalares = {}, listas = {};
+    Object.entries(item).forEach(([k, v]) => {
+      if (OCULTAR.test(k) || ehVazio(v)) return;
+      if (Array.isArray(v) && typeof v[0] === 'object') listas[k] = v;
+      else if (typeof v !== 'object') escalares[k] = v;
+    });
+
+    // Qualquer lista com registros, ou flag "existe_*" verdadeira, é sinal de pendência.
+    if (Object.keys(listas).length) achouPendencia = true;
+    Object.entries(escalares).forEach(([k, v]) => { if (/^existe_/.test(k) && v === true) achouPendencia = true; });
+
+    if (Object.keys(escalares).length) {
+      html += '<div class="res-grupo"><h4>Dados do veículo</h4><div class="kv">';
+      Object.entries(escalares).forEach(([k, v]) => {
+        html += `<div><b>${esc(rotulo(k))}</b><span>${esc(fmtValor(v))}</span></div>`;
+      });
+      html += '</div></div>';
+    }
+
+    Object.entries(listas).forEach(([k, arr]) => {
+      const cols = [...new Set(arr.flatMap(o => Object.keys(o)))]
+        .filter(c => !OCULTAR.test(c) && arr.some(o => !ehVazio(o[c]) && typeof o[c] !== 'object'));
+      if (!cols.length) return;
+      html += `<div class="res-grupo"><h4>${esc(rotulo(k))} (${arr.length})</h4><div class="tabela"><table><thead><tr>`;
+      cols.forEach(c => html += `<th>${esc(rotulo(c))}</th>`);
+      html += '</tr></thead><tbody>';
+      arr.forEach(o => {
+        html += '<tr>';
+        cols.forEach(c => html += `<td>${ehVazio(o[c]) ? '—' : esc(fmtValor(o[c]))}</td>`);
+        html += '</tr>';
+      });
+      html += '</tbody></table></div></div>';
+    });
+  });
+
+  res.className = 'res ' + (achouPendencia ? 'warn' : 'ok');
+  const titulo = achouPendencia
+    ? 'Encontramos pendências no seu veículo'
+    : 'Consulta concluída';
+  const icone = achouPendencia ? '#i-alert' : '#i-check-c';
+  const legenda = achouPendencia
+    ? 'Há registros que merecem atenção. Um especialista pode avaliar se cabe defesa e qual o prazo.'
+    : 'Não encontramos pendências nesta consulta. Ainda assim, vale conferir o seu prontuário da CNH.';
+
+  res.innerHTML = `<div class="res-box">
+    <div class="res-head"><svg class="ic"><use href="${icone}"/></svg><h3>${titulo}</h3></div>
+    <p style="color:var(--muted);font-size:13.5px;margin:0 0 16px">${legenda}</p>
+    ${html}
+    ${j.site_receipts && j.site_receipts.length ? `<p style="font-size:12px;color:var(--muted2);margin:0 0 10px"><a href="${esc(j.site_receipts[0])}" target="_blank" rel="noopener" style="color:var(--gold)">Ver comprovante da consulta no site do órgão</a></p>` : ''}
+    <p style="font-size:11.5px;color:var(--muted2);margin:0">Consulta de caráter preliminar, baseada em dados públicos do órgão de trânsito. Confira sempre os prazos junto ao órgão.</p>
+    ${blocoCta(lead, achouPendencia ? 'A consulta encontrou pendências no meu veículo e quero avaliar a defesa.' : 'Fiz a consulta no site e quero falar sobre o meu caso.')}
+  </div>`;
+}
+
+function blocoCta(lead, extra) {
+  return `<div class="res-cta">
+    <b>Quer a defesa completa pronta para protocolar?</b>
+    <p>Um especialista avalia o seu caso e monta a peça técnica.</p>
+    <a class="btn wa" target="_blank" href="${waLink(msgLead(lead, extra))}"><svg class="ic"><use href="#i-whatsapp"/></svg> Falar com especialista</a>
+  </div>`;
+}
+
+/* =========================================================
+   FERRAMENTA DE ANÁLISE POR IA (upload de documentos)
+   ========================================================= */
+let files = [];
+const drop = $('#drop'), fileInput = $('#fileInput');
+drop.onclick = () => fileInput.click();
+['dragenter', 'dragover'].forEach(e => drop.addEventListener(e, ev => { ev.preventDefault(); drop.classList.add('hot'); }));
+['dragleave', 'drop'].forEach(e => drop.addEventListener(e, ev => { ev.preventDefault(); drop.classList.remove('hot'); }));
+drop.addEventListener('drop', ev => addFiles(ev.dataTransfer.files));
+fileInput.onchange = () => addFiles(fileInput.files);
+
+async function addFiles(list) {
+  for (const f of list) {
+    const isPdf = f.type === 'application/pdf' || /\.pdf$/i.test(f.name);
+    const isImg = /^image\//.test(f.type);
+    if (!isPdf && !isImg) { alert('Envie PDF ou imagem: ' + f.name); continue; }
+    if (f.size > 15 * 1024 * 1024) { alert(f.name + ' é muito grande (máx. ~15 MB nesta análise grátis).'); continue; }
+    const data = await toB64(f);
+    files.push({ name: f.name, isPdf, mediaType: isPdf ? 'application/pdf' : (f.type || 'image/png'), data });
+  }
+  renderFiles();
+}
+function toB64(file) { return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1]); r.onerror = rej; r.readAsDataURL(file); }); }
+function renderFiles() {
+  const el = $('#fileList'); el.innerHTML = '';
+  files.forEach((f, i) => {
+    const d = document.createElement('div'); d.className = 'file';
+    d.innerHTML = `<svg class="ic"><use href="#${f.isPdf ? 'i-doc' : 'i-img'}"/></svg><span class="nm">${esc(f.name)}</span><button class="rm" aria-label="Remover"><svg class="ic"><use href="#i-x"/></svg></button>`;
+    d.querySelector('.rm').onclick = () => { files.splice(i, 1); renderFiles(); };
+    el.appendChild(d);
+  });
+}
+
+const SYS = `Você é um assistente de ANÁLISE TÉCNICA PRELIMINAR e GRATUITA de processos administrativos de trânsito no Brasil (multas e, principalmente, suspensão/cassação/cancelamento do direito de dirigir). Este é um DIAGNÓSTICO gratuito — NÃO é a peça de defesa.
+REGRAS: não invente dados; baseie-se apenas nos documentos e observações; destaque PRAZOS (fatais) e alerte para conferência; use linguagem TÉCNICA/ADMINISTRATIVA, NUNCA jurídica; NUNCA prometa resultado; não escreva a peça nem o passo a passo completo (isso é o serviço pago).
+Marco legal de apoio: CTB (Lei 9.503/97, arts. 261, 263, 281-290), Súmula 312 do STJ (dupla notificação), Resoluções do CONTRAN, CF art. 5º, LV.
+Responda em português do Brasil, em Markdown, CURTO, nesta ordem:
+## Diagnóstico preliminar
+Tipo de processo/documento identificado + dados principais (órgão, nº, datas, enquadramento) em lista curta. Use "—" para o que faltar.
+## Prazo
+Alerte sobre o prazo e a urgência (estime com a data de hoje, deixando claro que é estimativa a confirmar).
+## Possíveis vícios encontrados
+Bullets com os vícios/pontos de defesa aparentes (ex.: ausência de dupla notificação, cerceamento de defesa, erro no auto, aferição do instrumento, contagem de pontos, vício na portaria) — uma frase cada.
+## Força do caso
+Uma linha: indícios de teses de defesa (Alta/Média/Baixa) e quantas teses aparentes.
+## Próximo passo
+Diga que este é um diagnóstico gratuito e que a PEÇA COMPLETA (pronta para revisar, assinar e protocolar) é feita no atendimento; oriente a falar no WhatsApp. NÃO escreva a peça aqui.
+Encerre com: "Análise preliminar de caráter técnico; não constitui consultoria jurídica nem garante resultado. Confira sempre os prazos."`;
+
+$('#btnAnalisar').onclick = analisar;
+async function analisar() {
+  if (!$('#consentIA').checked) { alert('Marque a autorização para continuar.'); return; }
+  if (files.length === 0 && !$('#notes').value.trim()) { alert('Envie ao menos um documento ou descreva seu caso.'); return; }
+  const btn = $('#btnAnalisar'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Analisando...';
+  const out = $('#out'); out.style.display = 'block';
+  out.innerHTML = '<div class="statusline"><span class="spin"></span> Lendo seus documentos e montando o diagnóstico...</div>';
+
+  const hoje = new Date().toLocaleDateString('pt-BR');
+  const content = [];
+  files.forEach(f => content.push(f.isPdf
+    ? { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: f.data } }
+    : { type: 'image', source: { type: 'base64', media_type: f.mediaType, data: f.data } }));
+  content.push({ type: 'text', text: `Data de hoje: ${hoje}.\nTipo do caso: ${$('#tipo').value}.\nRelato do cliente: ${$('#notes').value.trim() || '(não informado)'}\n\nFaça o diagnóstico preliminar gratuito no formato definido.` });
+
+  const body = { model: CFG.modeloIA, max_tokens: 4000, system: SYS, messages: [{ role: 'user', content }] };
+
+  let raw = '';
+  try {
+    const resp = await fetch('/api/analisar', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+    if (!resp.ok) {
+      let m = 'Erro ' + resp.status; try { const j = await resp.json(); m = j.error || m; } catch (e) {}
+      throw new Error(m);
+    }
+    const reader = resp.body.getReader(); const dec = new TextDecoder(); let buf = '';
+    let started = false;
+    while (true) {
+      const { done, value } = await reader.read(); if (done) break;
+      buf += dec.decode(value, { stream: true });
+      const lines = buf.split('\n'); buf = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith('data:')) continue;
+        const d = line.slice(5).trim(); if (!d || d === '[DONE]') continue;
+        let ev; try { ev = JSON.parse(d); } catch (e) { continue; }
+        if (ev.type === 'content_block_delta' && ev.delta.type === 'text_delta') {
+          if (!started) { started = true; out.innerHTML = ''; }
+          raw += ev.delta.text; out.innerHTML = md(raw);
+        } else if (ev.type === 'error') { throw new Error(ev.error && ev.error.message || 'Erro'); }
+      }
+    }
+    out.innerHTML = md(raw) + `
+      <div class="res-cta">
+        <b>Quer a defesa completa pronta para protocolar?</b>
+        <p>Um especialista revisa o seu caso e monta a peça técnica.</p>
+        <a class="btn wa" target="_blank" href="${waLink('Olá! Fiz a análise grátis no site do ' + CFG.marca + ' (' + $('#tipo').value + ') e quero contratar a defesa completa.')}"><svg class="ic"><use href="#i-whatsapp"/></svg> Falar com especialista agora</a>
+      </div>`;
+  } catch (err) {
+    out.innerHTML = `<div style="padding:16px;border:1px solid rgba(224,83,63,.4);background:rgba(224,83,63,.08);border-radius:13px;font-size:13.5px;color:var(--muted)">
+      Não foi possível gerar a análise automática agora (${esc(err.message)}).<br>
+      Sem problema — <a href="${waLink('Olá! Tentei a análise no site do ' + CFG.marca + ' e quero falar com um especialista sobre meu caso de trânsito.')}" target="_blank" style="color:var(--gold);font-weight:700">fale com um especialista pelo WhatsApp</a> e resolvemos.
+    </div>`;
+  } finally { btn.disabled = false; btn.innerHTML = '<svg class="ic"><use href="#i-search"/></svg> Gerar meu diagnóstico gratuito'; }
+}
+
+/* ---------- Markdown mínimo ---------- */
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+function inl(s) { return esc(s).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>').replace(/`([^`]+)`/g, '<code>$1</code>'); }
+function md(t) {
+  const L = t.split('\n'); let h = '', i = 0;
+  while (i < L.length) {
+    let l = L[i], m;
+    if ((m = l.match(/^##\s+(.*)/))) { h += '<h2>' + inl(m[1]) + '</h2>'; i++; continue; }
+    if ((m = l.match(/^###\s+(.*)/))) { h += '<h3>' + inl(m[1]) + '</h3>'; i++; continue; }
+    if (/^\s*[-*]\s+/.test(l)) { h += '<ul>'; while (i < L.length && /^\s*[-*]\s+/.test(L[i])) { h += '<li>' + inl(L[i].replace(/^\s*[-*]\s+/, '')) + '</li>'; i++; } h += '</ul>'; continue; }
+    if (l.trim() === '') { i++; continue; }
+    let p = l; i++;
+    while (i < L.length && L[i].trim() !== '' && !/^(#|\s*[-*]\s)/.test(L[i])) { p += ' ' + L[i]; i++; }
+    h += '<p>' + inl(p) + '</p>';
+  }
+  return h;
+}
+
+/* =========================================================
+   INÍCIO
+   Fica no fim de propósito: iniciaAuth() usa as variáveis "let" declaradas
+   acima, e chamá-la antes daria ReferenceError (temporal dead zone).
+   ========================================================= */
+try { iniciaAuth(); } catch (e) { console.warn('[auth] indisponivel:', e); }
+</script>
+</body>
+</html>
