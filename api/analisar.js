@@ -23,7 +23,13 @@ function json(obj, status) {
   });
 }
 
-const MODELOS_PERMITIDOS = ["claude-opus-4-8", "claude-sonnet-5", "claude-haiku-4-5"];
+const MODELOS_PERMITIDOS = [
+  "claude-fable-5",   // camada ELITE do roteamento (2a instancia / casos complexos)
+  "claude-opus-5",
+  "claude-opus-4-8",
+  "claude-sonnet-5",
+  "claude-haiku-4-5",
+];
 
 export default {
   async fetch(request) {
@@ -57,7 +63,8 @@ export default {
 
     // Sanitiza e limita o que o cliente pode pedir (evita abuso/custo descontrolado).
     const model = MODELOS_PERMITIDOS.includes(payload.model) ? payload.model : "claude-sonnet-5";
-    const max_tokens = Math.min(Math.max(parseInt(payload.max_tokens, 10) || 8000, 256), 32000);
+    // Teto igual ao da ferramenta: 64000 (Opus/Sonnet). O minimo evita abuso.
+    const max_tokens = Math.min(Math.max(parseInt(payload.max_tokens, 10) || 8000, 256), 64000);
 
     if (!Array.isArray(payload.messages) || payload.messages.length === 0) {
       return json({ error: "Requisição sem mensagens." }, 400);
