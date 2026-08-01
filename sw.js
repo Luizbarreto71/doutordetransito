@@ -15,7 +15,7 @@
    Nunca guardamos em cache as chamadas de IA nem nada do Supabase:
    são dados do caso e não podem ficar parados numa cópia.
    ================================================================== */
-const VERSAO = 'doutor-detransito-v2.5';
+const VERSAO = 'doutor-detransito-v2.5.1';
 const ESSENCIAIS = [
   './',
   './index.html',
@@ -51,7 +51,7 @@ self.addEventListener('fetch', (e) => {
   // fora do nosso site (IA, Supabase, fontes, cotação) passa direto, sem cache
   if (url.origin !== self.location.origin) return;
 
-  const ehPagina = req.mode === 'navigate' || /\.html?$/i.test(url.pathname) || url.pathname.endsWith('/');
+  const ehPagina = req.mode === 'navigate' || /\.html?$/i.test(url.pathname) || url.pathname.endsWith('/') || /manifest\.webmanifest$/i.test(url.pathname);
 
   if (ehPagina) {
     // rede primeiro: a versão nova chega assim que houver internet
