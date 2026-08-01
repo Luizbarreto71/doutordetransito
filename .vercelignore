@@ -1,0 +1,20 @@
+# Nunca envie estes arquivos para a Vercel.
+#
+# O .gitignore já barra o .env quando você publica pelo GitHub.
+# Este arquivo é a segunda tranca: se um dia você publicar direto pela
+# linha de comando (npx vercel --prod), é ele que vale.
+#
+# Motivo: tudo que vai para esta pasta fica acessível pela internet.
+# Um .env aqui seria lido em seusite.vercel.app/.env — e o seu token
+# da Infosimples estaria na mão de qualquer um.
+
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+*.p12
+
+# Backups e versões antigas não precisam ir para o ar
+*_backup.html
+*_backup_*.html
