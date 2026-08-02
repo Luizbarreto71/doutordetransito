@@ -54,11 +54,14 @@ select option{background:#171613;color:#F3EBD3}
 .screen{width:100%;max-width:1920px;flex-shrink:0;background:#0a0a0a;display:flex;flex-direction:column}
 
 /* ===== CABEÇALHO ===== */
-.hdr{position:relative;display:flex;align-items:center;gap:36px;padding:18px 120px 18px 44px;
+.hdr{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;padding:30px 120px 24px;
   background:radial-gradient(ellipse 900px 420px at 50% 0%, #17130a 0%, #0b0b0b 65%, #0a0a0a 100%)}
-.hdr>svg{flex:none;filter:drop-shadow(0 8px 22px rgba(0,0,0,0.65))}
-.hdr-txt{display:flex;flex-direction:column;gap:10px}
-.brand-name{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:48px;line-height:1;color:#FFD966;letter-spacing:0.09em}
+.hdr>svg{flex:none;filter:drop-shadow(0 8px 22px rgba(0,0,0,0.65)) drop-shadow(0 0 38px rgba(255,217,102,0.30))}
+.hdr-txt{display:flex;flex-direction:column;align-items:center;gap:10px}
+.brand-name{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:48px;line-height:1;letter-spacing:0.09em;
+  background:linear-gradient(180deg,#FFF3C4 0%,#FFD966 55%,#C9A23F 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 2px 14px rgba(255,217,102,0.30))}
 .brand-sub{font-size:15px;color:#CFC3A0;letter-spacing:0.05em}
 .hdr-right{position:absolute;top:24px;right:36px;display:flex;align-items:center;gap:12px}
 .chip-ver{height:34px;display:flex;align-items:center;padding:0 14px;border:1px solid rgba(255,217,102,0.3);
@@ -68,10 +71,13 @@ select option{background:#171613;color:#F3EBD3}
 .btn-gear:hover{border:1px solid #FFD966;background:#171613}
 
 /* ===== INDICADOR DE CONEXÃO COM A IA ===== */
-.chip-con{height:34px;display:flex;align-items:center;gap:7px;padding:0 13px;border:1px solid rgba(255,217,102,0.3);
+.chip-con{width:38px;height:38px;display:flex;align-items:center;justify-content:center;padding:0;border-radius:999px;border:1px solid rgba(255,217,102,0.3);
   border-radius:999px;color:#CFC3A0;font-size:11.5px;letter-spacing:0.06em;font-weight:700;white-space:nowrap;
   background:#12110d;cursor:help}
-.chip-con .pt2{width:8px;height:8px;border-radius:50%;background:#8f886e;flex:none;box-shadow:0 0 0 3px rgba(143,136,110,.18)}
+.chip-con .pt2{width:13px;height:13px;border-radius:50%;background:#8f886e;flex:none;box-shadow:0 0 0 4px rgba(143,136,110,.18)}
+#chipConexaoTxt{display:none}
+@keyframes pulsoVerde{0%,100%{box-shadow:0 0 0 4px rgba(143,191,126,.18)}50%{box-shadow:0 0 0 7px rgba(143,191,126,.32)}}
+.chip-con.ok .pt2{animation:pulsoVerde 2.4s ease-in-out infinite}
 .chip-con.ok{color:#8FBF7E;border-color:rgba(143,191,126,.45)}
 .chip-con.ok .pt2{background:#8FBF7E;box-shadow:0 0 0 3px rgba(143,191,126,.18)}
 .chip-con.aten{color:#FFD966;border-color:rgba(255,217,102,.5)}
@@ -142,6 +148,76 @@ textarea.inp{height:auto;flex:1;min-height:130px;padding:12px 14px;font-size:14.
 @media(max-width:1100px){ .painel{grid-template-columns:1fr 1fr;padding:18px 20px 0} }
 /* v3.0: nulidades sugeridas pelo tipo de infração */
 .nul label.sug{border:1px solid rgba(255,217,102,.45);border-radius:8px;padding:4px 8px;background:rgba(255,217,102,.05)}
+/* v4.3: visualizador em páginas (modo PDF) — como o visualizador do DETRAN */
+.pdfview{display:flex;flex-direction:column;align-items:center;gap:0;animation:sobe .4s ease both;
+  background:#0d0c0a;border:1px solid rgba(255,217,102,.18);border-radius:12px;padding:0;overflow:hidden}
+.pdf-palco{display:flex;width:100%}
+.pdf-lateral{width:170px;flex:none;background:#100f0c;border-right:1px solid rgba(255,217,102,.14);
+  padding:10px 8px;overflow:auto}
+.pdf-lateral[hidden]{display:none}
+.pdf-lateral .tit{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ouro2);padding:4px 6px 8px}
+.pdf-lateral button{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid rgba(255,217,102,.1);
+  color:#CFC3A0;font-size:11.5px;line-height:1.35;padding:8px 6px;cursor:pointer;border-radius:6px}
+.pdf-lateral button:hover{background:#171613;color:#FFD966}
+.pdf-lateral button.atual{background:#1b1810;color:#FFD966}
+.pdf-lateral button small{display:block;color:#6d6650;font-size:10px;margin-top:2px}
+.pdf-arena{flex:1;min-width:0;display:flex;justify-content:center;padding:18px 10px;
+  background:radial-gradient(ellipse at 50% 0%,#141310 0%,#0a0a0a 75%)}
+.pdf-barra{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;width:100%;
+  padding:8px 10px;background:#100f0c;border-top:1px solid rgba(255,217,102,.14)}
+.pdf-barra button{width:34px;height:32px;display:flex;align-items:center;justify-content:center;
+  background:none;border:1px solid transparent;border-radius:8px;color:#CFC3A0;cursor:pointer;font-size:15px;line-height:1}
+.pdf-barra button:hover{background:#171613;border-color:rgba(255,217,102,.3);color:#FFD966}
+.pdf-barra button.on{background:#1b1810;border-color:rgba(255,217,102,.4);color:#FFD966}
+.pdf-barra .sep{width:1px;height:20px;background:rgba(255,217,102,.16);margin:0 4px}
+.pdf-barra .pdf-info{min-width:74px;text-align:center;font-size:12px;color:#CFC3A0;letter-spacing:.04em}
+/* tela cheia: o visualizador cobre a janela, como no site do DETRAN */
+.pdfview.cheia{position:fixed;inset:0;z-index:70;border-radius:0;border:0;background:#0a0a0a}
+.pdfview.cheia .pdf-palco{height:calc(100vh - 49px)}
+.pdfview.cheia .pdf-arena{align-items:center;overflow:auto}
+.pdf-papel{position:relative;background:#F7F3E8;border-radius:6px;box-shadow:0 16px 48px rgba(0,0,0,.65),0 2px 10px rgba(0,0,0,.4)}
+.pdf-vp{overflow:hidden}
+.pdf-fluxo{column-gap:0;transition:transform .38s cubic-bezier(.22,.8,.3,1)}
+.pdf-fluxo,.pdf-fluxo p,.pdf-fluxo li,.pdf-fluxo strong,.pdf-fluxo em,.pdf-fluxo h1,.pdf-fluxo h2,.pdf-fluxo h3,.pdf-fluxo blockquote,.pdf-fluxo td,.pdf-fluxo th{color:#1c1a14;font-family:'Times New Roman',Times,serif}
+.pdf-fluxo{font-size:13px;line-height:1.6;text-align:justify}
+.pdf-fluxo h1{font-size:14px;text-align:center;text-transform:uppercase;letter-spacing:.02em;margin:0 0 14px;font-weight:700}
+.pdf-fluxo h2{font-size:13.5px;margin:12px 0 7px;font-weight:700}
+.pdf-fluxo h3{font-size:13px;margin:10px 0 5px;font-weight:700}
+.pdf-fluxo p{text-indent:28px;margin:0 0 7px}
+.pdf-fluxo blockquote{margin:7px 0 7px 32px;font-size:12px;line-height:1.35}
+.pdf-fluxo blockquote p{text-indent:0}
+.pdf-fluxo ul,.pdf-fluxo ol{margin:6px 0 6px 30px;padding:0}
+.pdf-fluxo h1,.pdf-fluxo h2,.pdf-fluxo h3{break-after:avoid-column}
+.pdf-seta{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;
+  border:1px solid rgba(20,20,20,.15);background:rgba(255,255,255,.9);color:#1c1a14;font-size:22px;line-height:1;cursor:pointer;
+  box-shadow:0 4px 14px rgba(0,0,0,.25);transition:opacity .15s,transform .15s;display:flex;align-items:center;justify-content:center}
+.pdf-seta:hover{transform:translateY(-50%) scale(1.1)}
+.pdf-seta:disabled{opacity:.22;cursor:default}
+.pdf-ant{left:10px}.pdf-prox{right:10px}
+.pdf-rodape{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-family:'Times New Roman',serif;font-size:10.5px;color:#8a8064}
+.pdf-nav{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
+.pdf-info{font-size:12.5px;color:var(--ouro2);letter-spacing:.06em}
+.pdf-menu{background:#12110d;border:1px solid rgba(255,217,102,.3);border-radius:10px;padding:8px;display:flex;flex-direction:column;gap:4px;max-width:100%}
+.pdf-menu[hidden]{display:none}
+.pdf-menu button{display:flex;justify-content:space-between;gap:14px;background:none;border:0;color:#F3EBD3;font-size:12.5px;padding:7px 10px;border-radius:7px;cursor:pointer;text-align:left}
+.pdf-menu button:hover{background:#171613;color:#FFD966}
+.pdf-menu button span{color:#8f886e;flex:none}
+/* v4.1: chat interno — o assistente do sistema */
+.chat-fab{position:fixed;right:22px;bottom:22px;z-index:60;width:58px;height:58px;border-radius:50%;
+  background:linear-gradient(180deg,#FFE071,#E8B93B);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 10px 32px rgba(0,0,0,.55),0 0 26px rgba(255,217,102,.28);transition:transform .15s}
+.chat-fab:hover{transform:scale(1.07)}
+#dlgChat{width:min(760px,96vw)}
+.chat-corpo{display:flex;flex-direction:column;gap:10px;max-height:50vh;min-height:120px;overflow:auto;padding:4px 2px}
+.msg{max-width:88%;padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.65}
+.msg.eu{align-self:flex-end;background:linear-gradient(180deg,#2a2410,#1c1808);border:1px solid rgba(255,217,102,.35);color:#F3EBD3;border-bottom-right-radius:4px;white-space:pre-wrap}
+.msg.ia{align-self:flex-start;background:#12110d;border:1px solid rgba(255,217,102,.18);color:#F3EBD3;border-bottom-left-radius:4px}
+.msg.ia p{text-indent:0;margin:0 0 6px}
+.msg .custo-mini{display:block;margin-top:6px;font-size:10.5px;color:#6d6650}
+.chat-linha{display:flex;gap:8px;margin-top:12px}
+.chat-linha textarea{flex:1;min-height:54px;max-height:150px;resize:vertical;background:#171613;border:1px solid rgba(255,217,102,.28);border-radius:10px;color:#F3EBD3;padding:11px 12px;font-size:13.5px;font-family:inherit}
+.chat-linha textarea:focus{outline:none;border-color:#FFD966;box-shadow:0 0 0 3px rgba(255,217,102,.1)}
+.chat-ops{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:12px;color:#8f886e}
 /* v3.1: lote — varias multas do mesmo cliente */
 .lote-row{display:grid;grid-template-columns:1.1fr 1.1fr .8fr 1.5fr auto;gap:8px;margin-bottom:8px;align-items:center}
 .lote-row .inp{height:44px;font-size:13.5px}
@@ -403,7 +479,8 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
   .card-result{flex:none}
   .card-hist{height:auto;min-height:160px}
   .hdr{padding:18px 20px;gap:22px;flex-wrap:wrap}
-  .hdr-right{position:static;margin-left:auto}
+  .hdr>svg{width:170px;height:183px}
+  .hdr-right{position:static}
   .brand-name{font-size:34px}
   .r4{grid-template-columns:1fr 1fr}
   .grid-login{grid-template-columns:1fr 1fr}
@@ -423,7 +500,7 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
   .pill .l{white-space:normal}
   /* ---- v2.5 no celular ---- */
   .hdr-right{gap:8px}
-  .chip-con{height:30px;padding:0 10px;font-size:10.5px}
+  .chip-con{width:32px;height:32px;padding:0}
   .chip-ver{height:30px;padding:0 10px;font-size:11px}
   .ferr>summary{padding:12px 13px;font-size:12.5px;flex-wrap:wrap}
   .ferr>summary span{width:100%;padding-left:21px}
@@ -443,6 +520,63 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
   .dlg-f button{width:100%!important}
   #reqCorpo{max-height:none!important}
 }
+/* ==================================================================
+   v4.2 — MOTION: a página viva (preto fosco, ouro em movimento)
+   Regras: só transform/opacity/filter (GPU), durações longas, elegância
+   jurídica — nada pisca, tudo respira. prefers-reduced-motion desliga tudo.
+   ================================================================== */
+/* A BALANÇA oscila como uma balança de verdade (pêndulo lento, com leve
+   respiro vertical — mais orgânica, mais perfeita) */
+@keyframes balancaOscila{
+  0%,100%{transform:rotate(0deg) translateY(0)}
+  25%{transform:rotate(1.5deg) translateY(-2px)}
+  50%{transform:rotate(0deg) translateY(0)}
+  75%{transform:rotate(-1.5deg) translateY(-2px)}
+}
+.hdr>svg{transform-origin:50% 14%;animation:balancaOscila 9s cubic-bezier(.45,0,.55,1) infinite}
+/* O MARTELO bate duas vezes, como juiz encerrando a sessão (a cada ~5s) */
+@keyframes marteloBate{
+  0%,58%{transform:rotate(-20deg)}
+  64%{transform:rotate(2deg)}
+  68%{transform:rotate(-26deg)}
+  73%{transform:rotate(0deg)}
+  78%{transform:rotate(-20deg)}
+  100%{transform:rotate(-20deg)}
+}
+.martelo{transform-box:fill-box;transform-origin:14% 86%;animation:marteloBate 5.2s ease-in-out infinite}
+/* As LENTES dos semáforos respiram luz, alternadas */
+@keyframes lentePulso{0%,100%{filter:brightness(1)}50%{filter:brightness(1.55) drop-shadow(0 0 6px rgba(255,217,102,.8))}}
+.hdr svg circle[fill^="url"]{animation:lentePulso 3.8s ease-in-out infinite}
+.hdr svg circle[fill^="url"]:nth-of-type(2n){animation-delay:1.9s}
+.hdr svg circle[fill^="url"]:nth-of-type(3n){animation-delay:.9s}
+/* A FAIXA central flui como pista de rodagem */
+@keyframes faixaFlui{to{stroke-dashoffset:-68}}
+.hdr svg line[stroke-dasharray]{animation:faixaFlui 3.2s linear infinite}
+/* O TÍTULO recebe uma varredura de brilho no ouro, de tempos em tempos */
+@keyframes ouroVarre{0%,72%{background-position:0% 50%}86%{background-position:130% 50%}100%{background-position:200% 50%}}
+.brand-name{background-size:220% 100%;animation:ouroVarre 8s ease-in-out infinite}
+/* O losango dos títulos de seção pulsa discretamente */
+@keyframes diaPulsa{0%,100%{transform:rotate(45deg) scale(1)}50%{transform:rotate(45deg) scale(1.35)}}
+.sec .dia{animation:diaPulsa 3.2s ease-in-out infinite}
+/* Botão principal: lâmina de luz atravessa o ouro periodicamente */
+.btn-primary-big{position:relative;overflow:hidden}
+.btn-primary-big::after{content:'';position:absolute;top:0;left:-80%;width:45%;height:100%;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.42),transparent);
+  transform:skewX(-18deg);animation:lamina 6.5s ease-in-out infinite}
+@keyframes lamina{0%,74%{left:-80%}92%,100%{left:160%}}
+/* O botão do chat flutua como se respirasse */
+@keyframes fabFlutua{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.chat-fab{animation:fabFlutua 3.6s ease-in-out infinite}
+.chat-fab:hover{transform:none;filter:brightness(1.12)}
+/* ORBES de ouro flutuando ao fundo (ambiente vivo, quase imperceptível) */
+.orbe{position:fixed;border-radius:50%;pointer-events:none;z-index:-1;filter:blur(46px);opacity:.07;
+  background:radial-gradient(circle,#FFD966 0%,transparent 70%)}
+.orbe1{width:340px;height:340px;top:-80px;left:-90px;animation:orbeA 52s ease-in-out infinite}
+.orbe2{width:260px;height:260px;top:40%;right:-80px;animation:orbeB 64s ease-in-out infinite}
+.orbe3{width:220px;height:220px;bottom:-60px;left:30%;animation:orbeA 74s ease-in-out infinite reverse}
+@keyframes orbeA{0%,100%{transform:translate(0,0)}33%{transform:translate(70px,50px)}66%{transform:translate(-40px,90px)}}
+@keyframes orbeB{0%,100%{transform:translate(0,0)}50%{transform:translate(-90px,-70px)}}
+@media(max-width:900px){ .orbe{display:none} }
 /* ---- v3.0: microanimações (sutis, elegantes) ---- */
 @keyframes sobe{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .card{animation:sobe .45s ease both}
@@ -464,12 +598,14 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
 </style>
 </head>
 <body>
+<!-- v4.2 motion: orbes de ouro flutuando ao fundo -->
+<div class="orbe orbe1"></div><div class="orbe orbe2"></div><div class="orbe orbe3"></div>
 <div class="page">
 <div class="screen">
 
   <!-- ================= CABEÇALHO ================= -->
   <div class="hdr">
-    <svg width="150" height="162" viewBox="44 54 392 424" xmlns="http://www.w3.org/2000/svg">
+    <svg width="216" height="233" viewBox="44 54 392 424" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <radialGradient id="lenteOuro" cx="0.38" cy="0.32" r="0.85">
                 <stop offset="0" stop-color="#FFFBE8"></stop>
@@ -520,7 +656,7 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
             <circle cx="350" cy="279" r="11" fill="url(#lenteOuro)" stroke="#141414" stroke-width="2"></circle>
             <circle cx="376" cy="279" r="11" fill="url(#lenteOuro)" stroke="#141414" stroke-width="2"></circle>
             <circle cx="402" cy="279" r="11" fill="url(#lenteOuro)" stroke="#141414" stroke-width="2"></circle>
-                                    <g transform="rotate(-20 258 107)">
+                                    <g class="martelo" transform="rotate(-20 258 107)">
               <rect x="254" y="100" width="78" height="14" rx="7" fill="#141414" stroke="#FFD966" stroke-width="2"></rect>
               <line x1="314" y1="101.5" x2="314" y2="112.5" stroke="#FFD966" stroke-width="2.5"></line>
               <line x1="321" y1="101.5" x2="321" y2="112.5" stroke="#FFD966" stroke-width="2.5"></line>
@@ -820,6 +956,31 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
   <div class="dlg-f">
     <button class="btn-ghost" id="planoFechar" style="width:120px">Fechar</button>
     <button class="btn-primary" id="planoUsar" style="width:170px">Usar esta peça</button>
+  </div>
+</dialog>
+
+<!-- ============ CHAT INTERNO — ASSISTENTE DO SISTEMA (v4.1) ============ -->
+<button class="chat-fab" id="chatFab" title="Conversar com o assistente do sistema" aria-label="Abrir o chat do assistente">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="2"><path d="M21 12a8.5 8.5 0 0 1-12.4 7.5L4 21l1.6-4.4A8.5 8.5 0 1 1 21 12z"></path><path d="M8.5 10.5h7M8.5 13.5h4.5"></path></svg>
+</button>
+<dialog id="dlgChat">
+  <div class="dlg-h">ASSISTENTE DO SISTEMA</div>
+  <div class="dlg-b">
+    <div class="hint" style="margin-bottom:10px">Converse, alinhe estratégias e tire dúvidas — ele conhece as teses verificadas e <b>o caso aberto na tela</b>. Modo econômico por padrão (centavos por mensagem, custo mostrado em cada resposta). Para trabalhos grandes sem gastar a chave, use <b>Levar para o Claude Code</b>.</div>
+    <div class="chat-corpo" id="chatCorpo"></div>
+    <div class="chat-linha">
+      <textarea id="chatTexto" placeholder="Escreva aqui... (Ctrl+Enter envia)"></textarea>
+      <button class="btn-primary" id="chatEnviar" style="width:104px;flex:none">Enviar</button>
+    </div>
+    <div class="chat-ops">
+      <label class="chk" style="margin:0;display:flex;align-items:center;gap:6px"><input type="checkbox" id="chatElite"> resposta de elite (Fable 5 — o melhor, custa mais)</label>
+      <span style="flex:1"></span>
+      <button type="button" class="tb" id="chatCopiar" style="height:30px;padding:0 10px;font-size:11px;flex:none">Levar para o Claude Code</button>
+      <button type="button" class="tb" id="chatLimpar" style="height:30px;padding:0 10px;font-size:11px;flex:none">limpar conversa</button>
+    </div>
+  </div>
+  <div class="dlg-f">
+    <button class="btn-ghost" id="chatFechar" style="width:110px">Fechar</button>
   </div>
 </dialog>
 
@@ -1219,6 +1380,8 @@ const ROTEAMENTO = {
   /* Camada 3 */
   elite:    { model:'claude-fable-5',  effort:'xhigh',  maxTokens:64000 },
   banca:    { model:'claude-fable-5',  effort:'medium', maxTokens:64000 },
+  /* chat interno: conversa e alinhamento — barato por padrao */
+  chat:     { model:'claude-sonnet-5', effort:'low',    maxTokens:2500  },
   /* rede de seguranca: se o modelo recusar por classificador de seguranca */
   fallback: 'claude-opus-5'
 };
@@ -1530,6 +1693,19 @@ ____________________________________________
 Nunca omitas nem reescrevas a frase "Nestes termos, pede e aguarda deferimento." — o sistema usa exatamente essa frase para conferir se a peca chegou INTEIRA; sem ela, a peca e tratada como truncada. SEM bloco de advogado (sem OAB, sem procuracao, sem qualificacao profissional). NADA vem depois do nome do requerente. NAO inclua rol de documentos anexos nem referencias.
 
 FLUXO: (1) leia a peca e o objetivo; (2) produza a Parte 1; (3) produza a Parte 2 aplicando as correcoes; (4) nao acrescente comentarios, saudacoes ou explicacoes fora desses dois blocos.`;
+
+/* ==================================================================
+   v4.1 — PROMPT DO CHAT INTERNO (assistente de alinhamento)
+   ================================================================== */
+const SYSTEM_CHAT = `Voce e o ASSISTENTE INTERNO do sistema Doutor Detransito e o maior especialista em Direito Administrativo de Transito e no Sistema Nacional de Transito do Brasil. Seu interlocutor e o OPERADOR do sistema (advogado/despachante de transito em Aracaju-SE, foco quase total no DETRAN-SE: multas da PM por convenio e processos de suspensao/cassacao; tambem SMTT Aracaju, PRF, DER/SE e DNIT).
+
+FUNCAO: conversar, alinhar estrategia de caso, tirar duvidas juridicas de transito, sugerir teses do arsenal e orientar o uso do sistema (Radar, checklist de nulidades, lote de multas, banca revisora, conferencia de citacoes, prova de qualidade).
+
+ESTILO: portugues simples e direto; respostas CURTAS (o operador paga por token) — va direto ao ponto em ate ~10 linhas, salvo pedido expresso de detalhe; use listas curtas; zero enrolacao; tom de parceiro experiente.
+
+VERACIDADE (INEGOCIAVEL): NUNCA invente norma, numero, sumula ou julgado. Base verificada em fonte oficial (01/08/2026): CTB arts. 23 III, 90, 162 V (Lei 14.440/2022), 218, 252, 256-268 (267 vinculado), 280 (par. 4o), 281 (PAR. 1o, II - Lei 14.304/2022), 281-A, 282 (pars. 4o-7o: decadencia 180/360 dias), 285 (caput, par. 1o, par. 6o: 24 meses); Res. CONTRAN 723/2018+844/2021 (art. 24: prescricao 5a/3a), 900/2022, 918/2022, 798/2020+804/2020, 432/2013 (alcool, VIGENTE) e 985/2022+alteracoes (MBFT); Portarias INMETRO 158/2022 (radar) e 369/2021 (etilometro); Sumulas STJ 312, 127, 434; STF 473 e SV 14; Tema 1.097 STJ. NUNCA cite: Res. 619/2016, 299/2008, 925/2022 (revogadas), art. 285 par. 3o (revogado), nem 928/2022 para alcool. Fora dessa base, diga que precisa verificar antes.
+
+LIMITES: peca completa NAO se redige no chat — oriente o botao GERAR PECA (sai melhor e ja no padrao ABNT). Trabalho longo, reescrita grande ou pesquisa profunda — sugira o botao "Levar para o Claude Code" (nao gasta a chave API). Nunca prometa resultado de processo; estimativas de prazo sempre com a ressalva de conferir a notificacao.`;
 
 /* ==================================================================
    PROMPT 5 — RADAR DO CASO (triagem e extracao)
@@ -1885,6 +2061,7 @@ function usarPecaDoPlano(){
   lastKind=($('#outType').value==='analise')?'analise':'peca';
   pecaSalva=false; loadedCaseId=loadedCaseId||null;
   saveDraft();
+  paginaResultado(outEl, t);                 /* v4.3 */
   $('#toolbar').style.display='grid'; ajustaToolbar();
   const nota=document.createElement('div'); nota.className='hint'; nota.style.marginTop='8px';
   nota.textContent='Peça recebida do plano do Claude (sem custo na chave). Confira as citações e SALVE O CASO.';
@@ -1990,6 +2167,7 @@ async function runLote(){
       cases.unshift(rec);
       try{ setCases(cases); }catch(e){}
       lastText=r.text; lastHTML=outEl.innerHTML; lastKind='peca'; pecaSalva=true; loadedCaseId=rec.id;
+      paginaResultado(outEl, r.text);        /* v4.3 */
       mostraCusto(out, r.modelo, r.uso, 'lote', rotaL.motivo);
       estados[i]=(r.stop==='interrompido'||r.stop==='max_tokens') ? 'pronta — CONFIRA (pode estar incompleta)' : 'pronta';
       oks.push(it.ait); prontas.push(rec);
@@ -3081,6 +3259,140 @@ function saveDraft(){
 }
 function limpaDraft(){ try{ localStorage.removeItem(LS.rascunho); }catch(e){} }
 
+/* ==================================================================
+   v4.3 — VISUALIZADOR EM PÁGINAS (modo PDF do resultado)
+
+   A peça deixa de ser um rolo único até o fim da tela: vira FOLHAS A4
+   navegáveis, como o visualizador de processos do DETRAN — setas nas
+   laterais, contador "página X de N" e SUMÁRIO clicável das seções.
+   Técnica: colunas CSS do tamanho exato da área útil (1 coluna = 1
+   página); navegar = deslizar o fluxo. Zero biblioteca externa.
+   ================================================================== */
+const ICO_PDF={
+  lista:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"></path></svg>',
+  mais:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="11" cy="11" r="7"></circle><path d="M11 8v6M8 11h6M16.5 16.5L21 21"></path></svg>',
+  menos:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="11" cy="11" r="7"></circle><path d="M8 11h6M16.5 16.5L21 21"></path></svg>',
+  cheia:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg>',
+  baixar:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 4v11M12 15l-4-4M12 15l4-4M4 19h16"></path></svg>',
+  rolo:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M7 3h7l4 4v14H7z"></path><path d="M14 3v4h4M10 12h6M10 16h4"></path></svg>'
+};
+function paginaResultado(container, texto){
+  if(!container || !texto || !String(texto).trim()) return;
+  container.__pdftexto = texto;
+  const cheia = container.__cheia === true;
+  const zoom  = container.__zoom || 1;
+  const espaco = cheia ? Math.min(window.innerWidth-230, 900)
+                       : Math.min(container.clientWidth || 520, 720);
+  if(espaco < 200) return;                    /* sem espaço útil: fica o corrido */
+  const estreito = espaco < 430;              /* celular: sumário vira botão */
+  const pw = Math.round(Math.max(230, (estreito ? espaco-24 : espaco-200)) * zoom);
+  const ph = Math.round(pw*1.4142);           /* proporção A4 */
+  const mx = Math.round(pw*0.105), my = Math.round(ph*0.085);
+  const vw = pw-2*mx, vh = ph-2*my;
+  container.classList.add('pdfhost');
+  container.innerHTML =
+    '<div class="pdfview'+(cheia?' cheia':'')+'">'+
+      '<div class="pdf-palco">'+
+        '<div class="pdf-lateral"'+(estreito?' hidden':'')+'><div class="tit">Sumário</div><div class="itens"></div></div>'+
+        '<div class="pdf-arena">'+
+          '<div class="pdf-papel" style="width:'+pw+'px;height:'+ph+'px;padding:'+my+'px '+mx+'px">'+
+            '<div class="pdf-vp" style="width:'+vw+'px;height:'+vh+'px">'+
+              '<div class="pdf-fluxo" style="width:'+vw+'px;height:'+vh+'px;column-width:'+vw+'px;font-size:'+(13*zoom).toFixed(1)+'px">'+mdToHtml(texto)+'</div>'+
+            '</div>'+
+            '<button type="button" class="pdf-seta pdf-ant" aria-label="página anterior">‹</button>'+
+            '<button type="button" class="pdf-seta pdf-prox" aria-label="próxima página">›</button>'+
+            '<div class="pdf-rodape"></div>'+
+          '</div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="pdf-barra">'+
+        '<button type="button" class="b-sum'+(estreito?'':' on')+'" title="sumário">'+ICO_PDF.lista+'</button>'+
+        '<span class="sep"></span>'+
+        '<button type="button" class="b-menos" title="diminuir">'+ICO_PDF.menos+'</button>'+
+        '<span class="pdf-info"></span>'+
+        '<button type="button" class="b-mais" title="aumentar">'+ICO_PDF.mais+'</button>'+
+        '<span class="sep"></span>'+
+        '<button type="button" class="b-cheia" title="tela cheia">'+ICO_PDF.cheia+'</button>'+
+        '<button type="button" class="b-baixar" title="gerar PDF / imprimir">'+ICO_PDF.baixar+'</button>'+
+        '<button type="button" class="b-rolo" title="ver como documento corrido">'+ICO_PDF.rolo+'</button>'+
+      '</div>'+
+    '</div>';
+  const q=s=>container.querySelector(s);
+  const fluxo=q('.pdf-fluxo'), info=q('.pdf-info'), rod=q('.pdf-rodape'), lateral=q('.pdf-lateral');
+  let pag=0;
+  const total=()=>Math.max(1, Math.round(fluxo.scrollWidth/vw));
+  const vai=(p)=>{
+    pag=Math.max(0, Math.min(total()-1, p));
+    fluxo.style.transform='translateX(-'+(pag*vw)+'px)';
+    info.textContent=(pag+1)+' / '+total();
+    rod.textContent=(pag+1)+' / '+total();
+    q('.pdf-ant').disabled=(pag===0);
+    q('.pdf-prox').disabled=(pag>=total()-1);
+    lateral.querySelectorAll('button').forEach(b=>{
+      b.classList.toggle('atual', parseInt(b.dataset.pg,10)===pag);
+    });
+  };
+  q('.pdf-ant').onclick=()=>vai(pag-1);
+  q('.pdf-prox').onclick=()=>vai(pag+1);
+  /* SUMÁRIO lateral: as seções da peça viram índice clicável com a página */
+  const base=fluxo.getBoundingClientRect().left;
+  const cab=[...fluxo.querySelectorAll('h1,h2')];
+  const itens=lateral.querySelector('.itens');
+  if(cab.length){
+    itens.innerHTML=cab.map(h=>{
+      const pg=Math.max(0, Math.round((h.getBoundingClientRect().left-base)/vw));
+      return '<button type="button" data-pg="'+pg+'">'+escapeHtml(h.textContent.trim().slice(0,58))+'<small>pág. '+(pg+1)+'</small></button>';
+    }).join('');
+    itens.querySelectorAll('button').forEach(b=>{ b.onclick=()=>vai(parseInt(b.dataset.pg,10)); });
+  } else { itens.innerHTML='<div class="hint" style="padding:6px">Sem seções.</div>'; }
+  q('.b-sum').onclick=()=>{ lateral.hidden=!lateral.hidden; q('.b-sum').classList.toggle('on', !lateral.hidden); };
+  /* zoom, tela cheia, PDF e documento corrido */
+  const repagina=()=>{ const t=container.__pdftexto; paginaResultado(container, t); };
+  q('.b-mais').onclick =()=>{ container.__zoom=Math.min(1.6,(container.__zoom||1)+0.15); repagina(); };
+  q('.b-menos').onclick=()=>{ container.__zoom=Math.max(0.7,(container.__zoom||1)-0.15); repagina(); };
+  q('.b-cheia').onclick=()=>{ container.__cheia=!cheia; repagina(); };
+  q('.b-baixar').onclick=()=>{ const b=$('#btnPrint'); if(b) b.click(); else imprimeTexto(container.__pdftexto, docTitle()); };
+  q('.b-rolo').onclick=()=>{
+    container.classList.remove('pdfhost'); container.__cheia=false;
+    const t=container.__pdftexto;
+    container.innerHTML='<div class="output">'+mdToHtml(t)+'</div>';
+    const volta=document.createElement('button');
+    volta.type='button'; volta.className='tb';
+    volta.style.cssText='margin-top:10px;height:36px;width:100%';
+    volta.textContent='ver em páginas (modo PDF)';
+    volta.onclick=()=>paginaResultado(container, t);
+    container.appendChild(volta);
+  };
+  /* deslizar com o dedo (celular) e setas do teclado em tela cheia */
+  let x0=null;
+  const vp=q('.pdf-vp');
+  vp.addEventListener('touchstart',e=>{ x0=e.touches[0].clientX; },{passive:true});
+  vp.addEventListener('touchend',e=>{
+    if(x0===null) return;
+    const dx=e.changedTouches[0].clientX-x0; x0=null;
+    if(dx<-40) vai(pag+1); else if(dx>40) vai(pag-1);
+  },{passive:true});
+  if(cheia){
+    container.__teclas=(e)=>{
+      if(e.key==='ArrowRight'||e.key===' ') { e.preventDefault(); vai(pag+1); }
+      else if(e.key==='ArrowLeft') { e.preventDefault(); vai(pag-1); }
+      else if(e.key==='Escape'){ container.__cheia=false; repagina(); }
+    };
+    document.addEventListener('keydown', container.__teclas);
+  } else if(container.__teclas){
+    document.removeEventListener('keydown', container.__teclas); container.__teclas=null;
+  }
+  vai(0);
+}
+/* redimensionou a janela? repagina os visualizadores ativos */
+let _pdfTimer=null;
+window.addEventListener('resize',()=>{
+  clearTimeout(_pdfTimer);
+  _pdfTimer=setTimeout(()=>{
+    document.querySelectorAll('.pdfhost').forEach(c=>{ if(c.__pdftexto) paginaResultado(c, c.__pdftexto); });
+  }, 350);
+});
+
 /* ---------- Geração principal ---------- */
 $('#btnAnalyze').onclick = runGen;
 async function runGen(){
@@ -3127,6 +3439,7 @@ async function runGen(){
     status.remove();
     lastText=r.text; lastHTML=outEl.innerHTML; lastKind=isPeca?'peca':'analise'; pecaSalva=false;
     saveDraft();
+    paginaResultado(outEl, r.text);          /* v4.3: folhas navegáveis */
     $('#toolbar').style.display='grid'; ajustaToolbar();
     mostraCusto(out, r.modelo, r.uso, rota.tarefa, rota.motivo);
     if(r.stop==='interrompido'){
@@ -3221,6 +3534,7 @@ $('#btnRevise').onclick = async ()=>{
     const outEl=document.createElement('div'); outEl.className='output'; outEl.innerHTML=mdToHtml(peca); out.appendChild(outEl);
     lastText=peca; lastHTML=outEl.innerHTML; lastKind='peca'; pecaSalva=false;
     saveDraft();
+    paginaResultado(outEl, peca);            /* v4.3: folhas navegáveis */
     mostraCusto(out, r.modelo, r.uso, rota.tarefa, rota.motivo);
     if(r.stop==='interrompido'){
       avisoIncompleta(out,'A revisão foi cortada no meio ('+(r.erro||'conexão')+') e está INCOMPLETA. Use "Restaurar versão anterior" abaixo, ou revise de novo.');
@@ -3486,6 +3800,21 @@ function pintaPainel(cases){
     b.onclick=t.acao;
     el.appendChild(b);
   });
+  /* v4.2 motion: os numeros contam de 0 ate o valor (so os inteiros; o R$ entra direto) */
+  try{
+    if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      el.querySelectorAll('.pn .num').forEach(nEl=>{
+        const alvo=nEl.textContent.trim();
+        if(!/^\d+$/.test(alvo)) return;
+        const fim=parseInt(alvo,10); if(fim<=0) return;
+        const t0=performance.now(), dur=650;
+        const passo=(ag)=>{ const p=Math.min(1,(ag-t0)/dur);
+          nEl.textContent=String(Math.round(fim*(p*(2-p))));
+          if(p<1) requestAnimationFrame(passo); };
+        nEl.textContent='0'; requestAnimationFrame(passo);
+      });
+    }
+  }catch(e){ /* contagem e so enfeite; nunca pode quebrar o painel */ }
 }
 
 /* ---------- WhatsApp: mensagens prontas para o cliente ---------- */
@@ -3638,6 +3967,7 @@ function loadCase(id){
   out.appendChild(info);
   const outEl=document.createElement('div'); outEl.className='output'; outEl.innerHTML=mdToHtml(c.text||''); out.appendChild(outEl);
   lastText=c.text||''; lastHTML=outEl.innerHTML;
+  if(lastText.trim()) paginaResultado(outEl, lastText);   /* v4.3 */
   lastKind=(c.out==='analise')?'analise':'peca'; pecaSalva=true;
   $('#toolbar').style.display='grid'; ajustaToolbar();
   window.scrollTo({top:0,behavior:'smooth'});
@@ -4410,6 +4740,7 @@ function ofereceRascunho(){
     out.innerHTML='';
     const el=document.createElement('div'); el.className='output'; el.innerHTML=mdToHtml(r.text); out.appendChild(el);
     lastText=r.text; lastHTML=el.innerHTML; lastKind=r.kind||'peca'; pecaSalva=false; loadedCaseId=null;
+    paginaResultado(el, r.text);             /* v4.3 */
     $('#toolbar').style.display='grid'; ajustaToolbar();
   };
   b2.onclick=()=>{ limpaDraft(); bar.remove(); };
@@ -4431,11 +4762,110 @@ $('#fInfracao').onchange=()=>{
   if(t && t.nul.length) $('#ferr').open=true;
 };
 $('#zapFechar').onclick=()=>$('#dlgZap').close();
+/* ================= v4.1 — CHAT INTERNO (assistente) ================= */
+const LS_CHAT='adt_chat';
+let chatHist=[];
+function chatCarrega(){
+  try{ chatHist=JSON.parse(localStorage.getItem(LS_CHAT)||'[]'); }catch(e){ chatHist=[]; }
+  chatPinta();
+}
+function chatSalva(){
+  try{ localStorage.setItem(LS_CHAT, JSON.stringify(chatHist.slice(-40))); }catch(e){}
+}
+function chatPinta(){
+  const c=$('#chatCorpo'); if(!c) return;
+  c.innerHTML='';
+  if(!chatHist.length){
+    const v=document.createElement('div'); v.className='hint';
+    v.textContent='Nenhuma conversa ainda. Pergunte qualquer coisa: "qual a melhor tese para radar sem aferição?", "esse prazo já era?", "como uso o lote?"...';
+    c.appendChild(v);
+  }
+  chatHist.forEach(m=>{
+    const d=document.createElement('div'); d.className='msg '+(m.r==='user'?'eu':'ia');
+    if(m.r==='user'){ d.textContent=m.t; }
+    else{
+      d.innerHTML=mdToHtml(m.t);
+      if(m.c){ const cu=document.createElement('span'); cu.className='custo-mini'; cu.textContent=m.c; d.appendChild(cu); }
+    }
+    c.appendChild(d);
+  });
+  c.scrollTop=c.scrollHeight;
+}
+/* resumo do caso aberto: e o que faz o chat "conhecer" o que esta na tela */
+function chatContextoCaso(){
+  const p=[];
+  const add=(rot,sel)=>{ const v=($(sel)||{}).value; if(v && String(v).trim()) p.push(rot+': '+String(v).trim()); };
+  add('Fase','#procType'); add('Cliente','#fNome'); add('Orgao','#fOrgao'); add('AIT/Processo','#fAit');
+  add('Placa','#fPlaca'); add('Notificacao','#fDataNotif'); add('Prazo final','#fPrazoManual');
+  const inf=tipoInfracaoAtual(); if(inf && inf.id) p.push('Tipo de infracao: '+inf.t);
+  const nm=nulidadesMarcadas(); if(nm.length) p.push('Nulidades marcadas: '+nm.map(n=>n.t).join('; '));
+  if(TRIAGEM && TRIAGEM.complexidade) p.push('Triagem: complexidade '+TRIAGEM.complexidade+'/5'+(TRIAGEM.redFlags&&TRIAGEM.redFlags.length?(' | alertas: '+TRIAGEM.redFlags.join(', ')):''));
+  const obs=($('#notes')||{}).value; if(obs && obs.trim()) p.push('Fatos: '+obs.trim().slice(0,400));
+  return p.join('\n');
+}
+async function chatEnvia(){
+  const ta=$('#chatTexto'); const tx=ta.value.trim();
+  if(!tx) return;
+  if(!(await podeChamarIA())) return;
+  chatHist.push({ r:'user', t:tx }); ta.value=''; chatPinta(); chatSalva();
+
+  const elite=$('#chatElite').checked;
+  const rota = elite ? { model:'claude-fable-5', effort:'medium', maxTokens:3500 }
+                     : ROTEAMENTO.chat;
+  const conv=chatHist.slice(-12).map(m=>(m.r==='user'?'OPERADOR: ':'ASSISTENTE: ')+m.t).join('\n\n');
+  const ctx=chatContextoCaso();
+
+  const c=$('#chatCorpo');
+  const bolha=document.createElement('div'); bolha.className='msg ia';
+  const st=document.createElement('div'); st.className='status'; st.style.padding='0';
+  const corpo=document.createElement('div');
+  bolha.appendChild(st); bolha.appendChild(corpo); c.appendChild(bolha); c.scrollTop=c.scrollHeight;
+
+  travaBotoes(true); $('#chatEnviar').disabled=true;
+  try{
+    const r=await aiStream(SYSTEM_CHAT,
+      [{ type:'text', text:(ctx?('CONTEXTO DO CASO ABERTO NA TELA:\n'+ctx+'\n\n'):'')+'CONVERSA ATE AQUI:\n'+conv+'\n\nResponda a ULTIMA mensagem do OPERADOR.' }],
+      corpo, st,
+      { statusText:'Pensando…', maxTokens:rota.maxTokens, model:rota.model, effort:rota.effort, tarefa:'chat', allowThink:false });
+    let etiqueta='';
+    try{
+      const cc=calculaCusto(r.modelo, r.uso); registraGasto(cc);
+      registraTelemetria({ em:new Date().toISOString(), tarefa:'chat', modelo:normalizaModelo(r.modelo),
+        evento:'geracao', motivo:(elite?'elite':''), ent:cc.ent, cw:cc.cw, cr:cc.cr, sai:cc.sai, usd:cc.usd });
+      etiqueta='custo: '+fmtBRL(cc.brl)+' · '+normalizaModelo(r.modelo);
+      try{ pintaPainel(getCases()); }catch(e){}
+    }catch(e){}
+    chatHist.push({ r:'ia', t:r.text, c:etiqueta }); chatSalva(); chatPinta();
+  }catch(err){
+    chatHist.push({ r:'ia', t:'⚠ '+err.message }); chatSalva(); chatPinta();
+  }finally{
+    travaBotoes(false); $('#chatEnviar').disabled=false;
+    try{ ta.focus(); }catch(e){}
+  }
+}
+function chatParaClaudeCode(){
+  const ctx=chatContextoCaso();
+  const conv=chatHist.map(m=>(m.r==='user'?'OPERADOR: ':'ASSISTENTE DO SISTEMA: ')+m.t).join('\n\n');
+  const txt='Continuando uma conversa do chat interno do sistema Doutor Detransito (defesas administrativas de transito, foco DETRAN-SE/Sergipe). Use a skill /recursos-transito quando aplicavel.\n\n'+
+    (ctx?('CONTEXTO DO CASO ABERTO:\n'+ctx+'\n\n'):'')+
+    'CONVERSA:\n'+conv+'\n\nContinue de onde paramos, respondendo a ultima mensagem do OPERADOR com a maior qualidade possivel.';
+  copiaTexto(txt).then(ok=>{
+    alert(ok ? 'Conversa copiada!\n\nAbra o Claude Code (esta janela de conversa comigo) e COLE — eu continuo de onde o chat parou, sem gastar a sua chave API.'
+             : 'Não consegui copiar automaticamente. Tente de novo.');
+  });
+}
 /* v3.1: lote de defesas — começa com duas linhas prontas para preencher */
 $('#loteAdd').onclick=()=>addLinhaLote();
 $('#loteGerar').onclick=runLote;
 addLinhaLote(); addLinhaLote();
 pintaLoteInfo();
+/* v4.1: chat interno */
+$('#chatFab').onclick=()=>{ chatCarrega(); $('#dlgChat').showModal(); try{ $('#chatTexto').focus(); }catch(e){} };
+$('#chatFechar').onclick=()=>$('#dlgChat').close();
+$('#chatEnviar').onclick=chatEnvia;
+$('#chatTexto').addEventListener('keydown',e=>{ if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){ e.preventDefault(); chatEnvia(); } });
+$('#chatLimpar').onclick=()=>{ if(confirm('Apagar toda a conversa do chat?')){ chatHist=[]; chatSalva(); chatPinta(); } };
+$('#chatCopiar').onclick=chatParaClaudeCode;
 /* v3.1.1: ponte com o plano do Claude (gera sem gastar a chave) */
 $('#btnPlano').onclick=()=>{ $('#dlgPlano').showModal(); };
 $('#planoFechar').onclick=()=>$('#dlgPlano').close();
@@ -4491,7 +4921,9 @@ buscaCotacao().catch(()=>{});
 /* Se não há chave salva, a única coisa que falta é a chave: pedimos NA HORA,
    sem deixar o usuário esperando por uma procura de servidor que ele nem
    precisa. A detecção continua em segundo plano. */
-if(!(localStorage.getItem(LS.key)||'').trim()){ loadCfg(); cfg.showModal(); }
+/* No site publicado NAO abrimos a janela: o backend da Vercel pode ter a
+   chave (modo backend); se nao tiver, o proprio fluxo de conexao avisa. */
+if(!(localStorage.getItem(LS.key)||'').trim() && !ehSitePublico()){ loadCfg(); cfg.showModal(); }
 detectarConexao()
   .then(()=>{
     pintaConexao();
