@@ -15,7 +15,7 @@
    Nunca guardamos em cache as chamadas de IA nem nada do Supabase:
    são dados do caso e não podem ficar parados numa cópia.
    ================================================================== */
-const VERSAO = 'doutor-detransito-v4.1';
+const VERSAO = 'doutor-detransito-v5.0';
 const ESSENCIAIS = [
   './',
   './index.html',

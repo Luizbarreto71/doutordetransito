@@ -136,7 +136,7 @@ textarea.inp{height:auto;flex:1;min-height:130px;padding:12px 14px;font-size:14.
 .r2{margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .r3{margin-top:24px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
 /* v3.0: painel de controle — o escritório num relance */
-.painel{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:22px 36px 0}
+.painel{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;padding:22px 36px 0}
 .painel .pn{background:linear-gradient(180deg,#14130f,#0f0e0b);border:1px solid rgba(255,217,102,.22);
   border-radius:14px;padding:14px 18px;cursor:pointer;text-align:left;
   transition:border-color .18s,transform .18s,box-shadow .18s}
@@ -148,6 +148,41 @@ textarea.inp{height:auto;flex:1;min-height:130px;padding:12px 14px;font-size:14.
 @media(max-width:1100px){ .painel{grid-template-columns:1fr 1fr;padding:18px 20px 0} }
 /* v3.0: nulidades sugeridas pelo tipo de infração */
 .nul label.sug{border:1px solid rgba(255,217,102,.45);border-radius:8px;padding:4px 8px;background:rgba(255,217,102,.05)}
+/* ==================================================================
+   v4.4 — FORMULÁRIO EM BLOCOS, ADAPTATIVO POR FASE
+   Cada bloco é uma etapa do raciocínio: documentos → prazo → cliente →
+   processo → conferência → fatos. O que não cabe na fase some.
+   ================================================================== */
+.bloco{margin-top:22px;padding:16px 18px 18px;border:1px solid rgba(255,217,102,.14);border-radius:12px;background:rgba(255,217,102,.018)}
+.bloco[hidden]{display:none}
+.bloco-tit{display:flex;align-items:center;gap:9px;font-size:11.5px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:#B8A76C;margin-bottom:14px}
+.bloco-tit span{display:flex;align-items:center;justify-content:center;width:20px;height:20px;flex:none;
+  border-radius:50%;background:rgba(255,217,102,.14);border:1px solid rgba(255,217,102,.3);color:#FFD966;font-size:11px;letter-spacing:0}
+.bloco-prazo{border-color:rgba(255,217,102,.3);background:rgba(255,217,102,.035)}
+.bloco-prazo #prazoBadge{margin-top:12px}
+.bloco-prazo .r2{margin-top:0}
+/* grades proporcionais ao conteúdo */
+.r-cli{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px}
+.r-proc{display:grid;grid-template-columns:1.1fr 1.5fr .8fr;gap:16px}
+.r-proc .fg[hidden]{display:none}
+@media(max-width:1180px){ .r-cli,.r-proc{grid-template-columns:1fr 1fr} }
+/* obrigatório e opcional */
+label.obrig::after{content:'•';color:#FFD966;margin-left:5px;font-size:15px;line-height:0}
+label .opc{font-style:normal;font-weight:400;letter-spacing:.02em;text-transform:none;color:#6d6650;font-size:10.5px;margin-left:5px}
+/* orientação jurídica da fase */
+.fase-ajuda{margin-top:18px;padding:12px 15px;border-left:3px solid #FFD966;border-radius:0 10px 10px 0;
+  background:rgba(255,217,102,.06);font-size:13px;line-height:1.65;color:#CFC3A0}
+.fase-ajuda b{color:#FFD966}
+.fase-ajuda[hidden]{display:none}
+/* pendências antes de gerar */
+.pendencias{margin:16px 0 -4px;padding:11px 14px;border:1px solid rgba(224,122,95,.45);border-radius:10px;
+  background:rgba(224,122,95,.07);font-size:13px;color:#F3EBD3;display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+.pendencias[hidden]{display:none}
+.pendencias b{color:var(--danger);font-weight:700}
+.pendencias button{background:none;border:0;border-bottom:1px dashed rgba(255,217,102,.5);color:#FFD966;
+  font-size:13px;padding:0 0 1px;cursor:pointer;font-family:inherit}
+.pendencias button:hover{border-bottom-style:solid}
 /* v4.3: visualizador em páginas (modo PDF) — como o visualizador do DETRAN */
 .pdfview{display:flex;flex-direction:column;align-items:center;gap:0;animation:sobe .4s ease both;
   background:#0d0c0a;border:1px solid rgba(255,217,102,.18);border-radius:12px;padding:0;overflow:hidden}
@@ -218,6 +253,52 @@ textarea.inp{height:auto;flex:1;min-height:130px;padding:12px 14px;font-size:14.
 .chat-linha textarea{flex:1;min-height:54px;max-height:150px;resize:vertical;background:#171613;border:1px solid rgba(255,217,102,.28);border-radius:10px;color:#F3EBD3;padding:11px 12px;font-size:13.5px;font-family:inherit}
 .chat-linha textarea:focus{outline:none;border-color:#FFD966;box-shadow:0 0 0 3px rgba(255,217,102,.1)}
 .chat-ops{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:12px;color:#8f886e}
+/* v4.8: voz — ditado, leitura em voz alta e modo conversa */
+@keyframes micPulsa{0%,100%{box-shadow:0 0 0 0 rgba(224,122,95,.5)}50%{box-shadow:0 0 0 8px rgba(224,122,95,0)}}
+.chat-clip.ouvindo{border-color:var(--danger);background:rgba(224,122,95,.12);animation:micPulsa 1.6s ease-out infinite}
+.chat-clip.ouvindo svg{stroke:var(--danger)}
+.tb.on{background:#1b1810;border-color:#FFD966;color:#FFD966}
+.chat-voz-aviso{font-size:11.5px;color:#8f886e;margin-top:6px}
+/* v4.7: anexos direto na conversa */
+.chat-clip{width:46px;flex:none;background:#12110d;border:1px solid rgba(255,217,102,.3);border-radius:10px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .15s}
+.chat-clip:hover{border-color:#FFD966;background:#171613}
+.chat-anexos{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chat-anexos:empty{display:none}
+.anexo{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 6px 0 10px;border-radius:999px;
+  background:#12110d;border:1px solid rgba(255,217,102,.3);color:#F3EBD3;font-size:11.5px;max-width:210px}
+.anexo span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.anexo button{background:none;border:0;color:#8f886e;cursor:pointer;font-size:14px;line-height:1;padding:0 3px}
+.anexo button:hover{color:var(--danger)}
+#dlgChat.arrastando{outline:2px dashed #FFD966;outline-offset:-6px}
+/* v4.6: checklist vivo do caso, no topo do chat */
+.chat-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.chat-chip{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;border-radius:999px;
+  border:1px solid rgba(255,217,102,.22);background:#12110d;color:#6d6650;font-size:11.5px;cursor:default}
+.chat-chip.ok{color:#FFD966;border-color:rgba(255,217,102,.45)}
+.chat-chip.ok .mk{color:#FFD966}
+.chat-chip.falta{cursor:pointer;color:#8f886e}
+.chat-chip.falta:hover{border-color:#FFD966;color:#FFD966}
+.chat-chip.obrig{border-style:solid}
+.chat-chip.falta.obrig{border-color:rgba(224,122,95,.5);color:#E07A5F}
+.chat-chip.falta.obrig:hover{border-color:#E07A5F}
+.chat-chip .mk{font-size:12px;line-height:1}
+/* v4.6: cartão de confirmação antes de gerar */
+.resumo{background:#12110d;border:1px solid rgba(255,217,102,.4);border-radius:12px;padding:16px 18px;align-self:stretch;max-width:100%}
+.resumo h4{margin:0 0 4px;color:#FFD966;font-size:12px;letter-spacing:.16em;text-transform:uppercase}
+.resumo .sub{color:#8f886e;font-size:11.5px;margin-bottom:12px}
+.resumo .lin{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-top:1px solid rgba(255,217,102,.1);font-size:13px}
+.resumo .lin b{color:#CFC3A0;font-weight:400;flex:none}
+.resumo .lin span{color:#F3EBD3;text-align:right;word-break:break-word}
+.resumo .lin i{font-style:normal;color:#6d6650;font-size:10.5px;margin-left:5px}
+.resumo .avi{margin-top:10px;padding:9px 11px;border-radius:8px;font-size:12px;line-height:1.6}
+.resumo .avi.ok{background:rgba(143,191,126,.1);color:#CFE3C4}
+.resumo .avi.at{background:rgba(255,217,102,.09);color:#F0DFA8}
+.resumo .avi.ru{background:rgba(224,122,95,.1);color:#F0C4B6}
+.resumo .bts{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.resumo .bts button{flex:1;min-width:130px;height:42px;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;border:0}
+.resumo .bts .sim{background:linear-gradient(180deg,#FFE071,#E8B93B);color:#141414}
+.resumo .bts .nao{background:#171613;color:#FFD966;border:1px solid rgba(255,217,102,.35)}
 /* v3.1: lote — varias multas do mesmo cliente */
 .lote-row{display:grid;grid-template-columns:1.1fr 1.1fr .8fr 1.5fr auto;gap:8px;margin-bottom:8px;align-items:center}
 .lote-row .inp{height:44px;font-size:13.5px}
@@ -673,7 +754,7 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
     </div>
     <div class="hdr-right">
       <div class="chip-con" id="chipConexao" title="Como o sistema está falando com a IA"><span class="pt2"></span><span id="chipConexaoTxt">verificando…</span></div>
-      <div class="chip-ver">v4.1</div>
+      <div class="chip-ver">v5.0</div>
       <button class="btn-gear" id="btnCfg" title="Configurações" aria-label="Configurações"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFD966" stroke-width="1.8"><circle cx="12" cy="12" r="3.2"></circle><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"></path></svg></button>
     </div>
   </div>
@@ -721,48 +802,51 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
           </div>
         </div>
 
-        <div class="r4">
-          <div class="fg"><label for="fDataNotif">Data da notificação</label><input type="date" class="inp" id="fDataNotif"></div>
-          <div class="fg"><label for="fPrazoManual">Prazo final (se souber)</label><input type="date" class="inp" id="fPrazoManual"></div>
-          <div class="fg"><label for="fNome">Nome do condutor</label><input type="text" class="inp" id="fNome" placeholder="Ex.: João da Silva"></div>
-          <div class="fg"><label for="fOrgao">Órgão / UF</label><input type="text" class="inp" id="fOrgao" list="orgaosSE" placeholder="Ex.: DETRAN-SE"><datalist id="orgaosSE"><option value="DETRAN-SE"></option><option value="SMTT Aracaju"></option><option value="PRF"></option><option value="DER/SE"></option><option value="DNIT"></option><option value="CETRAN-SE"></option></datalist></div>
-        </div>
-        <div id="prazoBadge" class="prazo-badge" style="display:none"></div>
+        <!-- orientação jurídica da fase escolhida (muda sozinha) -->
+        <div class="fase-ajuda" id="faseAjuda"></div>
 
-        <div class="r4 r-ait">
+        <!-- BLOCO 2 · DOCUMENTOS (o Radar preenche o resto sozinho) -->
+        <div class="bloco" id="blocoDocs">
+          <div class="bloco-tit"><span>2</span> Documentos — jogue tudo aqui e deixe o Radar preencher</div>
           <div class="fg">
-            <label for="fAit">Nº do AIT / Processo</label>
-            <input type="text" class="inp" id="fAit" placeholder="Ex.: AIT nº AB000123 / Processo nº ...">
-          </div>
-          <div class="fg">
-            <label for="fPlaca">Placa</label>
-            <input type="text" class="inp" id="fPlaca" maxlength="8" placeholder="ABC1D23" style="text-transform:uppercase">
-          </div>
-          <div class="fg">
-            <label for="fCpf">CPF do requerente</label>
-            <input type="text" class="inp" id="fCpf" inputmode="numeric" maxlength="14" placeholder="000.000.000-00">
-          </div>
-          <div class="fg">
-            <label for="fTel">WhatsApp do cliente</label>
-            <input type="tel" class="inp" id="fTel" inputmode="tel" maxlength="16" placeholder="(79) 99999-9999">
-          </div>
-        </div>
-
-        <div class="r2b">
-          <div class="fg">
-            <label>Documentos (PDF ou imagem)</label>
             <div class="drop" id="drop">
               <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFD966" stroke-width="1.8"><path d="M12 16V5M12 5l-4 4M12 5l4 4"></path><path d="M4 16v3a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 20 19v-3"></path></svg>
               <div class="d1">Arraste aqui ou <span>clique para selecionar</span></div>
-              <div class="d2">Auto de infração, notificações, portaria, prontuário, CNH, fotos do local/radar</div>
+              <div class="d2" id="dropDica">Auto de infração, notificações, portaria, prontuário, CNH, fotos do local/radar</div>
             </div>
             <input type="file" id="fileInput" accept=".pdf,image/*" multiple hidden>
             <div class="files" id="fileList"></div>
           </div>
-          <div class="fg">
-            <label for="notes">Fatos e observações</label>
-            <textarea class="inp" id="notes" placeholder="Ex.: condutor não foi notificado da autuação; radar sem placa de aviso/aferição; foto ilegível; veículo já vendido; emergência médica; datas relevantes; o que o cliente alega..."></textarea>
-            <div class="hint">Quanto mais detalhe, melhor a peça.</div>
+          <button class="btn-ghost-wide" id="btnRadar" style="margin-top:10px">Radar do caso — ler documentos e preencher os campos</button>
+        </div>
+
+        <!-- BLOCO 3 · PRAZO (a única coisa que não tem conserto) -->
+        <div class="bloco bloco-prazo" id="blocoPrazo">
+          <div class="bloco-tit"><span>3</span> Prazo — a única coisa que não tem conserto</div>
+          <div class="r2">
+            <div class="fg"><label for="fDataNotif" id="labDataNotif">Data da notificação</label><input type="date" class="inp" id="fDataNotif"></div>
+            <div class="fg"><label for="fPrazoManual" id="labPrazoManual">Prazo final (se souber)</label><input type="date" class="inp" id="fPrazoManual"></div>
+          </div>
+          <div id="prazoBadge" class="prazo-badge" style="display:none"></div>
+        </div>
+
+        <!-- BLOCO 4 · CLIENTE (quem assina) -->
+        <div class="bloco" id="blocoCliente">
+          <div class="bloco-tit"><span>4</span> Cliente — quem assina</div>
+          <div class="r-cli">
+            <div class="fg"><label for="fNome">Nome do condutor</label><input type="text" class="inp" id="fNome" placeholder="Ex.: João da Silva"></div>
+            <div class="fg"><label for="fCpf">CPF do requerente</label><input type="text" class="inp" id="fCpf" inputmode="numeric" maxlength="14" placeholder="000.000.000-00"></div>
+            <div class="fg"><label for="fTel">WhatsApp do cliente <i class="opc">opcional</i></label><input type="tel" class="inp" id="fTel" inputmode="tel" maxlength="16" placeholder="(79) 99999-9999"></div>
+          </div>
+        </div>
+
+        <!-- BLOCO 5 · O PROCESSO (o que está sendo atacado) -->
+        <div class="bloco" id="blocoProcesso">
+          <div class="bloco-tit"><span>5</span> O processo — o que está sendo atacado</div>
+          <div class="r-proc">
+            <div class="fg"><label for="fOrgao" id="labOrgao">Órgão autuador / UF</label><input type="text" class="inp" id="fOrgao" list="orgaosSE" placeholder="Ex.: DETRAN-SE"><datalist id="orgaosSE"><option value="DETRAN-SE"></option><option value="SMTT Aracaju"></option><option value="PRF"></option><option value="DER/SE"></option><option value="DNIT"></option><option value="CETRAN-SE"></option></datalist></div>
+            <div class="fg"><label for="fAit" id="labAit">Nº do AIT / Processo</label><input type="text" class="inp" id="fAit" placeholder="Ex.: AB00012345" autocapitalize="characters" autocorrect="off" spellcheck="false"></div>
+            <div class="fg" id="fgPlaca"><label for="fPlaca" id="labPlaca">Placa</label><input type="text" class="inp" id="fPlaca" maxlength="8" placeholder="ABC1D23" style="text-transform:uppercase;letter-spacing:1px" autocapitalize="characters" autocorrect="off" spellcheck="false"></div>
           </div>
         </div>
 
@@ -829,7 +913,18 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
           </div>
         </details>
 
-        <button class="btn-ghost-wide" id="btnRadar">Radar do caso — ler documentos e preencher os campos</button>
+        <!-- BLOCO 6 · FATOS (depois do checklist: marcar as caixas ativa a memória) -->
+        <div class="bloco" id="blocoFatos">
+          <div class="bloco-tit"><span>6</span> O relato do caso</div>
+          <div class="fg">
+            <label for="notes">Fatos e observações</label>
+            <textarea class="inp" id="notes" placeholder="Ex.: condutor não foi notificado da autuação; radar sem placa de aviso/aferição; foto ilegível; veículo já vendido; emergência médica; datas relevantes; o que o cliente alega..."></textarea>
+            <div class="hint" id="notesDica">Quanto mais detalhe, melhor a peça.</div>
+          </div>
+        </div>
+
+        <!-- o que ainda falta para gerar (clicável) -->
+        <div class="pendencias" id="pendencias" hidden></div>
         <button class="btn-primary-big" id="btnAnalyze">Gerar peça (ABNT)</button>
         <!-- v3.1.1: ponte com o plano do Claude — gera sem gastar a chave API -->
         <button class="btn-ghost-wide" id="btnPlano" style="margin-top:10px">Gerar pelo plano do Claude — sem gastar créditos da chave</button>
@@ -915,7 +1010,7 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
   <!-- ================= RODAPÉ ================= -->
   <div class="footer">
     <div class="f1"><b>⚠ Aviso profissional:</b> a peça é gerada por IA como minuta de apoio. Antes de protocolar, confira dados, prazos (fatais), enquadramento e citações. O cálculo de prazo é estimativa; o prazo da notificação prevalece.</div>
-    <div class="f2">v4.1 — Resultado em modo PDF (folhas navegáveis com sumário) • Chat do assistente • Motion (martelo, balança, ouro vivo) • Base normativa verificada em fonte oficial (01/08/2026) • Roteamento inteligente de modelos (Fable 5 na elite e na banca revisora) • Teses novas: decadência da penalidade (art. 282 §§6º/7º), convênio PM (art. 23 III), prescrição (Res. 723 art. 24) • Lote de defesas • Painel de controle • WhatsApp • Telemetria de custos (CSV) • Foco Sergipe: DETRAN-SE, SMTT, CETRAN-SE</div>
+    <div class="f2">v5.0 — Assistente que monta o caso conversando (e lê PDF/foto na conversa) • Voz: ditado, leitura e modo conversa • Comandos que ela executa com sua autorização • Formulário que se adapta a cada fase • Motor de aprendizado: o seu acervo ensina a IA • Resultado em modo PDF • Base normativa verificada em fonte oficial (01/08/2026) • Roteamento inteligente de modelos (Fable 5 na elite e na banca revisora) • Teses novas: decadência da penalidade (art. 282 §§6º/7º), convênio PM (art. 23 III), prescrição (Res. 723 art. 24) • Lote de defesas • Painel de controle • WhatsApp • Telemetria de custos (CSV) • Foco Sergipe: DETRAN-SE, SMTT, CETRAN-SE</div>
   </div>
 
 </div>
@@ -959,6 +1054,18 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
   </div>
 </dialog>
 
+<!-- ============ O QUE O SISTEMA APRENDEU (v4.5) ============ -->
+<dialog id="dlgAprende">
+  <div class="dlg-h">O QUE O SISTEMA APRENDEU COM VOCÊ</div>
+  <div class="dlg-b">
+    <div class="hint" style="margin-bottom:12px">Cada caso que você marca como <b>deferido</b> ou <b>indeferido</b> ensina o sistema. Daqui em diante, a IA prioriza sozinha as teses que <b>realmente vencem no seu campo de batalha</b> — e usa as suas peças deferidas como exemplo.</div>
+    <div id="aprendeCorpo"></div>
+  </div>
+  <div class="dlg-f">
+    <button class="btn-primary" id="aprendeFechar" style="width:110px">Fechar</button>
+  </div>
+</dialog>
+
 <!-- ============ CHAT INTERNO — ASSISTENTE DO SISTEMA (v4.1) ============ -->
 <button class="chat-fab" id="chatFab" title="Conversar com o assistente do sistema" aria-label="Abrir o chat do assistente">
   <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="2"><path d="M21 12a8.5 8.5 0 0 1-12.4 7.5L4 21l1.6-4.4A8.5 8.5 0 1 1 21 12z"></path><path d="M8.5 10.5h7M8.5 13.5h4.5"></path></svg>
@@ -967,13 +1074,25 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
   <div class="dlg-h">ASSISTENTE DO SISTEMA</div>
   <div class="dlg-b">
     <div class="hint" style="margin-bottom:10px">Converse, alinhe estratégias e tire dúvidas — ele conhece as teses verificadas e <b>o caso aberto na tela</b>. Modo econômico por padrão (centavos por mensagem, custo mostrado em cada resposta). Para trabalhos grandes sem gastar a chave, use <b>Levar para o Claude Code</b>.</div>
+    <div class="chat-chips" id="chatChips"></div>
     <div class="chat-corpo" id="chatCorpo"></div>
+    <div class="chat-anexos" id="chatAnexos"></div>
     <div class="chat-linha">
-      <textarea id="chatTexto" placeholder="Escreva aqui... (Ctrl+Enter envia)"></textarea>
+      <button type="button" class="chat-clip" id="chatClip" title="Anexar PDF ou foto (auto de infração, notificação, CNH…)" aria-label="Anexar documento">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#FFD966" stroke-width="1.8"><path d="M20.5 11.5l-8.4 8.4a5 5 0 0 1-7.1-7.1l8.9-8.9a3.5 3.5 0 0 1 4.9 4.9l-8.9 8.9a2 2 0 0 1-2.8-2.8l8.1-8.1"></path></svg>
+      </button>
+      <input type="file" id="chatFile" accept=".pdf,image/*" multiple hidden>
+      <button type="button" class="chat-clip" id="chatMic" title="Falar em vez de digitar" aria-label="Ditar por voz">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#FFD966" stroke-width="1.8"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"></path></svg>
+      </button>
+      <textarea id="chatTexto" placeholder="Escreva aqui, ou arraste um documento... (Ctrl+Enter envia)"></textarea>
       <button class="btn-primary" id="chatEnviar" style="width:104px;flex:none">Enviar</button>
     </div>
+    <button class="btn-primary-big" id="chatGerar" style="margin-top:10px;display:none">Gerar a peça deste caso</button>
     <div class="chat-ops">
       <label class="chk" style="margin:0;display:flex;align-items:center;gap:6px"><input type="checkbox" id="chatElite"> resposta de elite (Fable 5 — o melhor, custa mais)</label>
+      <label class="chk" style="margin:0;display:flex;align-items:center;gap:6px" id="labFala"><input type="checkbox" id="chatFala"> ler as respostas em voz alta</label>
+      <button type="button" class="tb" id="chatConversa" style="height:30px;padding:0 10px;font-size:11px;flex:none" title="Você fala, ela responde falando, e o microfone reabre sozinho">modo conversa</button>
       <span style="flex:1"></span>
       <button type="button" class="tb" id="chatCopiar" style="height:30px;padding:0 10px;font-size:11px;flex:none">Levar para o Claude Code</button>
       <button type="button" class="tb" id="chatLimpar" style="height:30px;padding:0 10px;font-size:11px;flex:none">limpar conversa</button>
@@ -1703,9 +1822,52 @@ FUNCAO: conversar, alinhar estrategia de caso, tirar duvidas juridicas de transi
 
 ESTILO: portugues simples e direto; respostas CURTAS (o operador paga por token) — va direto ao ponto em ate ~10 linhas, salvo pedido expresso de detalhe; use listas curtas; zero enrolacao; tom de parceiro experiente.
 
+COBRANCA DO QUE FALTA (regra de convivencia): o CONTEXTO informa "AINDA FALTA" e "OPCIONAIS em branco". Ao fim da sua resposta, emende UMA cobranca curta e natural agrupando o que falta — nunca uma lista fria de campos, nunca mais de uma cobranca por mensagem, e JAMAIS peca de novo um dado que ja esta preenchido. Exemplo bom: "Anotei a placa e o orgao. Me diga o numero do auto e quando ele foi notificado — o prazo corre a partir dai." Quando nao faltar nada obrigatorio, avise que ja da para gerar e pare de cobrar.
+
 VERACIDADE (INEGOCIAVEL): NUNCA invente norma, numero, sumula ou julgado. Base verificada em fonte oficial (01/08/2026): CTB arts. 23 III, 90, 162 V (Lei 14.440/2022), 218, 252, 256-268 (267 vinculado), 280 (par. 4o), 281 (PAR. 1o, II - Lei 14.304/2022), 281-A, 282 (pars. 4o-7o: decadencia 180/360 dias), 285 (caput, par. 1o, par. 6o: 24 meses); Res. CONTRAN 723/2018+844/2021 (art. 24: prescricao 5a/3a), 900/2022, 918/2022, 798/2020+804/2020, 432/2013 (alcool, VIGENTE) e 985/2022+alteracoes (MBFT); Portarias INMETRO 158/2022 (radar) e 369/2021 (etilometro); Sumulas STJ 312, 127, 434; STF 473 e SV 14; Tema 1.097 STJ. NUNCA cite: Res. 619/2016, 299/2008, 925/2022 (revogadas), art. 285 par. 3o (revogado), nem 928/2022 para alcool. Fora dessa base, diga que precisa verificar antes.
 
-LIMITES: peca completa NAO se redige no chat — oriente o botao GERAR PECA (sai melhor e ja no padrao ABNT). Trabalho longo, reescrita grande ou pesquisa profunda — sugira o botao "Levar para o Claude Code" (nao gasta a chave API). Nunca prometa resultado de processo; estimativas de prazo sempre com a ressalva de conferir a notificacao.`;
+LIMITES: peca completa NAO se redige no chat — o sistema a gera pelo fluxo proprio (padrao ABNT). Trabalho longo, reescrita grande ou pesquisa profunda — sugira o botao "Levar para o Claude Code" (nao gasta a chave API). Nunca prometa resultado de processo; estimativas de prazo sempre com a ressalva de conferir a notificacao.
+
+DOCUMENTOS: o operador pode anexar PDF ou foto AQUI NA CONVERSA (clipe, arrastando ou colando) — quando isso acontecer, voce RECEBE o documento e deve le-lo: extraia os dados para o bloco de dados e resuma em poucas linhas o que ele mostra e o que chama atencao juridicamente (campo obrigatorio em branco, data fora do prazo, assinatura ausente, foto ilegivel). NUNCA adivinhe o que estiver ilegivel: diga qual dado ficou ilegivel e peca conferencia. Para gerar a PECA, porem, os documentos precisam estar tambem no campo DOCUMENTOS do formulario (a peca le de la) — avise isso ao operador quando ele anexar algo importante no chat.
+
+=================================================================
+MONTAGEM DO CASO (extracao estruturada) — REGRA TECNICA OBRIGATORIA
+=================================================================
+Voce tambem MONTA O CASO nos bastidores. Alem da resposta em texto, TODA resposta sua termina com UMA UNICA linha, a ultima de todas, exatamente neste formato:
+⟦DADOS⟧{...json...}⟦/DADOS⟧
+
+REGRAS DO BLOCO DE DADOS (inegociaveis):
+1. Inclua APENAS os campos MENCIONADOS pelo operador na conversa. Campo nao mencionado: OMITA a chave (nao invente, nao deduza, nao repita o que ja esta no formulario). Use null SO quando o operador disser expressamente que nao tem/nao sabe.
+2. NUNCA deduza dado a partir de outro. Nao invente numero, data, nome, placa nem orgao. Na duvida, NAO extraia — pergunte no texto.
+3. Datas: converta para AAAA-MM-DD apenas quando a data for EXPLICITA ("dia 20/07/2026", "20 de julho"; sem ano, use o ano corrente). Data RELATIVA ("semana passada", "mes passado", "outro dia", "faz uns dias") NAO se converte: omita o campo e PERGUNTE a data exata no texto — e prazo fatal.
+4. O caractere ⟦ so pode aparecer no bloco de dados. Jamais use ⟦ no texto da resposta.
+5. Se o operador CORRIGIR um dado ja informado ("na verdade a placa e...", "nao, o orgao e..."), inclua o campo com o valor novo E acrescente a chave "_corrigir" com a lista dos campos corrigidos. Sem isso o sistema NAO sobrescreve.
+6. Mensagem sem nenhum dado de caso (duvida juridica, conversa solta): devolva ⟦DADOS⟧{}⟦/DADOS⟧.
+
+CAMPOS ACEITOS (use exatamente estas chaves):
+"fase": um destes codigos — "defesa_previa" (multa nova, auto que acabou de chegar, notificacao de autuacao), "jari" (recurso de 1a instancia contra a penalidade), "cetran" (2a instancia, quando a JARI ja indeferiu), "suspensao" (processo de suspensao do direito de dirigir), "cassacao", "cancelamento", "indicacao" (indicar o condutor infrator), "outro".
+"nome" (condutor/requerente), "orgao" (um de: "DETRAN-SE","SMTT Aracaju","PRF","DER/SE","DNIT","CETRAN-SE" — ou o nome dito, se for de fora), "ait" (numero do auto OU do processo), "placa" (7 caracteres), "cpf", "tel" (WhatsApp), "dataNotif" (data da notificacao/ciencia), "dataInfracao", "infracao" (um de: "velocidade","semaforo","alcool","celular","cinto","estacionamento","ultrapassagem","documentacao","outra"), "fatos" (o relato do operador em 1-3 frases objetivas, so o que ele contou), "pontos" (pontos na CNH hoje, numero), "gravissimas" (numero de gravissimas em 12 meses), "ear" (true/false, motorista profissional).
+"gerar": true APENAS quando o operador pedir claramente para gerar a peca agora ("pode gerar", "manda a peca", "gera isso").
+"gerarAssimMesmo": true se ele insistir em gerar mesmo faltando dado obrigatorio.
+
+ACOES QUE VOCE PODE EXECUTAR NO SISTEMA: quando o operador PEDIR uma dessas coisas, acrescente ao bloco a chave "acoes", uma lista de objetos {"acao":"<codigo>", ...}. Nada roda sozinho: o sistema mostra um cartao e o operador autoriza. NUNCA peca acao que ele nao pediu; no texto, apenas confirme em uma linha o que vai propor.
+Codigos disponiveis:
+- "marcar_nulidade" com "ids":[...] — marca pontos do checklist. Ids validos: obs, local, datahora, placa, descr, agente, notif1, notif30, np180, convenio, presc3, afericao, sinaliz, foto, vendido, outro, advert, cerceio, motiv. Marque APENAS o que o operador afirmou ter conferido nos autos — nunca por suposicao.
+- "desmarcar_nulidade" com "ids":[...]
+- "salvar_caso" — guarda o caso em CASOS SALVOS
+- "conferir_citacoes" — audita as normas da peca ja gerada (USA IA, gasta credito)
+- "revisar" — banca revisora fortalece a peca (USA IA, gasta credito)
+- "radar" — le os documentos anexados no formulario (USA IA, gasta credito)
+- "gerar_pdf" / "baixar_word" — exporta a peca da tela
+- "requerimento" — monta o pedido de vista/copias dos autos
+- "whatsapp" — abre as mensagens prontas para o cliente
+- "novo_caso" — limpa a tela para o proximo cliente
+- "lote_adicionar" com "aits":["AIT 1","AIT 2"] — monta o lote de varias multas do mesmo cliente
+- "abrir_aprendizado" — mostra o painel de desempenho das teses do acervo
+
+EXEMPLO (o operador disse: "cliente Joao da Silva, multa da PM, placa ABC1D23, notificado dia 20/07"):
+Texto normal da resposta... e na ultima linha:
+⟦DADOS⟧{"fase":"defesa_previa","nome":"Joao da Silva","orgao":"DETRAN-SE","placa":"ABC1D23","dataNotif":"2026-07-20"}⟦/DADOS⟧`;
 
 /* ==================================================================
    PROMPT 5 — RADAR DO CASO (triagem e extracao)
@@ -1931,6 +2093,338 @@ const TIPOS_INFRACAO = [
     dica:'Prazo de 30 dias apos o vencimento em que a conducao ainda nao configura a infracao do art. 162, V, do CTB; validade estendida por resolucao ou norma local quando aplicavel; datas do documento x data da autuacao; enquadramento correto entre os incisos do art. 162.' },
   { id:'outra', t:'Outra infração', nul:[], dica:'' }
 ];
+/* ==================================================================
+   ARSENAL VERIFICADO (embutido)
+
+   Fonte de verdade: data/teses/arsenal.json — verificado em fonte oficial.
+   Como o sistema roda em file:// (onde o navegador proibe ler arquivo local),
+   o arsenal e EMBUTIDO aqui pelo gerador. Para atualizar:
+       node scripts/gera-arsenal.js
+   (a rotina mensal /atualizar-normas faz isso sozinha depois de rever as
+   normas). NAO edite o bloco abaixo a mao — sera sobrescrito.
+   ================================================================== */
+/* ARSENAL-INICIO (gerado por scripts/gera-arsenal.js — não editar à mão) */
+const ARSENAL={ verificadaEm:"2026-08-01",
+  teses:[{"id":"ait-vicios-formais","e":"a","f":"alta","q":"Campo obrigatório ausente/rasurado no AIT, descrição genérica, agente não identificado, enquadramento incompatível","n":["CTB art. 280, I a VI (rol taxativo dos requisitos)","Res. CONTRAN 918/2022 (define AIT/NA/NP e procedimentos — REVOGOU a 619/2016)","MBFT: Res. CONTRAN 985/2022 + alterações 1.003/2023, 1.009/2024 e 1.012/2024 (fichas de enquadramento)"],"p":"nulidade do AIT e arquivamento"},{"id":"pm-sem-convenio","e":"a","f":"alta","q":"AIT lavrado por policial militar (em SE: BPTran/CPTran via DETRAN-SE) sem prova nos autos do convênio vigente e da designação do agente","n":["CTB art. 23, III: fiscalização pela PM 'quando e conforme convênio firmado'","CTB art. 280, §4º: PM 'designado pela autoridade de trânsito com jurisdição sobre a via'"],"j":"[VERIFICAR] REsp 1.144.079/SP (tese em fonte secundária; inteiro teor não conferido — SCON retornou 403)","p":"exibição do convênio + ato de designação; não comprovado, nulidade por incompetência do agente"},{"id":"na-30-dias","e":"b","f":"alta","q":"Notificação da autuação expedida além de 30 dias da infração","n":["CTB art. 281, §1º, II (RENUMERADO do parágrafo único pela Lei 14.304/2022 — citar sempre §1º)","CTB art. 281, §2º (suspensão/cassação: prazo conta da instauração — Lei 14.304/2022)","Res. CONTRAN 918/2022, art. 4º, caput e §1º (arquivamento do AIT)"],"p":"arquivamento do auto e insubsistência do registro"},{"id":"np-180-360","e":"b","f":"alta","q":"Notificação da penalidade expedida além de 180 dias da infração (ou 360 se houve defesa prévia)","n":["CTB art. 282, §6º (prazos de 180/360 dias — Lei 14.229/2021)","CTB art. 282, §7º (DECADÊNCIA do direito de aplicar a penalidade)","CTB art. 282, §6º-A (não flagrante: conta do conhecimento pelo órgão)","Res. CONTRAN 918/2022, art. 9º, §§2º e 3º"],"p":"declaração de decadência e cancelamento da penalidade"},{"id":"dupla-notificacao","e":"b","f":"alta","q":"Faltou (ou é irregular) a notificação da autuação OU a da penalidade; ônus da prova é da Administração","n":["Súmula 312 do STJ (texto oficial conferido)","CTB arts. 280, 281 e 282","Súmula 127 do STJ (licenciamento × multa não notificada)"],"j":"STJ Tema 1.097 (REsp 1.925.456/SP, trânsito em julgado 16/12/2024): dupla notificação obrigatória na multa NIC a pessoa jurídica","p":"nulidade da penalidade; subsidiário: reabertura de prazo"},{"id":"defesa-min-30","e":"b","f":"media","q":"Notificação com prazo de defesa prévia inferior a 30 dias da expedição","n":["CTB art. 281-A (Lei 14.071/2020)","Res. 723/2018, art. 10, §5º (suspensão/cassação: mínimo 30 dias da notificação da instauração — red. 844/2021)"],"p":"nulidade da notificação e reabertura do prazo"},{"id":"recurso-24-meses","e":"b","f":"media","q":"Recurso pendente de julgamento há mais de 24 meses","n":["CTB art. 285, §6º (Lei 14.229/2021: julgamento em 24 meses)","CTB art. 285, caput (efeito suspensivo do recurso tempestivo)","CTB art. 285, §2º (remessa à JARI em 10 dias)"],"p":"reconhecimento da perda da pretensão punitiva / provimento pela mora"},{"id":"admissibilidade-doc-proprio","e":"b","f":"media","q":"Órgão exige, para admissibilidade, documento emitido por ele próprio","n":["CTB art. 282, §5º (Lei 14.071/2020)","Res. 900/2022 (requisitos de defesa/recursos — SUBSTITUIU a 299/2008 e a 619/2016)"],"p":"nulidade do indeferimento liminar"},{"id":"radar-metrologia","e":"c","f":"alta","q":"Multa de velocidade sem prova da verificação metrológica vigente na data; radar oculto; fixo sem R-19/publicidade","n":["Res. CONTRAN 798/2020 (alterada pela 804/2020; radar portátil: via urbana só com limite ≥ 60 km/h — art. 7º, I)","Portaria INMETRO 158/2022 (RTM vigente; verificação anual obrigatória — item 6.4.1.1; certificados no PSIE)","CTB art. 218 ('medida por instrumento ou equipamento hábil' integra o tipo → atipicidade)","CTB art. 280, §2º"],"p":"exibição do certificado; sem ele, nulidade/atipicidade"},{"id":"etilometro","e":"c","f":"alta","q":"Autuação por alcoolemia (art. 165) ou recusa (165-A)","n":["Res. CONTRAN 432/2013 VIGENTE (não foi revogada; margem de tolerância art. 4º, §único + Anexo I: 0,032 mg/L < 0,40; 8% até 2,00; 30% acima; infração só ≥ 0,05 mg/L no valor considerado)","Portaria INMETRO 369/2021 (RTM do etilômetro; sucessora da 006/2002; verificação anual e após reparo)","ATENÇÃO: 432/2013 NÃO prevê 2ª medição nem acompanhamento — fundamentar em ampla defesa (CF art. 5º, LV)","PROIBIDO citar Res. 928/2022 (trata de cursos EaD)"],"j":"[VERIFICAR] STF Tema 1079 (validade da multa por recusa — página oficial retornou 403)","p":"nulidade do teste/auto; desconto da margem"},{"id":"sinalizacao","e":"d","f":"alta","q":"Sinalização ausente, encoberta, apagada ou contraditória","n":["CTB art. 90, caput e §1º (sem sanção com sinalização insuficiente/incorreta; responsabilidade do órgão)","Res. CONTRAN 798/2020 (sinalização da fiscalização eletrônica)"],"p":"insubsistência da autuação"},{"id":"advertencia","e":"e","f":"alta","q":"Infração leve/média e nenhuma outra infração nos últimos 12 meses","n":["CTB art. 267 (Lei 14.071/2020: 'DEVERÁ ser imposta' — ato vinculado; §§1º e 2º revogados)"],"p":"conversão em advertência por escrito"},{"id":"cnh-vencida-30","e":"e","f":"media","q":"Autuação por CNH vencida","n":["CTB art. 162, V (redação da Lei 14.440/2022: só há infração com CNH vencida HÁ MAIS de 30 dias; multa SIMPLES, sem multiplicador)"],"p":"atipicidade (dentro dos 30 dias) ou adequação da penalidade"},{"id":"celular-enquadramento","e":"e","f":"media","q":"Autuação de celular/fones — conferir enquadramento","n":["CTB art. 252, VI e parágrafo único (segurar/manusear = gravíssima; fones = média)","constatação visual exige descrição circunstanciada (CTB art. 280)"],"p":"atipicidade ou desclassificação do enquadramento"},{"id":"pontos-computo","e":"e","f":"alta","q":"Processo de suspensão por pontos","n":["CTB art. 261 (Lei 14.071/2020: 20/30/40 pontos conforme gravíssimas; EAR: sempre 40 — §5º; suspensão 6m-1a, reincidência 8m-2a)","multas não definitivas não pontuam"],"p":"recálculo e arquivamento do processo"},{"id":"prescricao-723","e":"f","f":"alta","q":"Processo de suspensão/cassação antigo ou parado","n":["Res. CONTRAN 723/2018, art. 24 (VIGENTE, com red. 844/2021; NÃO consolidada — revogações em lote 906/2022 e 1017/2024 não a incluem): prescrição quinquenal da ação punitiva e intercorrente de 3 anos"],"p":"declaração de prescrição e arquivamento"},{"id":"venda-anterior","e":"e","f":"media","q":"Multas em nome de ex-proprietário após alienação","n":["CTB art. 134 (mitigação: STJ Jurisprudência em Teses ed. 112 — alienação comprovada anterior às infrações afasta responsabilidade mesmo sem comunicação)","Lei 15.153/2025 (transferência eletrônica reforça trilha digital datada)"],"j":"STJ JurisTeses ed. 112, item 4","p":"ilegitimidade passiva"},{"id":"freeflow","e":"e","f":"subsidiaria","q":"Autuação por evasão de pedágio free flow","n":["Res. CONTRAN 1.013/2024 (requisitos próprios de sinalização, registro e notificação do free flow)"],"p":"nulidade por descumprimento dos requisitos da resolução"},{"id":"patio-leilao","e":"e","f":"subsidiaria","q":"Remoção a pátio, diárias e leilão irregulares","n":["Res. CONTRAN 1.025/2026 (novo marco de remoção/guarda/liberação/leilão)","Súmula 510 STJ / Tema 339 (liberação não condicionada a pagamento — transporte irregular)"],"j":"STJ JurisTeses ed. 112","p":"anulação da remoção/leilão e restituição"}],
+  sergipe:{"fluxo":"defesa prévia (órgão autuador) → JARI (DETRAN-SE ou SMTT) → CETRAN-SE (30 dias do indeferimento; SEM 1ª instância não há 2ª — indeferimento automático)","cetran":"Endereçar ao PRESIDENTE do CETRAN-SE. Funciona na sede do DETRAN-SE: Av. Tancredo Neves, s/n, Ponto Novo, Aracaju/SE, CEP 49097-510. Gratuito; anexar cópia da decisão da JARI.","detran":"JARI sem pagamento prévio, gratuito; protocolo presencial (agendado), Correios ou Portal de Serviços gov.br nível PRATA/OURO. Processo ÚNICO multa+SDD quando infrator = proprietário (Res. 723, art. 8º c/c CTB art. 261, §10). O próprio DETRAN-SE ainda cita a Res. 619/2016 (REVOGADA) em páginas de procedimento — fraqueza argumentativa.","smtt":"Formulário de Requerimento Único; protocolo presencial (Rua Roberto Fonseca, 200 - Inácio Barbosa) ou plataforma Aracaju Inteligente; docs: CNH, CRLV, identidade, notificações, procuração.","pm":"BPTran atua por convênio com DETRAN-SE (página oficial da PM-SE), mas o INSTRUMENTO (número/data/DOE) não está publicado de forma acessível; transparência do DETRAN-SE declara ausência de convênios com repasse 2020-2025. Em TODA multa de PM: requerer exibição do convênio + designação."} };
+/* ARSENAL-FIM */
+/* teses do arsenal pertinentes ao caso (por infracao e por fase) */
+function tesesDoArsenal(infracaoId, faseId){
+  const T=(ARSENAL&&ARSENAL.teses)||[];
+  if(!T.length) return [];
+  const porEixo=(e)=>T.filter(t=>t.e===e);
+  let alvo=[];
+  const f=faseId||faseAtualId();
+  if(f==='suspensao'||f==='cassacao') alvo=alvo.concat(T.filter(t=>['pontos-computo','prescricao-723','dupla-notificacao','defesa-min-30','pm-sem-convenio'].indexOf(t.id)!==-1));
+  else if(f==='cancelamento') alvo=alvo.concat(T.filter(t=>['prescricao-723','dupla-notificacao'].indexOf(t.id)!==-1));
+  else alvo=alvo.concat(porEixo('a')).concat(porEixo('b'));
+  const mapa={ velocidade:['radar-metrologia','sinalizacao'], alcool:['etilometro'], semaforo:['radar-metrologia','sinalizacao'],
+    estacionamento:['sinalizacao'], celular:['celular-enquadramento'], documentacao:['cnh-vencida-30'],
+    ultrapassagem:['sinalizacao'], cinto:[] };
+  (mapa[infracaoId]||[]).forEach(id=>{ const t=T.find(x=>x.id===id); if(t) alvo.push(t); });
+  const vistos={}; return alvo.filter(t=>{ if(vistos[t.id]) return false; vistos[t.id]=1; return true; })
+    .sort((a,b)=>({alta:0,media:1,subsidiaria:2}[a.f]||3)-({alta:0,media:1,subsidiaria:2}[b.f]||3));
+}
+
+/* ==================================================================
+   v4.5 — MOTOR DE APRENDIZADO (o acervo ensina o sistema)
+
+   O modelo de IA não aprende com o uso — o cérebro dele é fixo. Mas o
+   SISTEMA aprende: cada caso marcado como DEFERIDO ou INDEFERIDO vira
+   estatística por tese, por órgão e por fase. Essa memória volta para
+   dentro do prompt da próxima peça, e o sistema passa a priorizar o que
+   REALMENTE vence no DETRAN-SE — não o que funciona "em geral".
+
+   Fonte de verdade: os próprios casos salvos (nada de banco paralelo).
+   Cada caso já guarda: status, proc (fase), orgao, infracao, nulidades[].
+   ================================================================== */
+const APRENDIZADO_MINIMO=3;   /* abaixo disso a amostra nao diz nada */
+function estatisticasAcervo(){
+  const casos=getCases().filter(c=>c && (c.status==='deferido'||c.status==='indeferido'));
+  const novo=()=>({ def:0, ind:0 });
+  const est={ total:casos.length, teses:{}, orgaos:{}, fases:{}, infracoes:{} };
+  casos.forEach(c=>{
+    const ok=(c.status==='deferido');
+    const conta=(mapa,chave)=>{ if(!chave) return; mapa[chave]=mapa[chave]||novo(); mapa[chave][ok?'def':'ind']++; };
+    (c.nulidades||[]).forEach(id=>conta(est.teses,id));
+    conta(est.orgaos,(c.orgao||'').trim());
+    conta(est.fases, rotuloFase(c.proc));
+    conta(est.infracoes, c.infracao);
+  });
+  return est;
+}
+function taxa(o){ const t=o.def+o.ind; return t? Math.round(o.def*100/t) : null; }
+/* ordena as teses do arsenal pelo desempenho REAL no acervo do operador */
+function tesesPorDesempenho(){
+  const est=estatisticasAcervo(); const out=[];
+  Object.keys(est.teses).forEach(id=>{
+    const o=est.teses[id], tot=o.def+o.ind;
+    if(tot<APRENDIZADO_MINIMO) return;
+    const n=NULIDADES.find(x=>x.id===id);
+    out.push({ id, nome:n?n.t:id, def:o.def, ind:o.ind, tot, pct:taxa(o) });
+  });
+  return out.sort((a,b)=>b.pct-a.pct || b.tot-a.tot);
+}
+/* o que o sistema aprendeu, em texto, para entrar no prompt da peça */
+function textoAprendizado(){
+  const est=estatisticasAcervo();
+  if(est.total<APRENDIZADO_MINIMO) return '';
+  const linhas=[];
+  const fortes=tesesPorDesempenho();
+  if(fortes.length){
+    const vencem=fortes.filter(t=>t.pct>=60).slice(0,6);
+    const perdem=fortes.filter(t=>t.pct<=25).slice(0,4);
+    if(vencem.length) linhas.push('TESES QUE MAIS VENCEM NESTE ACERVO (priorize e desenvolva com profundidade): '+
+      vencem.map(t=>t.nome+' ('+t.def+' de '+t.tot+' deferidas)').join('; ')+'.');
+    if(perdem.length) linhas.push('TESES DE BAIXO RENDIMENTO AQUI (use so se os autos ampararem muito bem, nunca como tese principal): '+
+      perdem.map(t=>t.nome+' ('+t.def+' de '+t.tot+')').join('; ')+'.');
+  }
+  const org=($('#fOrgao')||{}).value; const o=org&&est.orgaos[org.trim()];
+  if(o && (o.def+o.ind)>=APRENDIZADO_MINIMO){
+    linhas.push('Historico deste orgao ('+org.trim()+'): '+o.def+' deferidas em '+(o.def+o.ind)+' pecas.');
+  }
+  if(!linhas.length) return '';
+  return '\nMEMORIA DO ESCRITORIO (aprendida com '+est.total+' casos ja julgados deste proprio operador; e informacao '+
+    'estrategica de PRIORIZACAO, nao autoriza afirmar fato nem citar norma fora da base):\n'+linhas.join('\n')+'\n';
+}
+/* painel visual: taxa de vitória por tese, órgão e fase */
+function pintaAprendizado(){
+  const el=$('#aprendeCorpo'); if(!el) return;
+  const est=estatisticasAcervo();
+  if(est.total===0){
+    el.innerHTML='<div class="hint" style="text-align:center;padding:22px 8px;line-height:1.8">'+
+      'Ainda não há caso julgado no acervo.<br><br>Conforme você for marcando os casos como <b>deferido</b> ou '+
+      '<b>indeferido</b> na lista de CASOS SALVOS, este painel mostra o que funciona — e a IA passa a usar isso nas próximas peças.</div>';
+    return;
+  }
+  const barra=(pct)=>'<div style="height:6px;border-radius:3px;background:#171613;overflow:hidden;margin-top:5px">'+
+    '<div style="height:100%;width:'+pct+'%;background:linear-gradient(90deg,#E8B93B,#FFD966)"></div></div>';
+  const deferidas=getCases().filter(c=>c&&c.status==='deferido').length;
+  let h='<div style="display:flex;gap:18px;flex-wrap:wrap;margin-bottom:16px">'+
+    '<div><div style="font-family:\'Cormorant Garamond\',serif;font-size:30px;color:#FFD966;line-height:1">'+est.total+'</div>'+
+    '<div class="hint">casos já julgados</div></div>'+
+    '<div><div style="font-family:\'Cormorant Garamond\',serif;font-size:30px;color:var(--ok);line-height:1">'+deferidas+'</div>'+
+    '<div class="hint">deferidos</div></div>'+
+    '<div><div style="font-family:\'Cormorant Garamond\',serif;font-size:30px;color:#FFD966;line-height:1">'+
+      (est.total?Math.round(deferidas*100/est.total):0)+'%</div><div class="hint">taxa de êxito</div></div></div>';
+  const fortes=tesesPorDesempenho();
+  h+='<div class="ferr-tit">Desempenho por tese</div>';
+  if(!fortes.length){
+    h+='<div class="hint">Ainda não há tese com pelo menos '+APRENDIZADO_MINIMO+' casos julgados. Continue marcando os resultados — a partir daí o sistema prioriza sozinho.</div>';
+  } else {
+    h+=fortes.map(t=>'<div style="padding:9px 0;border-top:1px solid var(--line)">'+
+      '<div style="display:flex;justify-content:space-between;gap:10px;font-size:13px">'+
+      '<span style="color:#F3EBD3">'+escapeHtml(t.nome)+'</span>'+
+      '<b style="color:'+(t.pct>=60?'var(--ok)':(t.pct<=25?'var(--danger)':'#FFD966'))+';flex:none">'+t.pct+'% · '+t.def+'/'+t.tot+'</b></div>'+
+      barra(t.pct)+'</div>').join('');
+  }
+  const secao=(titulo,mapa)=>{
+    const ks=Object.keys(mapa).filter(k=>k && (mapa[k].def+mapa[k].ind)>=APRENDIZADO_MINIMO);
+    if(!ks.length) return '';
+    return '<div class="ferr-tit">'+titulo+'</div>'+ks.sort((a,b)=>taxa(mapa[b])-taxa(mapa[a])).map(k=>
+      '<div style="display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:7px 0;border-top:1px solid var(--line)">'+
+      '<span style="color:#CFC3A0">'+escapeHtml(k)+'</span><b style="color:#FFD966;flex:none">'+taxa(mapa[k])+'% · '+
+      mapa[k].def+'/'+(mapa[k].def+mapa[k].ind)+'</b></div>').join('');
+  };
+  h+=secao('Por órgão', est.orgaos)+secao('Por fase', est.fases);
+  const ex=getCases().filter(c=>c&&c.status==='deferido'&&c.text).length;
+  h+='<div class="hint" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line)">'+
+    (ex? ('<b style="color:var(--ok)">'+ex+' peça(s) deferida(s)</b> já servem de exemplo real nas próximas gerações.')
+       : 'Nenhuma peça deferida ainda para servir de exemplo.')+'</div>';
+  el.innerHTML=h;
+}
+/* peças deferidas viram EXEMPLO real para as próximas (few-shot do acervo) */
+function exemplosDeferidos(maxChars){
+  const bons=getCases().filter(c=>c && c.status==='deferido' && c.text && c.out!=='analise')
+    .sort((a,b)=>nvData(b.date)-nvData(a.date)).slice(0,2);
+  if(!bons.length) return '';
+  let t='\nEXEMPLOS REAIS DE PECAS DESTE OPERADOR QUE FORAM DEFERIDAS (siga o padrao de estrutura, tom e profundidade; '+
+        'NAO copie fatos, datas, nomes nem numeros deles):\n';
+  const teto=Math.floor((maxChars||9000)/bons.length);
+  bons.forEach((c,i)=>{ t+='\n--- EXEMPLO '+(i+1)+' ('+rotuloFase(c.proc)+') ---\n'+String(c.text).slice(0,teto)+'\n'; });
+  return t+'\n--- FIM DOS EXEMPLOS ---\n';
+}
+
+/* ==================================================================
+   v4.4 — O FORMULÁRIO SE ADAPTA À FASE
+
+   Cada fase tem um rito próprio: a defesa prévia ataca o AUTO; a JARI
+   ataca a PENALIDADE; o CETRAN ataca a DECISÃO; suspensão/cassação
+   atacam a CNH (e ali o que individualiza é o processo e o CPF, não a
+   placa). Este mapa é a única fonte de verdade disso — mudar o
+   comportamento de uma fase é editar UMA entrada aqui.
+
+   chaves: obrig[] = bloqueiam a geração · ocultar[] = seletores que somem
+   labels{} = rótulo de cada campo nesta fase · dicas{} = placeholder/ajuda
+   ================================================================== */
+const FASES_FORM={
+  defesa_previa:{
+    obrig:['#procType','#fNome','#fOrgao','#fAit','#fPlaca','#fDataNotif'],
+    ocultar:['[data-nul="np180"]','[data-nul="motiv"]','[data-nul="presc3"]','[data-nul="notif1"]'],
+    labels:{ '#fDataNotif':'Data em que recebeu a notificação da AUTUAÇÃO', '#fAit':'Nº do AIT (auto de infração)',
+      '#fPrazoManual':'Prazo final impresso na notificação', '#fOrgao':'Órgão autuador / UF' },
+    dicas:{ '#fAit':'Ex.: AB00012345' },
+    drop:'Auto de infração, notificação da autuação, CNH, CRLV, fotos do local/radar',
+    notes:'Inclua a DATA DA INFRAÇÃO e se a notificação demorou a chegar — é disso que sai a tese do art. 281, §1º, II.',
+    ajuda:'Ainda não há penalidade: ataque o <b>auto</b> e a <b>notificação</b>, e peça o arquivamento. Confira se a notificação da autuação foi <b>expedida em até 30 dias</b> da infração (art. 281, §1º, II) — o que não for alegado agora, a JARI dirá que precluiu.'
+  },
+  jari:{
+    obrig:['#procType','#fNome','#fOrgao','#fAit','#fPlaca','#fDataNotif'],
+    ocultar:['[data-nul="presc3"]'],
+    labels:{ '#fDataNotif':'Data em que recebeu a notificação da PENALIDADE (NIP)', '#fAit':'Nº do AIT / processo da defesa prévia',
+      '#fPrazoManual':'Prazo final impresso na NIP', '#fOrgao':'Órgão autuador / UF' },
+    dicas:{ '#fDataNotif':'não é a data da autuação' },
+    drop:'Notificação da penalidade (NIP), auto de infração, decisão da defesa prévia, CNH, CRLV',
+    notes:'Houve defesa prévia? Foi indeferida com que fundamento? Anote a data de EXPEDIÇÃO da NIP.',
+    ajuda:'O prazo de 30 dias corre da notificação da <b>penalidade</b> (art. 285). Antes do mérito, confira a data de <b>expedição da NIP</b>: passou de 180 dias da infração (360 se houve defesa prévia), é <b>decadência</b> (art. 282, §§6º e 7º) — a tese que mais derruba multa.'
+  },
+  cetran:{
+    obrig:['#procType','#fNome','#fOrgao','#fAit','#fPlaca','#fDataNotif','#notes'],
+    ocultar:['[data-nul="presc3"]'],
+    labels:{ '#fDataNotif':'Data em que recebeu a DECISÃO da JARI', '#fAit':'Nº do AIT / processo',
+      '#fPrazoManual':'Prazo final impresso na decisão', '#fOrgao':'Órgão autuador / UF' },
+    drop:'Decisão da JARI, notificação da penalidade, auto de infração, defesa protocolada',
+    notes:'COLE AQUI O TEXTO DA DECISÃO DA JARI — se ela foi genérica, a falta de motivação (art. 50 da Lei 9.784/99) já é metade do recurso.',
+    ajuda:'Aqui não se repete a defesa: recorre-se da <b>decisão</b>. Cole o texto do indeferimento — se a JARI usou fórmula genérica, a <b>falta de motivação</b> (art. 50 da Lei 9.784/99) vira o pedido de anulação do julgamento.'
+  },
+  suspensao:{
+    obrig:['#procType','#fNome','#fCpf','#fOrgao','#fAit','#fDataNotif'],
+    ocultar:['#loteBox','[data-nul="advert"]','[data-nul="vendido"]','[data-nul="outro"]','[data-nul="placa"]'],
+    labels:{ '#fDataNotif':'Data da notificação de INSTAURAÇÃO do processo', '#fAit':'Nº do processo administrativo',
+      '#fPrazoManual':'Prazo final impresso na notificação', '#fOrgao':'Órgão instaurador / UF',
+      '#fPlaca':'Placa <i class="opc">só se houver infração autônoma</i>' },
+    dicas:{ '#fAit':'Ex.: Processo nº 295825952' },
+    drop:'Portaria/notificação de instauração, prontuário e extrato de pontos, CNH, decisões anteriores',
+    notes:'Liste as multas somadas e diga se alguma ainda está em recurso. Anote a data do último ato do processo (prescrição intercorrente).',
+    ajuda:'Aqui o alvo é a <b>CNH</b>, não o carro: o que individualiza é o <b>nº do processo</b> e o CPF. Exija o extrato de pontos e a lista das multas somadas — multa não definitiva não podia ter sido computada; e processo parado há mais de 3 anos tem <b>prescrição intercorrente</b> (art. 24 da Res. CONTRAN 723/2018).',
+    abrirPontos:true
+  },
+  cassacao:{
+    obrig:['#procType','#fNome','#fCpf','#fOrgao','#fAit','#fDataNotif'],
+    ocultar:['#loteBox','#ptsAtual','#ptsGrav','[data-nul="advert"]','[data-nul="vendido"]','[data-nul="placa"]'],
+    labels:{ '#fDataNotif':'Data da notificação de INSTAURAÇÃO do processo', '#fAit':'Nº do processo administrativo',
+      '#fOrgao':'Órgão instaurador / UF', '#fPlaca':'Placa <i class="opc">se houver</i>' },
+    drop:'Portaria de instauração, decisão da penalidade anterior (suspensão), prontuário, CNH',
+    notes:'A penalidade anterior já era definitiva? O cliente foi notificado dela? Descreva toda a cadeia.',
+    ajuda:'Cassação depende de <b>penalidade anterior já definitiva</b>: se a suspensão ainda estava em recurso, ou se o cliente nunca foi validamente notificado dela, falta pressuposto e o processo cai inteiro. Ataque a <b>cadeia</b>, não só o último ato. Pontuação não é critério aqui.'
+  },
+  cancelamento:{
+    obrig:['#procType','#fNome','#fCpf','#fOrgao','#fAit','#fDataNotif','#notes'],
+    ocultar:['#loteBox','#fInfracao','#fgPlaca','#ptsAtual','#ptsGrav','#ptsEar','#docsLista',
+      '[data-nul="obs"]','[data-nul="local"]','[data-nul="datahora"]','[data-nul="placa"]','[data-nul="descr"]',
+      '[data-nul="agente"]','[data-nul="notif1"]','[data-nul="notif30"]','[data-nul="np180"]','[data-nul="afericao"]',
+      '[data-nul="sinaliz"]','[data-nul="foto"]','[data-nul="vendido"]','[data-nul="outro"]','[data-nul="advert"]','[data-nul="convenio"]'],
+    labels:{ '#fDataNotif':'Data em que soube do cancelamento', '#fAit':'Nº do processo administrativo',
+      '#fOrgao':'Órgão / UF' },
+    drop:'Ato/decisão de cancelamento, CNH, comprovantes de boa-fé e do tempo decorrido',
+    notes:'Quando a CNH foi EXPEDIDA? Houve contraditório antes do cancelamento? Descreva a boa-fé e o tempo decorrido.',
+    ajuda:'Cancelamento não é penalidade de trânsito: é a Administração anulando o próprio ato. A tese mestra é a <b>decadência de 5 anos do art. 54 da Lei 9.784/99</b> — contada da expedição da CNH — somada à boa-fé (Súmula 473 do STF) e à falta de contraditório prévio.'
+  },
+  indicacao:{
+    obrig:['#procType','#fNome','#fCpf','#fOrgao','#fAit','#fPlaca','#fDataNotif','#notes'],
+    ocultar:['#loteBox','#fInfracao','#ferr'],
+    labels:{ '#fDataNotif':'Data da notificação da AUTUAÇÃO', '#fAit':'Nº do AIT',
+      '#fNome':'Nome do PROPRIETÁRIO do veículo', '#fOrgao':'Órgão autuador / UF' },
+    drop:'Notificação da autuação, CNH do REAL CONDUTOR, CRLV, formulário FICI se já tiver',
+    notes:'Dados completos do REAL CONDUTOR: nome, CPF, nº e categoria da CNH, endereço — e a declaração de que ele assume a autoria.',
+    ajuda:'Isto não é defesa, é <b>formulário (FICI)</b> e não discute o mérito da multa: 30 dias, assinatura do proprietário <b>e</b> do condutor e cópia da CNH dele. Faltando qualquer uma das três, o órgão indefere sem analisar e o proprietário ainda leva a multa do art. 257, §8º.'
+  },
+  outro:{
+    obrig:['#procType','#fNome','#fOrgao','#notes'],
+    ocultar:[],
+    labels:{ '#fDataNotif':'Data da notificação / ciência', '#fAit':'Nº do AIT / processo', '#fOrgao':'Órgão / UF' },
+    drop:'Todos os documentos que tiver sobre o caso',
+    notes:'Descreva o caso com detalhe — é do seu relato que sairão o endereçamento e o pedido.',
+    ajuda:'Modo aberto (requerimento, pedido de vista, reconsideração): como o sistema não conhece o rito, o <b>relato é obrigatório</b>. Não há estimativa de prazo confiável nesta fase.'
+  }
+};
+/* descobre a fase atual pelo texto do value selecionado */
+function faseAtualId(){
+  const v=String(($('#procType')||{}).value||'').toLowerCase();
+  if(v.indexOf('cetran')!==-1) return 'cetran';
+  if(v.indexOf('jari')!==-1) return 'jari';
+  if(v.indexOf('suspens')!==-1) return 'suspensao';
+  if(v.indexOf('cassa')!==-1) return 'cassacao';
+  if(v.indexOf('cancel')!==-1) return 'cancelamento';
+  if(v.indexOf('indica')!==-1) return 'indicacao';
+  if(v.indexOf('defesa da autua')!==-1) return 'defesa_previa';
+  return 'outro';
+}
+const ROTULO_CAMPO={'#procType':'Fase','#fNome':'Nome do condutor','#fCpf':'CPF','#fOrgao':'Órgão',
+  '#fAit':'Nº do AIT/processo','#fPlaca':'Placa','#fDataNotif':'Data da notificação','#notes':'Fatos e observações',
+  '#fTel':'WhatsApp','#fInfracao':'Tipo de infração'};
+/* desejáveis: não bloqueiam a geração, mas viram [MARCADOR] na peça */
+const DESEJAVEIS=['#fCpf','#fInfracao','#fPlaca','#notes','#fTel'];
+function campoVisivel(sel){
+  const e=$(sel); if(!e) return false;
+  const c=e.closest('.fg,.pts-ear'); if(c && c.hidden) return false;
+  const b=e.closest('.bloco'); if(b && b.hidden) return false;
+  return true;
+}
+function desejaveisDaFase(){
+  const cfg=FASES_FORM[faseAtualId()]||FASES_FORM.outro;
+  return DESEJAVEIS.filter(s=>campoVisivel(s) && (cfg.obrig||[]).indexOf(s)===-1);
+}
+function faltamDesejaveis(){
+  return desejaveisDaFase().filter(s=>{ const e=$(s); return e && !String(e.value||'').trim(); });
+}
+/* o que ainda falta para gerar nesta fase */
+function pendenciasDaFase(){
+  const cfg=FASES_FORM[faseAtualId()]||FASES_FORM.outro;
+  return (cfg.obrig||[]).filter(sel=>{
+    const el=$(sel); if(!el) return false;
+    if(sel==='#procType') return false;                 /* sempre tem valor */
+    return !String(el.value||'').trim();
+  });
+}
+function pintaPendencias(){
+  const el=$('#pendencias'); if(!el) return;
+  const f=pendenciasDaFase();
+  if(!f.length){ el.hidden=true; el.innerHTML=''; return; }
+  el.hidden=false;
+  el.innerHTML='<b>Falta'+(f.length>1?'m':'')+' '+f.length+':</b> ';
+  f.forEach((sel,i)=>{
+    const b=document.createElement('button'); b.type='button';
+    b.textContent=ROTULO_CAMPO[sel]||sel;
+    b.onclick=()=>{ const c=$(sel); if(c){ c.scrollIntoView({behavior:'smooth',block:'center'}); setTimeout(()=>c.focus(),300); } };
+    el.appendChild(b);
+    if(i<f.length-1) el.appendChild(document.createTextNode(' · '));
+  });
+}
+/* aplica TUDO da fase: rótulos, visibilidade, obrigatórios, ajuda */
+function aplicaFase(){
+  const id=faseAtualId(), cfg=FASES_FORM[id]||FASES_FORM.outro;
+  /* 1. tudo volta ao normal antes de esconder o que esta fase não usa */
+  document.querySelectorAll('.bloco, #ferr, #consultas, #loteBox, #fgPlaca, #docsLista').forEach(e=>{ e.hidden=false; });
+  document.querySelectorAll('#nulidades label').forEach(l=>{ l.hidden=false; });
+  ['#fInfracao','#ptsAtual','#ptsGrav','#ptsEar'].forEach(s=>{ const e=$(s); if(e&&e.closest('.fg,.pts-ear')) e.closest('.fg,.pts-ear').hidden=false; });
+  document.querySelectorAll('label.obrig').forEach(l=>l.classList.remove('obrig'));
+  /* 2. rótulos e dicas da fase */
+  const labelDe=(sel)=>document.querySelector('label[for="'+sel.slice(1)+'"]');
+  Object.keys(ROTULO_CAMPO).forEach(sel=>{
+    const lab=labelDe(sel); if(!lab) return;
+    const novo=(cfg.labels||{})[sel];
+    if(novo!==undefined) lab.innerHTML=novo;
+  });
+  Object.keys(cfg.dicas||{}).forEach(sel=>{ const e=$(sel); if(e) e.placeholder=cfg.dicas[sel]; });
+  const dp=$('#dropDica'); if(dp && cfg.drop) dp.textContent=cfg.drop;
+  const nd=$('#notesDica'); if(nd && cfg.notes) nd.textContent=cfg.notes;
+  /* 3. marca os obrigatórios */
+  (cfg.obrig||[]).forEach(sel=>{ const lab=labelDe(sel); if(lab) lab.classList.add('obrig'); });
+  /* 4. esconde o que não cabe nesta fase */
+  (cfg.ocultar||[]).forEach(sel=>{
+    let alvo=null;
+    if(sel.indexOf('[data-nul')===0){ const cx=document.querySelector(sel); alvo=cx?cx.parentNode:null; }
+    else { const e=document.querySelector(sel); alvo = e ? (e.closest('.fg,.pts-ear')||e) : null; }
+    if(alvo) alvo.hidden=true;
+  });
+  /* 5. orientação jurídica da fase */
+  const aj=$('#faseAjuda');
+  if(aj){ if(cfg.ajuda){ aj.hidden=false; aj.innerHTML=cfg.ajuda; } else { aj.hidden=true; aj.innerHTML=''; } }
+  /* 6. em suspensão o risco de pontos É o mérito: abre sozinho */
+  if(cfg.abrirPontos){ const f=$('#ferr'); if(f) f.open=true; }
+  pintaPendencias();
+}
 function montaInfracoes(){
   const el=$('#fInfracao'); if(!el) return;
   el.innerHTML='';
@@ -2144,6 +2638,7 @@ async function runLote(){
       'Fatos e observacoes gerais do cliente: '+(obsGeral||'(nenhuma informada)')+'\n'+
       'Observacoes especificas DESTA multa: '+(it.obs||'(nenhuma)')+'\n'+
       textoPontos()+
+      textoAprendizado()+        /* v4.5: memoria do escritorio tambem no lote */
       '\nCom base nos documentos anexados e nesses dados, redija a PECA COMPLETA e pronta para protocolo, '+
       'seguindo a estrutura, o fechamento e todas as regras. Use marcadores [ENTRE COLCHETES] apenas onde '+
       'faltar informacao. Nao inclua bloco de advogado nem secoes finais de documentos/referencias.' });
@@ -2654,7 +3149,11 @@ $('#cfgTest').onclick = async ()=>{
 
 /* ---------- botao/saida e prazo ---------- */
 $('#outType').onchange = ()=>{ $('#btnAnalyze').textContent = $('#outType').value==='peca' ? 'Gerar peça (ABNT)' : 'Analisar caso'; };
-$('#procType').addEventListener('change', ()=>{ $('#procType').style.borderColor=''; $('#procType').title=''; updatePrazo(); });
+$('#procType').addEventListener('change', ()=>{ $('#procType').style.borderColor=''; $('#procType').title=''; aplicaFase(); updatePrazo(); });
+/* qualquer campo obrigatório preenchido atualiza a linha de pendências */
+['#fNome','#fCpf','#fOrgao','#fAit','#fPlaca','#fDataNotif','#notes'].forEach(s=>{
+  const el=$(s); if(el){ el.addEventListener('input', pintaPendencias); el.addEventListener('change', pintaPendencias); }
+});
 $('#fDataNotif').addEventListener('change', ()=>{ $('#fDataNotif').style.borderColor=''; $('#fDataNotif').title=''; updatePrazo(); });
 $('#fPrazoManual').addEventListener('change', updatePrazo);
 
@@ -2985,6 +3484,9 @@ async function aiStream(systemPrompt, content, renderEl, statusEl, opts){
   if(model!=='claude-haiku-4-5'){ body.thinking={ type:'adaptive', display: showThink?'summarized':'omitted' }; }
   else { delete body.output_config; }
 
+  /* v4.2: opts.filtro deixa o chamador ESCONDER da tela um trecho do texto
+     enquanto ele ainda esta chegando (o chat usa para o bloco de dados). */
+  const filtraTela = (typeof opts.filtro==='function') ? opts.filtro : (t)=>t;
   let thinkBox=null, thinkContent='';
   if(showThink && model!=='claude-haiku-4-5' && renderEl && renderEl.parentNode){
     thinkBox=document.createElement('details'); thinkBox.className='think';
@@ -3124,7 +3626,7 @@ async function aiStream(systemPrompt, content, renderEl, statusEl, opts){
           const j=await resp.json();
           const t=j.text || (Array.isArray(j.content) ? j.content.map(c=>c.type==='text'?c.text:'').join('') : '');
           if(j.stop_reason==='refusal') return await recusaFallback();
-          if(renderEl) renderEl.innerHTML=mdToHtml(t||'');
+          if(renderEl) renderEl.innerHTML=mdToHtml(filtraTela(t||''));
           if(!String(t).trim()) throw new Error('A IA respondeu, mas sem texto. Tente de novo.');
           return { text:t||'', stop:(j.stop_reason||null), uso:(j.usage||{}), modelo:model };
         }
@@ -3161,7 +3663,7 @@ async function aiStream(systemPrompt, content, renderEl, statusEl, opts){
               if(d.type==='text_delta'){
                 raw+=d.text;
                 const agora=Date.now();
-                if(renderEl && agora-lastRender>120){ renderEl.innerHTML=mdToHtml(raw); lastRender=agora; }
+                if(renderEl && agora-lastRender>120){ renderEl.innerHTML=mdToHtml(filtraTela(raw)); lastRender=agora; }
               }else if(d.type==='thinking_delta' && thinkBox){
                 thinkContent+=(d.thinking||'');
                 const tb=thinkBox.querySelector('.tb'); if(tb) tb.textContent=thinkContent;
@@ -3182,7 +3684,7 @@ async function aiStream(systemPrompt, content, renderEl, statusEl, opts){
         paraVigia();
         try{ reader.cancel(); }catch(e){}
 
-        if(renderEl) renderEl.innerHTML=mdToHtml(raw);
+        if(renderEl) renderEl.innerHTML=mdToHtml(filtraTela(raw));
 
         if(erroFluxo){
           /* Texto ja gerado NUNCA se perde: devolvemos o parcial com o aviso.
@@ -3397,6 +3899,17 @@ window.addEventListener('resize',()=>{
 $('#btnAnalyze').onclick = runGen;
 async function runGen(){
   if(!(await podeChamarIA())) return;
+  /* v4.4: dado obrigatório da fase em falta = peça com buraco entre colchetes.
+     Melhor barrar aqui do que descobrir depois do protocolo. */
+  const falta=pendenciasDaFase();
+  if(falta.length){
+    pintaPendencias();
+    const nomes=falta.map(s=>ROTULO_CAMPO[s]||s);
+    const el=$(falta[0]); if(el){ el.scrollIntoView({behavior:'smooth',block:'center'}); setTimeout(()=>el.focus(),300); }
+    if(!confirm('Faltam dados obrigatórios desta fase:\n\n• '+nomes.join('\n• ')+
+      '\n\nSem eles a peça sai com [MARCADORES ENTRE COLCHETES] no lugar — e protocolar assim é o erro que mais custa caro.\n\n'+
+      'OK — gerar assim mesmo\nCancelar — preencher primeiro (recomendado)')) return;
+  }
   if(files.length===0 && !$('#notes').value.trim()){ alert('Envie ao menos um documento ou descreva os fatos do caso.'); return; }
   if(lastText && !pecaSalva && !confirm('Há uma peça/análise na tela que ainda NÃO foi salva. Gerar agora vai substituí-la (o rascunho automático guarda a atual por segurança). Continuar?')) return;
 
@@ -3425,6 +3938,8 @@ async function runGen(){
     textoInfracao()+
     textoNulidades()+
     textoPontos()+
+    textoAprendizado()+          /* v4.5: o que o acervo do operador ensinou */
+    exemplosDeferidos(9000)+     /* v4.5: peças deferidas como exemplo real */
     `\n`+
     (isPeca
       ? `Com base nos documentos anexados e nesses dados, redija a PECA COMPLETA e pronta para protocolo, seguindo a estrutura, o fechamento e todas as regras. Use marcadores [ENTRE COLCHETES] apenas onde faltar informacao. Nao inclua bloco de advogado nem secoes finais de documentos/referencias.`
@@ -3790,6 +4305,10 @@ function pintaPainel(cases){
     { n:String(prot), l:'aguardando julgamento', cls:'',
       dica:'Casos protocolados, esperando a decisao do orgao.',
       acao:rola },
+    { n:(function(){ const e=estatisticasAcervo(); return e.total? (Math.round(getCases().filter(c=>c&&c.status==='deferido').length*100/e.total)+'%') : '—'; })(),
+      l:'taxa de êxito', cls:'',
+      dica:'Quanto o sistema já aprendeu com os seus resultados. Clique para ver as teses que mais vencem.',
+      acao:()=>{ pintaAprendizado(); $('#dlgAprende').showModal(); } },
     { n:fmtBRL(gasto), l:'gasto de IA no mês', cls:'',
       dica:'Quanto a IA custou neste mes. Clique para ver os detalhes.',
       acao:()=>{ loadCfg(); cfg.showModal(); } }
@@ -4752,6 +5271,7 @@ function ofereceRascunho(){
 carregaTriagem();          /* v4.0: complexidade/red flags da ultima triagem */
 montaNulidades();
 montaInfracoes();
+aplicaFase();               /* v4.4: o formulário se molda à fase escolhida */
 montaConsultas();
 montaCopiaveis();
 montaDocumentos();
@@ -4762,8 +5282,143 @@ $('#fInfracao').onchange=()=>{
   if(t && t.nul.length) $('#ferr').open=true;
 };
 $('#zapFechar').onclick=()=>$('#dlgZap').close();
+$('#aprendeFechar').onclick=()=>$('#dlgAprende').close();
+/* ==================================================================
+   v4.2 — O CHAT QUE MONTA O CASO (intake conversacional)
+
+   O operador fala solto; a IA devolve, na MESMA resposta, o texto e um
+   bloco ⟦DADOS⟧ com o que reconheceu. Aqui embaixo esse bloco vira
+   campo preenchido no formulario, no mesmo padrao do Radar: so preenche
+   campo VAZIO, so sobrescreve com correcao expressa, e marca de dourado
+   tudo que a IA tocou para o operador conferir.
+   ================================================================== */
+const LS_CHAT='adt_chat', LS_CASO_CHAT='adt_caso_chat';
+let CASO_CHAT={};
+function casoChatCarrega(){
+  try{ CASO_CHAT=JSON.parse(localStorage.getItem(LS_CASO_CHAT)||'{}')||{}; }catch(e){ CASO_CHAT={}; }
+}
+function casoChatSalva(){
+  try{ localStorage.setItem(LS_CASO_CHAT, JSON.stringify(CASO_CHAT)); }catch(e){}
+}
+/* carrega AQUI (depois das declaracoes acima): chamar isto la no init, que
+   roda antes deste ponto do arquivo, derrubaria o script inteiro. */
+casoChatCarrega();
+/* ---- de codigo curto para o value EXATO do #procType ---- */
+const FASES_CHAT={
+  defesa_previa:'Defesa da Autuação (defesa prévia) de auto de infração — endereçada ao Diretor do órgão autuador',
+  jari:'Recurso à JARI contra a penalidade de multa — endereçado ao Presidente da JARI',
+  cetran:'Recurso ao CETRAN (2ª instância) — endereçado ao Presidente do CETRAN',
+  suspensao:'Defesa/Recurso em processo administrativo de SUSPENSÃO do direito de dirigir',
+  cassacao:'Defesa/Recurso em processo administrativo de CASSAÇÃO da CNH',
+  cancelamento:'Defesa/Recurso em processo de CANCELAMENTO/nulidade da habilitação',
+  indicacao:'Indicação do condutor infrator (art. 257 do CTB) — prazo de 30 dias',
+  outro:'Peça ou análise geral — outra situação'
+};
+const ORGAOS_CANON=['DETRAN-SE','SMTT Aracaju','PRF','DER/SE','DNIT','CETRAN-SE'];
+function orgaoCanonico(v){
+  const s=String(v||'').trim(); if(!s) return '';
+  const n=s.toLowerCase().replace(/[^a-z]/g,'');
+  if(n.indexOf('detran')!==-1) return n.indexOf('se')!==-1||n==='detran' ? 'DETRAN-SE' : s;
+  if(n.indexOf('smtt')!==-1) return 'SMTT Aracaju';
+  if(n.indexOf('cetran')!==-1) return 'CETRAN-SE';
+  if(n.indexOf('prf')!==-1||n.indexOf('policiarodoviariafederal')!==-1) return 'PRF';
+  if(n.indexOf('dnit')!==-1) return 'DNIT';
+  if(n.indexOf('der')!==-1) return 'DER/SE';
+  return s;   /* orgao de fora de Sergipe: fica como o operador falou */
+}
+function placaValida(v){
+  const p=String(v||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+  /* padrao antigo ABC1234 e Mercosul ABC1D23 */
+  return /^[A-Z]{3}\d[A-Z0-9]\d{2}$/.test(p) ? p : '';
+}
+function dataISOok(v){ return /^\d{4}-\d{2}-\d{2}$/.test(String(v||'').trim()) ? String(v).trim() : ''; }
+/* marca visualmente o que veio da IA — e limpa a marca quando o operador confere */
+function marcaChat(sel, aviso){
+  const el=$(sel); if(!el) return;
+  el.style.borderColor='var(--warn)';
+  el.title=aviso||'Preenchido pelo chat — confira antes de gerar.';
+  if(!el.__marcaChat){
+    el.__marcaChat=true;
+    const limpa=()=>{ el.style.borderColor=''; el.title=''; };
+    el.addEventListener('change', limpa);
+    el.addEventListener('input', limpa);
+  }
+}
+/* ---- aplica o bloco de dados ao formulario (padrao do Radar) ---- */
+function aplicaDadosChat(d){
+  if(!d || typeof d!=='object') return [];
+  const corr=Array.isArray(d._corrigir)?d._corrigir:[];
+  const tocados=[];
+  const put=(campo, sel, val, aviso)=>{
+    if(val===undefined || val===null || String(val).trim()==='') return;
+    const el=$(sel); if(!el) return;
+    const vazio=!String(el.value||'').trim();
+    if(!vazio && corr.indexOf(campo)===-1) return;      /* nao sobrescreve sem correcao expressa */
+    el.value=String(val); marcaChat(sel, aviso); tocados.push(campo);
+    CASO_CHAT[campo]=String(val);
+  };
+  if(d.fase && FASES_CHAT[d.fase]){
+    const el=$('#procType');
+    if(!CASO_CHAT.fase || corr.indexOf('fase')!==-1 || el.selectedIndex===0){
+      el.value=FASES_CHAT[d.fase]; marcaChat('#procType','Fase reconhecida pelo chat — confira.');
+      CASO_CHAT.fase=d.fase; tocados.push('fase');
+    }
+  }
+  put('nome','#fNome',d.nome);
+  put('orgao','#fOrgao', d.orgao?orgaoCanonico(d.orgao):'');
+  put('ait','#fAit',d.ait);
+  const pl=placaValida(d.placa); if(pl) put('placa','#fPlaca',pl);
+  if(d.cpf) put('cpf','#fCpf', mascaraCpf(String(d.cpf)));
+  if(d.tel) put('tel','#fTel',d.tel);
+  const dn=dataISOok(d.dataNotif);
+  if(dn) put('dataNotif','#fDataNotif',dn,'Data informada no chat. CONFIRA na notificação: o prazo é fatal.');
+  const di=dataISOok(d.dataInfracao); if(di) CASO_CHAT.dataInfracao=di;
+  if(d.infracao && TIPOS_INFRACAO.some(t=>t.id===d.infracao)){
+    const el=$('#fInfracao');
+    if(!el.value || corr.indexOf('infracao')!==-1){
+      el.value=d.infracao; marcaChat('#fInfracao'); sugereNulidades();
+      CASO_CHAT.infracao=d.infracao; tocados.push('infracao');
+    }
+  }
+  /* fatos ACUMULAM (nunca apagam o que o operador ja escreveu) */
+  if(d.fatos && String(d.fatos).trim()){
+    const ta=$('#notes'), novo=String(d.fatos).trim(), atual=String(ta.value||'').trim();
+    if(atual.indexOf(novo)===-1){
+      ta.value=(atual?atual+'\n':'')+novo; marcaChat('#notes','Relato anotado pelo chat — complete se quiser.');
+      tocados.push('fatos');
+    }
+    CASO_CHAT.fatos=(CASO_CHAT.fatos?CASO_CHAT.fatos+'\n':'')+novo;
+  }
+  if(d.pontos!==undefined && d.pontos!==null && String(d.pontos)!==''){ put('pontos','#ptsAtual',d.pontos); }
+  if(d.gravissimas!==undefined && d.gravissimas!==null && String(d.gravissimas)!==''){ put('gravissimas','#ptsGrav',d.gravissimas); }
+  if(d.ear===true && !$('#ptsEar').checked){ $('#ptsEar').checked=true; tocados.push('ear'); CASO_CHAT.ear=true; }
+  if(tocados.indexOf('pontos')!==-1||tocados.indexOf('gravissimas')!==-1||tocados.indexOf('ear')!==-1){
+    try{ calculaPontos(); $('#ferr').open=true; }catch(e){}
+  }
+  if(tocados.indexOf('dataNotif')!==-1 || tocados.indexOf('fase')!==-1){ try{ updatePrazo(); }catch(e){} }
+  if(tocados.length){ try{ montaCopiaveis(); montaDocumentos(); }catch(e){} }
+  if(tocados.indexOf('fase')!==-1){ try{ aplicaFase(); }catch(e){} }
+  try{ pintaPendencias(); pintaChatChips(); }catch(e){}
+  casoChatSalva();
+  return tocados;
+}
+/* separa o bloco ⟦DADOS⟧ do texto visivel */
+function separaDadosChat(txt){
+  const s=String(txt||'');
+  const i=s.indexOf('⟦DADOS⟧');
+  if(i===-1) return { texto:s.trim(), dados:null };
+  const texto=s.slice(0,i).trim();
+  let bruto=s.slice(i+7);
+  const f=bruto.indexOf('⟦/DADOS⟧'); if(f!==-1) bruto=bruto.slice(0,f);
+  let dados=null;
+  try{
+    const a=bruto.indexOf('{'), b=bruto.lastIndexOf('}');
+    if(a!==-1 && b>a) dados=JSON.parse(bruto.slice(a,b+1));
+  }catch(e){ dados=null; }
+  return { texto, dados };
+}
+
 /* ================= v4.1 — CHAT INTERNO (assistente) ================= */
-const LS_CHAT='adt_chat';
 let chatHist=[];
 function chatCarrega(){
   try{ chatHist=JSON.parse(localStorage.getItem(LS_CHAT)||'[]'); }catch(e){ chatHist=[]; }
@@ -4782,7 +5437,15 @@ function chatPinta(){
   }
   chatHist.forEach(m=>{
     const d=document.createElement('div'); d.className='msg '+(m.r==='user'?'eu':'ia');
-    if(m.r==='user'){ d.textContent=m.t; }
+    if(m.r==='user'){
+      d.textContent=m.t;
+      if(m.anexos && m.anexos.length){
+        const a=document.createElement('div');
+        a.style.cssText='margin-top:6px;font-size:11px;color:#B8A76C';
+        a.textContent='📎 '.replace('📎','')+m.anexos.join(' · ');
+        d.appendChild(a);
+      }
+    }
     else{
       d.innerHTML=mdToHtml(m.t);
       if(m.c){ const cu=document.createElement('span'); cu.className='custo-mini'; cu.textContent=m.c; d.appendChild(cu); }
@@ -4791,6 +5454,112 @@ function chatPinta(){
   });
   c.scrollTop=c.scrollHeight;
 }
+/* ==================================================================
+   v4.6 — CHECKLIST VIVO E CARTÃO DE CONFIRMAÇÃO
+
+   O chat sabe o que a fase exige, cobra só o que falta (uma vez, com
+   jeito de gente) e NÃO gera peça com dado obrigatório em branco. Antes
+   de gerar, mostra o caso inteiro para o operador confirmar.
+   ================================================================== */
+function pintaChatChips(){
+  const el=$('#chatChips'); if(!el) return;
+  const cfg=FASES_FORM[faseAtualId()]||FASES_FORM.outro;
+  const obrig=(cfg.obrig||[]).filter(s=>s!=='#procType' && campoVisivel(s));
+  const desej=desejaveisDaFase();
+  const chip=(sel,ehObrig)=>{
+    const e=$(sel); const preenchido=e && String(e.value||'').trim();
+    const b=document.createElement('button'); b.type='button';
+    b.className='chat-chip '+(preenchido?'ok':'falta')+(ehObrig?' obrig':'');
+    b.innerHTML='<span class="mk">'+(preenchido?'✓':'○')+'</span>'+escapeHtml(ROTULO_CAMPO[sel]||sel);
+    b.title=preenchido ? 'Preenchido' : (ehObrig?'Obrigatório nesta fase — clique para eu perguntar':'Deixa a peça mais forte — clique para eu perguntar');
+    if(!preenchido){
+      b.onclick=()=>{
+        const nome=ROTULO_CAMPO[sel]||sel;
+        chatHist.push({ r:'ia', t:'Me diga **'+nome+'**'+(ehObrig?' — é obrigatório nesta fase.':' (opcional, mas fortalece a peça).') });
+        chatSalva(); chatPinta();
+        try{ $('#chatTexto').focus(); }catch(e){}
+      };
+    }
+    return b;
+  };
+  el.innerHTML='';
+  obrig.forEach(s=>el.appendChild(chip(s,true)));
+  desej.forEach(s=>el.appendChild(chip(s,false)));
+  /* botão de gerar aparece quando o obrigatório está completo */
+  const bg=$('#chatGerar');
+  if(bg) bg.style.display = pendenciasDaFase().length ? 'none' : 'block';
+}
+/* estimativa de custo da peça, para o operador decidir com o número na mão */
+function custoEstimadoPeca(){
+  const rota=decideModelo('redacao');
+  const p=PRECOS[rota.model]||PRECOS['claude-opus-5'];
+  const usd=(12000*p.ent + 8000*p.sai)/1e6;
+  return { model:rota.model, motivo:rota.motivo, brl:usd*cotacaoDolar() };
+}
+/* o cartão que aparece ANTES de gerar: nada sai sem o operador ver */
+function cartaoResumo(){
+  const q=s=>String(($(s)||{}).value||'').trim();
+  const origem=(sel,campo)=>{
+    const v=q(sel); if(!v) return '';
+    if(CASO_CHAT && String(CASO_CHAT[campo]||'')===v) return '<i>chat</i>';
+    if(TRIAGEM && TRIAGEM.em) return '<i>Radar/manual</i>';
+    return '<i>manual</i>';
+  };
+  const cfg=FASES_FORM[faseAtualId()]||FASES_FORM.outro;
+  const linhas=[];
+  const add=(rot,sel,campo)=>{ const v=q(sel); if(v && campoVisivel(sel)) linhas.push('<div class="lin"><b>'+rot+'</b><span>'+escapeHtml(v)+(campo?origem(sel,campo):'')+'</span></div>'); };
+  add('Cliente','#fNome','nome'); add('CPF','#fCpf','cpf'); add('WhatsApp','#fTel','tel');
+  add('Órgão','#fOrgao','orgao'); add('Nº AIT/processo','#fAit','ait'); add('Placa','#fPlaca','placa');
+  add('Notificação','#fDataNotif','dataNotif');
+  const inf=tipoInfracaoAtual(); if(inf && inf.id) linhas.push('<div class="lin"><b>Infração</b><span>'+escapeHtml(inf.t)+'</span></div>');
+
+  let prazoTxt='';
+  const dn=q('#fDataNotif'), pm=q('#fPrazoManual');
+  if(pm){ prazoTxt='Prazo final informado: <b>'+pm.split('-').reverse().join('/')+'</b> ('+diasAteISO(pm)+' dias).'; }
+  else if(dn){ const r=estimarPrazo(dn,$('#procType').value);
+    if(r.prazoFinalISO) prazoTxt='Prazo estimado: <b>'+r.prazoFinalISO.split('-').reverse().join('/')+'</b> — '+r.diasRestantes+' dia(s). <span style="opacity:.75">Estimativa conservadora; o prazo da notificação prevalece.</span>'; }
+
+  const nuls=nulidadesMarcadas();
+  /* teses candidatas: saem do ARSENAL verificado (nunca de lista digitada à mão) */
+  const doArsenal=tesesDoArsenal(inf&&inf.id, faseAtualId()).slice(0,5).map(t=>t.id.replace(/-/g,' '));
+  const cand=(inf&&inf.nul&&inf.nul.length)? inf.nul.map(id=>{ const n=NULIDADES.find(x=>x.id===id); return n?n.t:null; }).filter(Boolean) : doArsenal;
+  const falta=faltamDesejaveis().map(s=>ROTULO_CAMPO[s]||s);
+  const falho=pendenciasDaFase().map(s=>ROTULO_CAMPO[s]||s);
+  const c=custoEstimadoPeca();
+
+  let h='<div class="resumo"><h4>Confira antes de gerar</h4>'+
+    '<div class="sub">'+escapeHtml(rotuloFase($('#procType').value))+'</div>'+linhas.join('');
+  if(prazoTxt) h+='<div class="avi '+(dn||pm?'at':'ru')+'">'+prazoTxt+'</div>';
+  if(nuls.length) h+='<div class="avi ok"><b>'+nuls.length+' ponto(s) de nulidade marcado(s):</b> '+nuls.map(n=>escapeHtml(n.t)).join(' · ')+'</div>';
+  else if(cand.length) h+='<div class="avi at"><b>Teses típicas desta infração</b> (marque no checklist o que conferiu nos autos): '+cand.map(escapeHtml).join(' · ')+'</div>';
+  if(falho.length) h+='<div class="avi ru"><b>Obrigatório em falta:</b> '+falho.join(', ')+' — vai sair como [MARCADOR] na peça.</div>';
+  else if(falta.length) h+='<div class="avi at">Sem preencher: '+falta.join(', ')+' — a peça sai com marcador entre colchetes onde faltar.</div>';
+  h+='<div class="avi at">Modelo: <b>'+c.model+'</b>'+(c.motivo?(' ('+c.motivo+')'):'')+' · custo estimado <b>'+fmtBRL(c.brl)+'</b></div>';
+  h+='<div class="bts"><button type="button" class="sim" id="rsSim">Confirmar e gerar</button>'+
+     '<button type="button" class="nao" id="rsNao">Corrigir (é só falar)</button></div></div>';
+  return h;
+}
+function mostraResumoNoChat(){
+  const c=$('#chatCorpo');
+  const d=document.createElement('div'); d.className='msg ia'; d.style.maxWidth='100%'; d.style.background='none'; d.style.border='0'; d.style.padding='0';
+  d.innerHTML=cartaoResumo();
+  c.appendChild(d); c.scrollTop=c.scrollHeight;
+  d.querySelector('#rsSim').onclick=()=>{
+    d.querySelector('.bts').innerHTML='<div class="hint">Gerando a peça…</div>';
+    chatHist.push({ r:'ia', t:'✓ Peça enviada para geração às '+new Date().toLocaleTimeString('pt-BR').slice(0,5)+
+      '. Depois de pronta: **Conferir citações** e, se for caso difícil, **Revisar/Fortalecer** (banca revisora).' });
+    chatSalva();
+    $('#dlgChat').close();
+    setTimeout(()=>{ try{ runGen(); }catch(e){ alert('Não consegui iniciar a geração: '+e.message); } }, 120);
+  };
+  d.querySelector('#rsNao').onclick=()=>{
+    d.remove();
+    chatHist.push({ r:'ia', t:'Sem problema. Me diga o que corrigir — por exemplo: *"a placa certa é ABC1D23"* ou *"troca o órgão para SMTT"*.' });
+    chatSalva(); chatPinta();
+    try{ $('#chatTexto').focus(); }catch(e){}
+  };
+}
+
 /* resumo do caso aberto: e o que faz o chat "conhecer" o que esta na tela */
 function chatContextoCaso(){
   const p=[];
@@ -4801,13 +5570,223 @@ function chatContextoCaso(){
   const nm=nulidadesMarcadas(); if(nm.length) p.push('Nulidades marcadas: '+nm.map(n=>n.t).join('; '));
   if(TRIAGEM && TRIAGEM.complexidade) p.push('Triagem: complexidade '+TRIAGEM.complexidade+'/5'+(TRIAGEM.redFlags&&TRIAGEM.redFlags.length?(' | alertas: '+TRIAGEM.redFlags.join(', ')):''));
   const obs=($('#notes')||{}).value; if(obs && obs.trim()) p.push('Fatos: '+obs.trim().slice(0,400));
+  /* teses do ARSENAL verificado que cabem neste caso — a IA cita SO daqui */
+  const arse=tesesDoArsenal(inf&&inf.id, faseAtualId()).slice(0,6);
+  if(arse.length){
+    p.push('TESES DO ARSENAL VERIFICADO aplicaveis a este caso (cite fundamento SOMENTE daqui; verificadas em '+
+      (ARSENAL.verificadaEm||'01/08/2026')+'):');
+    arse.forEach(t=>p.push('- ['+t.f+'] '+t.q+' | base: '+(t.n||[]).slice(0,2).join(' ; ')));
+  }
+  /* v4.6: o checklist entra no contexto — assim ele NUNCA repergunta o que já tem */
+  const falho=pendenciasDaFase().map(s=>ROTULO_CAMPO[s]||s);
+  const desej=faltamDesejaveis().map(s=>ROTULO_CAMPO[s]||s);
+  p.push(falho.length ? ('AINDA FALTA (obrigatorio nesta fase): '+falho.join(', ')) : 'OBRIGATORIOS: todos preenchidos — pode gerar quando ele pedir.');
+  if(desej.length) p.push('OPCIONAIS em branco (nao bloqueiam): '+desej.join(', '));
   return p.join('\n');
 }
+/* ==================================================================
+   v4.7 — ANEXOS NA CONVERSA
+
+   O operador arrasta o auto/notificacao (PDF ou foto) direto no chat: a
+   IA LE o documento na mesma chamada em que responde, e o bloco de dados
+   preenche o caso. Reaproveita todo o pipeline de arquivos do sistema
+   (mesmos limites, mesma reducao de imagem, mesmo base64).
+   ================================================================== */
+let chatFiles=[];
+async function chatAddFiles(lista){
+  const antes=files.length;
+  const guarda=files; files=[];              /* usa o addFiles do sistema, sem misturar */
+  try{ await addFiles(lista); chatFiles=chatFiles.concat(files); }
+  catch(e){ console.warn('[chat] anexo:', e); }
+  finally{ files=guarda; renderFiles(); }
+  if(chatFiles.length>6) chatFiles=chatFiles.slice(0,6);
+  pintaChatAnexos();
+  return chatFiles.length-antes;
+}
+function pintaChatAnexos(){
+  const el=$('#chatAnexos'); if(!el) return;
+  el.innerHTML='';
+  chatFiles.forEach((f,i)=>{
+    const d=document.createElement('div'); d.className='anexo';
+    d.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFD966" stroke-width="1.8" style="flex:none">'+
+      (f.isPdf?'<path d="M7 3h7l4 4v14H7z"></path><path d="M14 3v4h4"></path>'
+             :'<rect x="4" y="5" width="16" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.6"></circle><path d="M4 17l5-4 4 3 3-2 4 3"></path>')+
+      '</svg><span>'+escapeHtml(f.name)+'</span>';
+    const b=document.createElement('button'); b.type='button'; b.textContent='✕'; b.title='remover';
+    b.onclick=()=>{ chatFiles.splice(i,1); pintaChatAnexos(); };
+    d.appendChild(b); el.appendChild(d);
+  });
+}
+/* ==================================================================
+   v4.9 — COMANDOS QUE ELA EXECUTA (com a sua autorização)
+
+   O operador manda ("marca as nulidades de radar", "salva o caso",
+   "conferir as citações") e a IA pede a acao no MESMO bloco de dados —
+   sem chamada extra. Nada roda sozinho: aparece um cartao de autorizacao
+   no chat, com aviso de custo quando a acao gastar credito.
+   ================================================================== */
+const ACOES={
+  marcar_nulidade:{ rot:'Marcar pontos de nulidade', custa:false,
+    desc:(a)=>'marcar: '+(a.ids||[]).map(id=>{ const n=NULIDADES.find(x=>x.id===id); return n?n.t:id; }).join(' · '),
+    ok:(a)=>{ let n=0; (a.ids||[]).forEach(id=>{ const cx=document.querySelector('[data-nul="'+id+'"]');
+        if(cx && !cx.checked && !(cx.parentNode&&cx.parentNode.hidden)){ cx.checked=true; n++; } });
+      if(n){ $('#ferr').open=true; montaDocumentos(); }
+      return n+' ponto(s) marcado(s) no checklist.'; } },
+  desmarcar_nulidade:{ rot:'Desmarcar pontos', custa:false,
+    desc:(a)=>'desmarcar: '+(a.ids||[]).join(', '),
+    ok:(a)=>{ let n=0; (a.ids||[]).forEach(id=>{ const cx=document.querySelector('[data-nul="'+id+'"]'); if(cx&&cx.checked){ cx.checked=false; n++; } });
+      montaDocumentos(); return n+' ponto(s) desmarcado(s).'; } },
+  salvar_caso:{ rot:'Salvar o caso', custa:false,
+    desc:()=>'guardar este caso em CASOS SALVOS',
+    ok:()=>{ if(!lastText){ return 'Não há peça na tela para salvar ainda.'; } $('#btnSave').click(); return 'Caso salvo.'; } },
+  conferir_citacoes:{ rot:'Conferir citações', custa:true,
+    desc:()=>'auditar cada norma citada na peça',
+    ok:()=>{ if(!lastText) return 'Gere a peça primeiro.'; $('#dlgChat').close(); setTimeout(()=>$('#btnCheck').click(),120); return 'Conferência iniciada.'; } },
+  revisar:{ rot:'Revisar / banca revisora', custa:true,
+    desc:()=>'criticar e fortalecer a peça (modelo de elite)',
+    ok:()=>{ if(!lastText) return 'Gere a peça primeiro.'; $('#dlgChat').close(); setTimeout(()=>$('#btnRevise').click(),120); return 'Revisão iniciada.'; } },
+  radar:{ rot:'Rodar o Radar nos documentos', custa:true,
+    desc:()=>'ler os documentos do formulário e preencher os campos',
+    ok:()=>{ if(!files.length) return 'Anexe os documentos no campo DOCUMENTOS do formulário primeiro.';
+      $('#dlgChat').close(); setTimeout(()=>$('#btnRadar').click(),120); return 'Radar iniciado.'; } },
+  gerar_pdf:{ rot:'Gerar o PDF', custa:false,
+    desc:()=>'abrir a peça pronta para impressão/PDF',
+    ok:()=>{ if(!lastText) return 'Não há peça na tela.'; $('#btnPrint').click(); return 'PDF aberto.'; } },
+  baixar_word:{ rot:'Baixar o Word', custa:false,
+    desc:()=>'baixar a peça em .docx (ABNT)',
+    ok:()=>{ if(!lastText) return 'Não há peça na tela.'; $('#btnDocx').click(); return 'Arquivo baixado.'; } },
+  requerimento:{ rot:'Gerar requerimento ao órgão', custa:false,
+    desc:()=>'montar o pedido de vista/cópias dos autos',
+    ok:()=>{ $('#dlgChat').close(); setTimeout(()=>abreRequerimento(),120); return 'Requerimento montado.'; } },
+  whatsapp:{ rot:'Mensagem de WhatsApp', custa:false,
+    desc:()=>'abrir as mensagens prontas para o cliente',
+    ok:()=>{ const c=getCases()[0]; if(!c) return 'Salve o caso primeiro.'; $('#dlgChat').close(); setTimeout(()=>abreZap(c.id),120); return 'Mensagens abertas.'; } },
+  novo_caso:{ rot:'Começar um caso novo', custa:false,
+    desc:()=>'limpar a tela para o próximo cliente',
+    ok:()=>{ $('#btnNew').click(); chatHist=[]; CASO_CHAT={}; chatSalva(); casoChatSalva(); chatPinta(); pintaChatChips(); return 'Tela limpa para o próximo caso.'; } },
+  lote_adicionar:{ rot:'Montar lote de multas', custa:false,
+    desc:(a)=>'colocar no lote: '+(a.aits||[]).join(', '),
+    ok:(a)=>{ const aits=(a.aits||[]).filter(Boolean); if(!aits.length) return 'Nenhum AIT informado.';
+      const box=$('#loteBox'); if(box && box.hidden) return 'O lote não vale nesta fase (só para multas).';
+      $('#loteLinhas').innerHTML=''; aits.forEach(()=>addLinhaLote());
+      const linhas=document.querySelectorAll('#loteLinhas .lote-row');
+      aits.forEach((a2,i)=>{ if(linhas[i]) linhas[i].querySelector('[data-lt="ait"]').value=a2; });
+      pintaLoteInfo(); if(box) box.open=true;
+      return aits.length+' multa(s) no lote — confira e clique em "Gerar TODAS as defesas do lote".'; } },
+  abrir_aprendizado:{ rot:'Mostrar o que o sistema aprendeu', custa:false,
+    desc:()=>'abrir o painel de desempenho das teses',
+    ok:()=>{ pintaAprendizado(); $('#dlgChat').close(); setTimeout(()=>$('#dlgAprende').showModal(),120); return 'Painel aberto.'; } }
+};
+function cartaoAcoes(lista){
+  const val=lista.filter(a=>a && ACOES[a.acao]);
+  if(!val.length) return;
+  const custa=val.some(a=>ACOES[a.acao].custa);
+  const c=$('#chatCorpo');
+  const d=document.createElement('div'); d.className='msg ia'; d.style.cssText='max-width:100%;background:none;border:0;padding:0';
+  d.innerHTML='<div class="resumo"><h4>Autoriza?</h4><div class="sub">Eu faço isso no sistema por você</div>'+
+    val.map(a=>{ let t=''; try{ t=ACOES[a.acao].desc(a)||''; }catch(e){}
+      return '<div class="lin"><b>'+escapeHtml(ACOES[a.acao].rot)+'</b><span>'+escapeHtml(t)+'</span></div>'; }).join('')+
+    (custa?'<div class="avi at">Uma das ações usa a IA e consome crédito da sua chave.</div>':'')+
+    '<div class="bts"><button type="button" class="sim" id="acSim">Autorizar</button>'+
+    '<button type="button" class="nao" id="acNao">Agora não</button></div></div>';
+  c.appendChild(d); c.scrollTop=c.scrollHeight;
+  d.querySelector('#acSim').onclick=()=>{
+    const res=[];
+    val.forEach(a=>{ try{ res.push('• '+ACOES[a.acao].rot+': '+ACOES[a.acao].ok(a)); }
+      catch(e){ res.push('• '+ACOES[a.acao].rot+': não consegui ('+e.message+')'); } });
+    d.remove();
+    chatHist.push({ r:'ia', t:'✓ Feito:\n\n'+res.join('\n') });
+    chatSalva(); chatPinta(); pintaChatChips(); pintaPendencias();
+  };
+  d.querySelector('#acNao').onclick=()=>{ d.remove(); chatHist.push({ r:'ia', t:'Tudo bem, não fiz nada.' }); chatSalva(); chatPinta(); };
+}
+
+/* ==================================================================
+   v4.8 — VOZ: ditar, ouvir e o modo conversa
+
+   Ditado e leitura sao do PROPRIO NAVEGADOR (Web Speech API): nao passam
+   pela IA, nao gastam credito nenhum e funcionam offline. A IA continua
+   recebendo TEXTO — e o que ela entende.
+   Chrome/Edge no PC: ditado completo. iPhone: o ditado do teclado do
+   proprio iOS faz o mesmo papel; a leitura em voz alta funciona.
+   ================================================================== */
+const VOZ_OK = !!(window.SpeechRecognition||window.webkitSpeechRecognition);
+const FALA_OK = !!window.speechSynthesis;
+let recon=null, ouvindo=false, modoConversa=false, textoAntesDoDitado='';
+function limpaParaFalar(t){
+  return String(t||'')
+    .replace(/⟦[\s\S]*$/,'')
+    .replace(/```[\s\S]*?```/g,' ')
+    .replace(/[#*_>`]/g,'')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g,'$1')
+    .replace(/\s+/g,' ')
+    .trim().slice(0,900);
+}
+function falaTexto(t){
+  if(!FALA_OK) return;
+  try{
+    window.speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(limpaParaFalar(t));
+    u.lang='pt-BR'; u.rate=1.06; u.pitch=1;
+    const vs=window.speechSynthesis.getVoices()||[];
+    const pt=vs.find(v=>/pt[-_]BR/i.test(v.lang)) || vs.find(v=>/^pt/i.test(v.lang));
+    if(pt) u.voice=pt;
+    u.onend=()=>{ if(modoConversa && $('#dlgChat').open) setTimeout(()=>iniciaDitado(true), 350); };
+    window.speechSynthesis.speak(u);
+  }catch(e){ console.warn('[voz]', e); }
+}
+function paraDeFalar(){ try{ window.speechSynthesis.cancel(); }catch(e){} }
+function pintaMic(){
+  const b=$('#chatMic'); if(!b) return;
+  b.classList.toggle('ouvindo', ouvindo);
+  b.title = ouvindo ? 'Ouvindo… clique para parar' : 'Falar em vez de digitar';
+  const c=$('#chatConversa'); if(c) c.classList.toggle('on', modoConversa);
+}
+function iniciaDitado(auto){
+  if(!VOZ_OK){
+    if(!auto) alert('Este navegador não tem ditado por voz.\n\nNo PC, use o Chrome ou o Edge.\nNo iPhone, toque no microfone do próprio teclado — funciona igual.');
+    return;
+  }
+  if(ouvindo) return;
+  paraDeFalar();
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  recon=new SR();
+  recon.lang='pt-BR'; recon.continuous=false; recon.interimResults=true; recon.maxAlternatives=1;
+  const ta=$('#chatTexto');
+  textoAntesDoDitado=String(ta.value||'');
+  let finalTxt='';
+  recon.onstart=()=>{ ouvindo=true; pintaMic(); };
+  recon.onresult=(e)=>{
+    let parcial='';
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      const r=e.results[i];
+      if(r.isFinal) finalTxt+=r[0].transcript; else parcial+=r[0].transcript;
+    }
+    ta.value=(textoAntesDoDitado?textoAntesDoDitado+' ':'')+(finalTxt+parcial).trim();
+  };
+  recon.onerror=(e)=>{
+    ouvindo=false; pintaMic();
+    if(e.error==='not-allowed'){ modoConversa=false; pintaMic();
+      alert('O navegador bloqueou o microfone.\n\nClique no cadeado ao lado do endereço e permita o microfone para este site.'); }
+  };
+  recon.onend=()=>{
+    ouvindo=false; pintaMic();
+    const t=String(ta.value||'').trim();
+    /* no modo conversa, o que voce falou ja segue sozinho */
+    if(modoConversa && t && $('#dlgChat').open){ chatEnvia(); }
+  };
+  try{ recon.start(); }catch(e){ ouvindo=false; pintaMic(); }
+}
+function paraDitado(){ if(recon){ try{ recon.stop(); }catch(e){} } ouvindo=false; pintaMic(); }
+
 async function chatEnvia(){
   const ta=$('#chatTexto'); const tx=ta.value.trim();
-  if(!tx) return;
+  if(!tx && !chatFiles.length) return;
   if(!(await podeChamarIA())) return;
-  chatHist.push({ r:'user', t:tx }); ta.value=''; chatPinta(); chatSalva();
+  const anexados=chatFiles.slice();           /* vão nesta mensagem */
+  const rotulos=anexados.map(f=>f.name);
+  chatHist.push({ r:'user', t:(tx||'(documento anexado)'), anexos:rotulos });
+  ta.value=''; chatFiles=[]; pintaChatAnexos(); chatPinta(); chatSalva();
 
   const elite=$('#chatElite').checked;
   const rota = elite ? { model:'claude-fable-5', effort:'medium', maxTokens:3500 }
@@ -4823,10 +5802,28 @@ async function chatEnvia(){
 
   travaBotoes(true); $('#chatEnviar').disabled=true;
   try{
-    const r=await aiStream(SYSTEM_CHAT,
-      [{ type:'text', text:(ctx?('CONTEXTO DO CASO ABERTO NA TELA:\n'+ctx+'\n\n'):'')+'CONVERSA ATE AQUI:\n'+conv+'\n\nResponda a ULTIMA mensagem do OPERADOR.' }],
+    /* documentos anexados entram ANTES do texto (o modelo lê e já extrai) */
+    const conteudo=[];
+    anexados.forEach(f=>{
+      conteudo.push(f.isPdf
+        ? { type:'document', source:{ type:'base64', media_type:'application/pdf', data:f.dataB64 } }
+        : { type:'image',    source:{ type:'base64', media_type:f.mediaType,       data:f.dataB64 } });
+    });
+    conteudo.push({ type:'text', text:(ctx?('CONTEXTO DO CASO ABERTO NA TELA:\n'+ctx+'\n\n'):'')+
+      (anexados.length?('O OPERADOR ANEXOU '+anexados.length+' documento(s) NESTA mensagem ('+rotulos.join(', ')+
+        '). LEIA-OS e extraia os dados do caso para o bloco de dados; no texto, resuma em poucas linhas o que os documentos mostram e o que chamou sua atencao juridicamente. Se algo estiver ilegivel, diga qual campo ficou ilegivel — nao adivinhe.\n\n'):'')+
+      'CONVERSA ATE AQUI:\n'+conv+'\n\nResponda a ULTIMA mensagem do OPERADOR.' });
+    const r=await aiStream(SYSTEM_CHAT, conteudo,
       corpo, st,
-      { statusText:'Pensando…', maxTokens:rota.maxTokens, model:rota.model, effort:rota.effort, tarefa:'chat', allowThink:false });
+      { statusText:'Pensando…', maxTokens:rota.maxTokens, model:rota.model, effort:rota.effort, tarefa:'chat', allowThink:false,
+        /* o operador NUNCA ve o bloco de dados, nem enquanto ele chega */
+        filtro:(t)=>String(t).split('⟦')[0] });
+    /* v4.2: o que a IA reconheceu vira campo preenchido no formulario */
+    const sep=separaDadosChat(r.text);
+    r.text=sep.texto;
+    let tocados=[];
+    try{ tocados=aplicaDadosChat(sep.dados)||[]; }
+    catch(e){ console.warn('[chat] não consegui aplicar os dados:', e); }
     let etiqueta='';
     try{
       const cc=calculaCusto(r.modelo, r.uso); registraGasto(cc);
@@ -4835,7 +5832,30 @@ async function chatEnvia(){
       etiqueta='custo: '+fmtBRL(cc.brl)+' · '+normalizaModelo(r.modelo);
       try{ pintaPainel(getCases()); }catch(e){}
     }catch(e){}
-    chatHist.push({ r:'ia', t:r.text, c:etiqueta }); chatSalva(); chatPinta();
+    if(tocados.length){
+      const nomes={fase:'fase',nome:'nome',orgao:'órgão',ait:'nº do AIT/processo',placa:'placa',cpf:'CPF',
+        tel:'WhatsApp',dataNotif:'data da notificação',infracao:'tipo de infração',fatos:'fatos',
+        pontos:'pontos',gravissimas:'gravíssimas',ear:'EAR'};
+      etiqueta=(etiqueta?etiqueta+' · ':'')+'preenchi: '+tocados.map(t=>nomes[t]||t).join(', ');
+    }
+    chatHist.push({ r:'ia', t:r.text, c:etiqueta }); chatSalva(); chatPinta(); pintaChatChips();
+    /* v4.8: lê a resposta em voz alta (e, no modo conversa, reabre o microfone) */
+    if(($('#chatFala') && $('#chatFala').checked) || modoConversa) falaTexto(r.text);
+    /* v4.6: pediu para gerar? só passa com o obrigatório completo (ou com
+       ordem expressa "gera assim mesmo") — e sempre com o resumo antes. */
+    const d=sep.dados||{};
+    /* v4.9: ela pediu para executar algo? o operador autoriza no cartão */
+    if(Array.isArray(d.acoes) && d.acoes.length){ try{ cartaoAcoes(d.acoes); }catch(e){ console.warn('[acoes]',e); } }
+    if(d.gerar===true){
+      const falho=pendenciasDaFase();
+      if(falho.length && d.gerarAssimMesmo!==true){
+        chatHist.push({ r:'ia', t:'⚠ Ainda não dá para gerar: falta **'+
+          falho.map(s=>ROTULO_CAMPO[s]||s).join('**, **')+'**.\n\nMe passe esses dados que eu monto na hora — ou diga *"gera assim mesmo"* e eu sigo, deixando marcador entre colchetes no lugar.' });
+        chatSalva(); chatPinta();
+      } else {
+        mostraResumoNoChat();
+      }
+    }
   }catch(err){
     chatHist.push({ r:'ia', t:'⚠ '+err.message }); chatSalva(); chatPinta();
   }finally{
@@ -4860,11 +5880,47 @@ $('#loteGerar').onclick=runLote;
 addLinhaLote(); addLinhaLote();
 pintaLoteInfo();
 /* v4.1: chat interno */
-$('#chatFab').onclick=()=>{ chatCarrega(); $('#dlgChat').showModal(); try{ $('#chatTexto').focus(); }catch(e){} };
-$('#chatFechar').onclick=()=>$('#dlgChat').close();
+$('#chatFab').onclick=()=>{ chatCarrega(); casoChatCarrega(); pintaChatChips(); $('#dlgChat').showModal(); try{ $('#chatTexto').focus(); }catch(e){} };
+$('#chatGerar').onclick=()=>{ pintaChatChips(); mostraResumoNoChat(); };
+/* v4.7: anexar por clipe, arrastando ou colando (Ctrl+V de um print) */
+$('#chatClip').onclick=()=>$('#chatFile').click();
+$('#chatFile').onchange=async ()=>{ const f=$('#chatFile').files; if(f&&f.length) await chatAddFiles(f); $('#chatFile').value=''; };
+(function(){
+  const dlg=$('#dlgChat');
+  ['dragenter','dragover'].forEach(ev=>dlg.addEventListener(ev,e=>{ e.preventDefault(); dlg.classList.add('arrastando'); }));
+  ['dragleave','drop'].forEach(ev=>dlg.addEventListener(ev,e=>{ e.preventDefault(); if(ev==='dragleave'&&dlg.contains(e.relatedTarget)) return; dlg.classList.remove('arrastando'); }));
+  dlg.addEventListener('drop', async (e)=>{ const f=e.dataTransfer&&e.dataTransfer.files; if(f&&f.length) await chatAddFiles(f); });
+  $('#chatTexto').addEventListener('paste', async (e)=>{
+    const its=(e.clipboardData||{}).items||[]; const arqs=[];
+    for(const it of its){ if(it.kind==='file'){ const f=it.getAsFile(); if(f) arqs.push(f); } }
+    if(arqs.length){ e.preventDefault(); await chatAddFiles(arqs); }
+  });
+})();
+$('#chatFechar').onclick=()=>{ modoConversa=false; paraDitado(); paraDeFalar(); $('#dlgChat').close(); };
+/* v4.8: voz */
+$('#chatMic').onclick=()=>{ ouvindo ? paraDitado() : iniciaDitado(false); };
+$('#chatConversa').onclick=()=>{
+  if(!VOZ_OK){ alert('O modo conversa precisa do ditado por voz.\n\nNo PC, use o Chrome ou o Edge.\nNo iPhone, use o microfone do teclado e marque "ler as respostas em voz alta".'); return; }
+  modoConversa=!modoConversa; pintaMic();
+  if(modoConversa){
+    if($('#chatFala')) $('#chatFala').checked=true;
+    chatHist.push({ r:'ia', t:'🎙️ **Modo conversa ligado.** Pode falar — eu respondo em voz alta e o microfone reabre sozinho. Para encerrar, clique de novo em *modo conversa*.'.replace('🎙️ ','') });
+    chatSalva(); chatPinta();
+    iniciaDitado(true);
+  } else { paraDitado(); paraDeFalar(); }
+};
+if(!VOZ_OK){ const m=$('#chatMic'); if(m){ m.style.opacity='.4'; m.title='Ditado por voz: use o Chrome/Edge no PC, ou o microfone do teclado no celular'; } }
+if(!FALA_OK){ const l=$('#labFala'); if(l) l.style.display='none'; }
 $('#chatEnviar').onclick=chatEnvia;
 $('#chatTexto').addEventListener('keydown',e=>{ if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){ e.preventDefault(); chatEnvia(); } });
-$('#chatLimpar').onclick=()=>{ if(confirm('Apagar toda a conversa do chat?')){ chatHist=[]; chatSalva(); chatPinta(); } };
+$('#chatLimpar').onclick=()=>{
+  if(!confirm('Apagar toda a conversa do chat?')) return;
+  chatHist=[]; chatSalva(); chatPinta();
+  if(Object.keys(CASO_CHAT||{}).length &&
+     confirm('Apagar também o caso que o chat estava montando?\n\n(Os campos já preenchidos no formulário NÃO são apagados — só a memória do chat.)')){
+    CASO_CHAT={}; casoChatSalva();
+  }
+};
 $('#chatCopiar').onclick=chatParaClaudeCode;
 /* v3.1.1: ponte com o plano do Claude (gera sem gastar a chave) */
 $('#btnPlano').onclick=()=>{ $('#dlgPlano').showModal(); };
@@ -4922,8 +5978,14 @@ buscaCotacao().catch(()=>{});
    sem deixar o usuário esperando por uma procura de servidor que ele nem
    precisa. A detecção continua em segundo plano. */
 /* No site publicado NAO abrimos a janela: o backend da Vercel pode ter a
-   chave (modo backend); se nao tiver, o proprio fluxo de conexao avisa. */
-if(!(localStorage.getItem(LS.key)||'').trim() && !ehSitePublico()){ loadCfg(); cfg.showModal(); }
+   chave (modo backend); se nao tiver, o proprio fluxo de conexao avisa.
+   E no PC abrimos UMA VEZ SO: reabrir a cada F5 travava a tela de quem
+   ainda nao tinha colado a chave (a janela e modal e bloqueia o resto). */
+if(!(localStorage.getItem(LS.key)||'').trim() && !ehSitePublico()
+   && !localStorage.getItem('adt_cfg_vista')){
+  try{ localStorage.setItem('adt_cfg_vista','1'); }catch(e){}
+  loadCfg(); cfg.showModal();
+}
 detectarConexao()
   .then(()=>{
     pintaConexao();
