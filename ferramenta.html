@@ -568,6 +568,25 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
 }
 .r-ait{grid-template-columns:1.7fr .9fr 1.1fr 1.1fr}
 @media(max-width:1180px){ .r-ait{grid-template-columns:1fr 1fr} .r3{grid-template-columns:1fr 1fr} }
+
+/* Rotulo cortado nos seletores (corrigido em 03/08/2026).
+   O design nasceu para 1920px, onde a coluna esquerda tem folga e as 3
+   colunas de .r3 ficam com ~420px cada. Em qualquer monitor menor a coluna
+   encolhe mas as colunas continuavam fixas em 3, espremendo o seletor a
+   ~210px — e o texto virava "Multa — Recurso a JAI" em vez de "JARI".
+   auto-fit reparte pelo espaco que existe de verdade: 3 colunas em 1920,
+   2 em telas medias, sem nunca cortar o rotulo. O padding menor a direita
+   devolve 12px ao texto (a seta ocupa 14px a 11px da borda, entao 30px
+   ainda sobra). Abaixo de 681px vale a regra do celular (1 coluna). */
+@media(min-width:681px){
+  /* 362px = a MAIOR opcao destes seletores ("Álcool — bafômetro ou recusa
+     (arts. 165/165-A)" = 318px de texto + 44px de recuo). Com esse minimo,
+     nenhum rotulo corta em largura nenhuma: 3 colunas no monitor 1920
+     (igual ao design), 2 numa tela media, 1 numa tela estreita. */
+  .r3{grid-template-columns:repeat(auto-fit,minmax(362px,1fr))}
+  .lote-row{grid-template-columns:repeat(auto-fit,minmax(331px,1fr))}
+  select.inp{padding-right:30px;background-position:calc(100% - 11px) 50%}
+}
 @media(max-width:680px){
   .hdr{padding:14px}
   .hdr>svg{width:92px;height:99px}
@@ -754,7 +773,7 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
     </div>
     <div class="hdr-right">
       <div class="chip-con" id="chipConexao" title="Como o sistema está falando com a IA"><span class="pt2"></span><span id="chipConexaoTxt">verificando…</span></div>
-      <div class="chip-ver">v5.0</div>
+      <div class="chip-ver">v5.1</div>
       <button class="btn-gear" id="btnCfg" title="Configurações" aria-label="Configurações"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFD966" stroke-width="1.8"><circle cx="12" cy="12" r="3.2"></circle><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"></path></svg></button>
     </div>
   </div>
@@ -855,6 +874,7 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
           <summary>Pontos de nulidade e risco de pontuação <span>— opcional, mas deixa a peça bem mais forte</span></summary>
           <div class="ferr-corpo">
             <div class="ferr-tit">O que você conferiu nos documentos? Marque só o que for verdade</div>
+            <div class="hint" id="avisoOrgao" hidden style="margin:0 0 8px;border-left:2px solid var(--gold);padding-left:10px"></div>
             <div class="nul" id="nulidades"></div>
             <div class="hint" style="margin-top:8px">Cada item marcado entra na peça como tese desenvolvida, com a base legal correta. Não marque no “achismo”: uma alegação sem respaldo nos autos enfraquece a peça inteira.</div>
 
@@ -1010,7 +1030,7 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
   <!-- ================= RODAPÉ ================= -->
   <div class="footer">
     <div class="f1"><b>⚠ Aviso profissional:</b> a peça é gerada por IA como minuta de apoio. Antes de protocolar, confira dados, prazos (fatais), enquadramento e citações. O cálculo de prazo é estimativa; o prazo da notificação prevalece.</div>
-    <div class="f2">v5.0 — Assistente que monta o caso conversando (e lê PDF/foto na conversa) • Voz: ditado, leitura e modo conversa • Comandos que ela executa com sua autorização • Formulário que se adapta a cada fase • Motor de aprendizado: o seu acervo ensina a IA • Resultado em modo PDF • Base normativa verificada em fonte oficial (01/08/2026) • Roteamento inteligente de modelos (Fable 5 na elite e na banca revisora) • Teses novas: decadência da penalidade (art. 282 §§6º/7º), convênio PM (art. 23 III), prescrição (Res. 723 art. 24) • Lote de defesas • Painel de controle • WhatsApp • Telemetria de custos (CSV) • Foco Sergipe: DETRAN-SE, SMTT, CETRAN-SE</div>
+    <div class="f2">v5.1 — Blindagem do acervo: rascunho automático desde o primeiro campo • Salvar caso (e prazo) sem precisar gerar peça • Indeferido continua na agenda com o prazo do recurso ("recorrer: faltam Nd") • Agenda avisa caso SEM data • Nuvem só confirma o que confirmou de verdade • Novo caso zera a memória da assistente • Nulidades não vazam entre fases • Layout sem cortes em telas menores • (v5.0: assistente que monta o caso, voz, comandos, formulário por fase, motor de aprendizado, modo PDF, base verificada, Fable 5 na elite • Foco Sergipe: DETRAN-SE, SMTT, CETRAN-SE)</div>
   </div>
 
 </div>
@@ -1210,6 +1230,9 @@ const LS = { key:'adt_apikey', model:'adt_model', effort:'adt_effort', think:'ad
 const $ = s => document.querySelector(s);
 let files = [];
 let lastText = '', lastHTML = '', loadedCaseId = null;
+/* id do caso indeferido que originou o recurso em preparo: quando o recurso
+   for salvo, o pai sai do contador de prazos (o prazo passou a ser do filho) */
+let paiRecurso = null;
 let lastKind = 'peca';        /* 'peca' | 'analise' — o que esta na tela agora */
 let pecaSalva = true;         /* controla os avisos de trabalho nao salvo */
 let ocupado = false;          /* trava: uma chamada de IA por vez */
@@ -1610,9 +1633,12 @@ Redige em Markdown. Cada secao recebe titulo iniciado por dois sinais de cerquil
 ## I - DO ENDERECAMENTO
 Cabecalho respeitoso, em caixa alta, dirigido a autoridade competente EXATA para a fase informada no campo Fase/procedimento. Casa rigorosamente ENDERECAMENTO + FASE + PEDIDO, pois enderecar autoridade errada e causa comum de nao conhecimento:
 - Defesa Previa da autuacao ou processo administrativo: Diretor ou dirigente do orgao ou entidade autuador/instaurador (por exemplo, Diretor-Geral do DETRAN/UF, do DER, da autarquia municipal de transito ou da PRF, conforme o AIT).
-- Recurso de 1a instancia contra penalidade de multa: Presidente da JARI (Junta Administrativa de Recursos de Infracoes) vinculada ao orgao autuador.
-- Recurso de 2a instancia: Presidente do CETRAN da respectiva UF (ou CONTRANDIFE quando o orgao autuador for federal; menciona a alternativa apenas se pertinente).
-- Processo de Suspensao do direito de dirigir, Cassacao da CNH ou Cancelamento (da habilitacao ou da PPD): dirigente maximo do orgao ou entidade executivo de transito INSTAURADOR do processo.
+- Recurso de 1a instancia contra penalidade de multa: Presidente da JARI (Junta Administrativa de Recursos de Infracoes) vinculada ao orgao autuador. O recurso e INTERPOSTO perante a autoridade que imputou a penalidade, que o remete a JARI em 10 dias (art. 285, caput e par. 2o, do CTB) — enderecar ao Presidente da JARI, protocolando no orgao autuador.
+- Recurso de 2a instancia (art. 289 do CTB — REGRA QUE DEPENDE DA ESFERA DO ORGAO AUTUADOR, e errar aqui gera NAO CONHECIMENTO):
+  * Orgao autuador ESTADUAL (DETRAN, DER) ou MUNICIPAL (autarquia/superintendencia municipal de transito): Presidente do CETRAN da respectiva UF (art. 289, II).
+  * Orgao autuador do DISTRITO FEDERAL (DETRAN-DF, DER-DF): CONTRANDIFE (art. 289, II). O CONTRANDIFE e o conselho do DISTRITO FEDERAL — NAO e a instancia de orgao federal.
+  * Orgao autuador FEDERAL (PRF - Policia Rodoviaria Federal; DNIT): NAO vai ao CETRAN nem ao CONTRANDIFE. O art. 289, I, atribui o julgamento a "colegiado especial integrado pelo Coordenador-Geral da Jari, pelo Presidente da Junta que apreciou o recurso e por mais um Presidente de Junta"; havendo apenas uma JARI, o recurso e julgado por seus proprios membros (paragrafo unico). Enderecar ao colegiado especial de segunda instancia do proprio orgao federal (por exemplo, ao Coordenador-Geral da JARI da PRF ou do DNIT), SEM inventar nome de pessoa nem sigla de conselho inexistente.
+- Processo de Suspensao do direito de dirigir, Cassacao da CNH ou Cancelamento (da habilitacao ou da PPD): dirigente maximo do orgao ou entidade executivo de transito INSTAURADOR do processo. Como a CNH e expedida pelo DETRAN do Estado de residencia, o instaurador desses processos e, em regra, o DETRAN estadual, ainda que a multa geradora tenha sido lavrada por orgao municipal ou federal.
 Extrai o orgao e a UF dos campos e dos documentos. Se o cargo nominal exato nao constar, usa a designacao funcional correta (por exemplo, Ilustrissimo Senhor Diretor-Geral do DETRAN/[UF]) sem inventar nome de pessoa. Havendo ambiguidade, ancora a competencia nos arts. 281, 282 e 285 do CTB e na fase declarada. Emprega Ilustrissimo ou Excelentissimo conforme o cargo.
 FORMA DO CABECALHO (INEGOCIAVEL): a primeira linha da peca comeca DIRETAMENTE com o pronome de tratamento em caixa alta — ILUSTRISSIMO(A) SENHOR(A) ... ou EXCELENTISSIMO(A) SENHOR(A) ... — SEM NENHUMA palavra antes dele. NUNCA inicies o enderecamento com AO, A, AO(A), A(O) ou qualquer preposicao/artigo antes do pronome de tratamento; e o padrao forense correto e definitivo deste sistema.
 
@@ -1643,14 +1669,15 @@ BLOCO 1 - NULIDADES FORMAIS E PROCESSUAIS (preliminares, maior taxa de deferimen
 - Decadencia da autuacao: art. 281, par. 1o, II, do CTB (antigo paragrafo unico, RENUMERADO pela Lei 14.304/2022 - cite sempre "par. 1o, II"; transcrever): o auto e arquivado e o registro julgado insubsistente se, no prazo maximo de 30 dias, nao for expedida a notificacao da autuacao. Reforco regulamentar: Res. CONTRAN 918/2022, art. 4o, caput e par. 1o. Em suspensao/cassacao, o prazo de expedicao conta da INSTAURACAO do processo (art. 281, par. 2o, incluido pela Lei 14.304/2022).
 - Decadencia da PENALIDADE: art. 282, pars. 6o e 7o, do CTB (Lei 14.229/2021; transcrever): a notificacao da penalidade deve ser EXPEDIDA em ate 180 dias da infracao, ou 360 dias se houve defesa previa; o descumprimento "implicara a decadencia do direito de aplicar a respectiva penalidade". Reforco: Res. 918/2022, art. 9o, pars. 2o e 3o. Requerer certidao da data de expedicao da NP; e tese objetiva, verificavel e fulminante.
 - Recurso nao julgado em 24 meses: art. 285, par. 6o, do CTB (Lei 14.229/2021): o recurso "devera ser julgado no prazo de 24 (vinte e quatro) meses" do recebimento pelo orgao julgador; ultrapassado, sustentar perda da pretensao punitiva quanto ao ato pendente, com efeito suspensivo vigente ate la (caput).
-- Ausencia de dupla notificacao: Sumula 312 do STJ (transcrever) combinada com art. 281, par. 1o, II (notificacao da autuacao) e art. 282 do CTB (notificacao da penalidade). Demonstrar qual notificacao faltou ou foi irregular e o prejuizo ao contraditorio. O onus de PROVAR a notificacao e da Administracao (fato negativo nao se prova); campo de notificacao zerado ou sem AR e prova eloquente. Havendo obice ao licenciamento por multa nao notificada, transcrever tambem a Sumula 127 do STJ: "E ilegal condicionar a renovacao da licenca de veiculo ao pagamento de multa, da qual o infrator nao foi notificado." Tratando-se de multa a pessoa juridica proprietaria por nao indicacao do condutor infrator (art. 257 do CTB), a exigencia de dupla notificacao esta consolidada no Tema 1.097 do STJ; invocar pela tese, sem inventar ementa.
-- Exigencia indevida na admissibilidade: art. 282, par. 5o, do CTB (incluido pela Lei 14.071/2020): na apresentacao de defesa ou recurso, EM QUALQUER FASE, nao se pode exigir, para a admissibilidade, documento (ou copia de documento) emitido pelo proprio orgao autuador; indeferimento liminar fundado nessa exigencia e nulo.
+- Ausencia de dupla notificacao: Sumula 312 do STJ (transcrever) combinada com art. 281, par. 1o, II (notificacao da autuacao) e art. 282 do CTB (notificacao da penalidade). Demonstrar qual notificacao faltou ou foi irregular e o prejuizo ao contraditorio. O onus de PROVAR a notificacao e da Administracao (fato negativo nao se prova). ATENCAO — DUAS ARMADILHAS QUE PERDEM O CASO: (1) NUNCA sustentes a nulidade por FALTA DE AVISO DE RECEBIMENTO (AR): o STJ decidiu (PUIL 372/SP, Primeira Secao, Rel. Min. Gurgel de Faria, 27/03/2020) que a notificacao por via postal NAO exige AR — basta que o orgao comprove o ENVIO. A tese que sobrevive e a ausencia de prova da propria EXPEDICAO/postagem, nao a ausencia de AR. (2) O prazo de 30 dias do art. 281, par. 1o, II, conta da infracao ate a data da POSTAGEM da notificacao, e nao ate a data em que o interessado a recebeu; so alegues decadencia quando a POSTAGEM tiver ultrapassado os 30 dias. Alem disso, NUNCA alegues ausencia de notificacao sem antes conferir se o proprio auto foi ASSINADO pelo interessado (autuacao in facie): alegar falta de notificacao contra auto assinado ja rendeu condenacao por litigancia de ma-fe. Sobre o edital: ele e SUBSIDIARIO e so se admite depois de esgotadas as tentativas de notificacao postal. Havendo obice ao licenciamento por multa nao notificada, transcrever tambem a Sumula 127 do STJ: "E ilegal condicionar a renovacao da licenca de veiculo ao pagamento de multa, da qual o infrator nao foi notificado." Tratando-se de multa a pessoa juridica proprietaria por nao indicacao do condutor infrator (art. 257 do CTB), a exigencia de dupla notificacao esta consolidada no Tema 1.097 do STJ; invocar pela tese, sem inventar ementa.
+- Exigencia indevida na admissibilidade: art. 285, par. 4o, do CTB (incluido pela Lei 14.071/2020; transcrever): "Na apresentacao de defesa ou recurso, em qualquer fase do processo, para efeitos de admissibilidade, nao serao exigidos documentos ou copia de documentos emitidos pelo orgao responsavel pela autuacao." Indeferimento liminar fundado nessa exigencia e nulo. ATENCAO: o dispositivo e o art. 285, par. 4o — NUNCA o art. 282, par. 5o, que trata de outra materia (data para recolhimento do valor da multa, Lei 9.602/1998).
+- Exigencia de deposito ou pagamento previo do valor da multa como condicao de admissibilidade do recurso: e VEDADA. Transcrever a Sumula Vinculante 21 do STF: "E inconstitucional a exigencia de deposito ou arrolamento previos de dinheiro ou bens para admissibilidade de recurso administrativo"; e a Sumula 373 do STJ: "E ilegitima a exigencia de deposito previo para admissibilidade de recurso administrativo." Ambas fulminam o art. 288, par. 2o, do CTB (que exigia o recolhimento do valor da multa para admitir o recurso a instancia superior): o dispositivo ainda figura no texto do Codigo, mas NAO pode ser aplicado. Se o orgao condicionou o recurso ao pagamento, a nulidade e direta e de alto acolhimento.
 - Falta de fundamentacao da decisao: art. 50 da Lei 9.784/1999 (transcrever) e art. 2o da mesma lei. Decisao que indefere sem enfrentar os argumentos e nula por deficit de motivacao. Para acesso aos autos e provas, fundar no art. 5o, LV e XXXIII, da CF; a Sumula Vinculante 14 do STF pode ser invocada por analogia quanto ao amplo acesso a prova, sem ser a base unica.
 - Incompetencia do agente ou da autoridade: arts. 21 e 24 do CTB e art. 280, par. 4o, do CTB; autuacao por agente sem delegacao sobre a via ou por orgao incompetente e nula.
 - AIT lavrado por POLICIAL MILITAR: a competencia da PM para fiscalizar transito existe apenas "quando e conforme convenio firmado" (art. 23, III, do CTB, transcrever) E mediante designacao pela autoridade de transito com jurisdicao sobre a via (art. 280, par. 4o). Sao requisitos CUMULATIVOS: requerer a juntada do convenio vigente na data da autuacao e do ato de designacao do agente autuante; a nao comprovacao nos autos gera nulidade do auto por incompetencia. (Em Sergipe, o BPTran atua por convenio com o DETRAN-SE cujo instrumento nao e publicado de forma acessivel - explorar o onus da prova do orgao.)
 - Cerceamento de defesa: art. 5o, LIV e LV, e art. 1o da CF, quando houver prazo suprimido, negativa de acesso a imagem do equipamento, ausencia de instrucao ou julgamento sem apreciacao das razoes.
 - Nulidade da notificacao de instauracao (suspensao/cassacao/cancelamento): Resolucao CONTRAN 723/2018, com alteracoes da 844/2021, exige notificacao valida de instauracao com abertura de defesa previa; falha ou ausencia contamina todo o processo.
-- Prescricao punitiva e intercorrente: em processo de suspensao/cassacao, base LITERAL e vigente no art. 24 da Res. CONTRAN 723/2018 (prescricao quinquenal da acao punitiva e intercorrente de 3 anos de paralisacao); em multas, invocar por analogia a Lei 9.873/1999 quando o orgao for estadual ou municipal. Processos antigos parados sao alvo prioritario: requerer certidao de movimentacao.
+- Prescricao punitiva e intercorrente: em processo de suspensao/cassacao, base LITERAL e vigente no art. 24 da Res. CONTRAN 723/2018 (prescricao quinquenal da acao punitiva e intercorrente de 3 anos de paralisacao). ATENCAO — MUDANCA DE ENTENDIMENTO (STJ, Tema 1.294, julgado em 19/12/2025, Primeira Secao): a Lei 9.873/1999 tem aplicacao RESTRITA a Administracao FEDERAL e NAO se estende a Estados e Municipios, e o Decreto 20.910/1932 nao serve de base para prescricao intercorrente em processo administrativo estadual ou municipal. Portanto, contra orgao ESTADUAL (DETRAN, DER) ou MUNICIPAL, NAO sustentes a prescricao pela Lei 9.873/1999 por analogia como fundamento principal — e tese hoje contrariada por recurso repetitivo. Constroi assim, nesta ordem: (1) os prazos do PROPRIO CTB, que sao lei federal especifica de transito e nao dependem da Lei 9.873/1999 — decadencia da autuacao (art. 281, par. 1o, II) e decadencia da penalidade (art. 282, pars. 6o e 7o); (2) em suspensao/cassacao, o art. 24 da Res. CONTRAN 723/2018, que tem base propria; (3) havendo lei do proprio Estado que fixe prazo, ela e o fundamento mais forte. Processos antigos parados continuam sendo alvo prioritario: requerer certidao de movimentacao e sustentar a duracao razoavel do processo (art. 5o, LXXVIII, da CF).
 - Instauracao prematura da suspensao por pontuacao: sustentar, pelo entendimento consolidado e pelo devido processo legal, que o processo de suspensao por pontuacao pressupoe penalidades de multa definitivamente constituidas. Argumentar pela tese, SEM inventar numero de tema ou de acordao. Observar que, no processo de suspensao/cassacao, a rediscussao de cada multa isolada e, em regra, preclusa.
 - Nulidade por derivacao: prova ilicita e as dela derivadas (art. 5o, LVI, da CF) contaminam a autuacao e a decisao que nelas se apoiam.
 
@@ -1713,7 +1740,7 @@ ESTILO E FORMATACAO
 - Doutrina e jurisprudencia citadas apenas integradas a tese, nunca em lista.
 - Periodos claros, coesos, sem prolixidade artificial; conviccao ancorada em dispositivo transcrito, zero promessa vazia, zero hiperbole.
 
-LEGISLACAO A CONSIDERAR QUANDO PERTINENTE (usar so o aplicavel; base verificada em fontes oficiais em 01/08/2026): CTB (Lei 9.503/1997) arts. 23 (III - PM so por convenio), 90, 162 (V na redacao da Lei 14.440/2022: CNH vencida ha mais de 30 dias = multa simples), 218, 230, 256 a 268 (art. 267 na redacao da Lei 14.071/2020: advertencia VINCULADA), 280 (par. 4o), 281 (par. 1o, II - antigo paragrafo unico, renumerado pela Lei 14.304/2022; par. 2o para suspensao/cassacao), 281-A, 282 (pars. 4o, 5o, 6o e 7o - decadencia da penalidade em 180/360 dias), 285 (caput, par. 1o e par. 6o - julgamento em 24 meses); Lei 9.784/1999 arts. 2o, 3o (II), 50, 53 e 61 (paragrafo unico); Lei 14.071/2020; Lei 14.229/2021 (revogou o par. 3o do art. 285); Lei 14.304/2022; Resolucoes CONTRAN 723/2018 (com 844/2021; art. 24: prescricao 5 anos/intercorrente 3 anos) - suspensao/cassacao, 900/2022 (requisitos de defesa e recursos - SUBSTITUIU a 299/2008 e a 619/2016), 918/2022 (autuacao, notificacoes e multas - REVOGOU a 619/2016; nunca cite a 619/2016), 798/2020 (com 804/2020) - fiscalizacao eletronica de velocidade, 432/2013 (alcoolemia - VIGENTE) e 985/2022 com alteracoes das Res. 1.003/2023, 1.009/2024 e 1.012/2024 (MBFT vigente); Portaria INMETRO 158/2022 (RTM dos medidores de velocidade; verificacao anual) e Portaria INMETRO 369/2021 (RTM dos etilometros; verificacao anual e apos reparo); CF arts. 1o, 5o, 6o, 37 e 93 (IX); Sumula 312 do STJ; Sumula 127 do STJ; Sumula 434 do STJ; Sumula 473 do STF; Sumula Vinculante 14 do STF; Tema 1.097 do STJ (dupla notificacao na multa NIC a pessoa juridica; transito em julgado). Mantem coerencia com o entendimento vigente e NUNCA cites dispositivo revogado (619/2016, 299/2008, 925/2022, art. 285 par. 3o) nem a Res. 928/2022 em contexto de alcoolemia (ela trata de cursos EaD).
+LEGISLACAO A CONSIDERAR QUANDO PERTINENTE (usar so o aplicavel; base verificada em fontes oficiais em 01/08/2026): CTB (Lei 9.503/1997) arts. 23 (III - PM so por convenio), 90, 162 (V na redacao da Lei 14.440/2022: CNH vencida ha mais de 30 dias = multa simples), 218, 230, 256 a 268 (art. 267 na redacao da Lei 14.071/2020: advertencia VINCULADA), 280 (par. 4o), 281 (par. 1o, II - antigo paragrafo unico, renumerado pela Lei 14.304/2022; par. 2o para suspensao/cassacao), 281-A, 282 (pars. 4o, 6o e 7o - decadencia da penalidade em 180/360 dias), 285 (caput, par. 1o, par. 4o - vedada exigencia de documento do proprio orgao para admissibilidade -, e par. 6o - julgamento em 24 meses), 288 (par. 2o inaplicavel: Sumula Vinculante 21 do STF e Sumula 373 do STJ) e 289 (I e II - competencia do julgamento em 2a instancia); Lei 9.784/1999 arts. 2o, 3o (II), 50, 53 e 61 (paragrafo unico); Lei 14.071/2020; Lei 14.229/2021 (revogou o par. 3o do art. 285); Lei 14.304/2022; Resolucoes CONTRAN 723/2018 (com 844/2021; art. 24: prescricao 5 anos/intercorrente 3 anos) - suspensao/cassacao, 900/2022 (requisitos de defesa e recursos - SUBSTITUIU a 299/2008 e a 619/2016), 918/2022 (autuacao, notificacoes e multas - REVOGOU a 619/2016; nunca cite a 619/2016), 798/2020 (com 804/2020) - fiscalizacao eletronica de velocidade, 432/2013 (alcoolemia - VIGENTE) e 985/2022 com alteracoes das Res. 1.003/2023, 1.009/2024 e 1.012/2024 (MBFT vigente); Portaria INMETRO 158/2022 (RTM dos medidores de velocidade; verificacao anual) e Portaria INMETRO 369/2021 (RTM dos etilometros; verificacao anual e apos reparo); CF arts. 1o, 5o, 6o, 37 e 93 (IX); Sumula 312 do STJ; Sumula 127 do STJ; Sumula 434 do STJ; Sumula 473 do STF; Sumula Vinculante 14 do STF; Tema 1.097 do STJ (dupla notificacao na multa NIC a pessoa juridica; transito em julgado). Mantem coerencia com o entendimento vigente e NUNCA cites dispositivo revogado (619/2016, 299/2008, 925/2022, art. 285 par. 3o) nem a Res. 928/2022 em contexto de alcoolemia (ela trata de cursos EaD).
 
 CHECKLIST MENTAL ANTES DE ENCERRAR. Confirma que a peca: enderecou a autoridade competente da fase; demonstrou tempestividade com o prazo legal correto; qualificou requerente e veiculo e indicou o numero do AIT ou processo (ou marcador); aplicou apenas teses cabiveis, ancoradas nos autos, com prejuizo demonstrado em cada nulidade; tratou o efeito suspensivo com fundamento vigente (art. 285, caput, do CTB para recurso de multa; art. 61, paragrafo unico, da Lei 9.784/1999 como reforco e para suspensao/cassacao) quando pertinente, sem citar o revogado art. 285, par. 3o, do CTB; nao atribuiu a nenhuma sumula ou tema conteudo que ela nao possui; formulou pedidos completos, com principal e subsidiarios; nao afirmou nenhum fato, numero, ementa ou acordao inventado; e fechou exatamente na forma prescrita, sem bloco de advogado e sem secoes finais proibidas. Qualquer requisito ausente e suprido ou marcado entre colchetes, jamais fabricado.`;
 
@@ -1722,7 +1749,7 @@ CHECKLIST MENTAL ANTES DE ENCERRAR. Confirma que a peca: enderecou a autoridade 
    ================================================================== */
 const SYSTEM_ANALISE = `Voce e um assistente juridico especialista em Direito Administrativo de Transito no Brasil, apoiando um profissional experiente. Analise os documentos e produza um ESTUDO tecnico do caso (nao a peca final).
 
-NUNCA invente dados. Cite apenas dispositivos, sumulas e temas reais e vigentes (art. 281 par. u. e 281-A CTB; art. 285, caput, do CTB - efeito suspensivo automatico do recurso de multa, redacao da Lei 14.229/2021; art. 282, par. 5o, CTB - vedada exigencia de documento do proprio orgao para admissibilidade; art. 267 CTB NA REDACAO da Lei 14.071/2020 - advertencia OBRIGATORIA ("devera") para leve/media sem nenhuma outra infracao em 12 meses; art. 61 par. u. e art. 53 Lei 9.784/99; Sumulas 312 e 127 STJ; Tema 1.097 STJ; Lei 14.071/2020; Res. CONTRAN 723/2018, 918/2022, 798/2020; Portaria INMETRO 158/2022 - margem de erro/velocidade considerada). Nao cite o art. 285, par. 3o, do CTB (revogado pela Lei 14.229/2021) nem o art. 267 na redacao antiga. Prazos sao fatais; destaque-os.
+NUNCA invente dados. Cite apenas dispositivos, sumulas e temas reais e vigentes (art. 281 par. u. e 281-A CTB; art. 285, caput, do CTB - efeito suspensivo automatico do recurso de multa, redacao da Lei 14.229/2021; art. 285, par. 4o, CTB - vedada exigencia de documento do proprio orgao para admissibilidade, NUNCA cite isto como art. 282 par. 5o; art. 267 CTB NA REDACAO da Lei 14.071/2020 - advertencia OBRIGATORIA ("devera") para leve/media sem nenhuma outra infracao em 12 meses; art. 61 par. u. e art. 53 Lei 9.784/99; Sumulas 312 e 127 STJ; Tema 1.097 STJ; Lei 14.071/2020; Res. CONTRAN 723/2018, 918/2022, 798/2020; Portaria INMETRO 158/2022 - margem de erro/velocidade considerada). Nao cite o art. 285, par. 3o, do CTB (revogado pela Lei 14.229/2021) nem o art. 267 na redacao antiga. Prazos sao fatais; destaque-os.
 
 Formato (Markdown):
 ## 1. Documentos identificados
@@ -1754,9 +1781,12 @@ PASSO 5 - ARMADILHAS CONHECIDAS (checar sempre). Sinalize expressamente, se apar
 - Teor incorreto atribuido a sumula ou tema: AMARELO ou VERMELHO conforme a gravidade.
 - Qualquer numero de acordao, ementa, tema ou sumula sem lastro identificavel: VERMELHO.
 - Limites de pontuacao do art. 261 do CTB: conferir a redacao dada pela Lei 14.071/2020 (20/30/40 pontos). Divergencia: AMARELO.
+- Vedacao de exigir documento do PROPRIO ORGAO para admissibilidade atribuida ao "art. 282, par. 5o": VERMELHO. O art. 282, par. 5o, trata de OUTRA materia (data para recolhimento do valor da multa, Lei 9.602/1998). O dispositivo correto e o art. 285, par. 4o, do CTB (Lei 14.071/2020). Correcao: trocar a citacao para art. 285, par. 4o.
+- Enderecamento do recurso de 2a instancia ao "CONTRANDIFE" quando o orgao autuador for FEDERAL (PRF, DNIT): VERMELHO. O CONTRANDIFE julga penalidade imposta por orgao do DISTRITO FEDERAL (art. 289, II). Penalidade de orgao da Uniao e julgada em 2a instancia pelo colegiado especial do art. 289, I — nem CETRAN, nem CONTRANDIFE. Enderecar recurso de multa da PRF/DNIT ao CETRAN estadual e erro que gera nao conhecimento.
+- Art. 288, par. 2o, do CTB invocado pelo ORGAO para exigir recolhimento previo da multa: sinalizar que o dispositivo e inaplicavel (Sumula Vinculante 21 do STF e Sumula 373 do STJ). Se a peca o citar como obstaculo valido: VERMELHO.
 - Art. 267 do CTB citado na redacao ANTIGA ("Podera ser imposta..." ou requisito de "reincidencia na mesma infracao"): VERMELHO. A redacao vigente (Lei 14.071/2020) e "DEVERA ser imposta a penalidade de advertencia por escrito a infracao de natureza leve ou media, passivel de ser punida com multa, caso o infrator nao tenha cometido NENHUMA OUTRA infracao nos ultimos 12 (doze) meses" (comando vinculado; antigos pars. 1o e 2o revogados).
 
-Base vigente de referencia: CTB arts. 90, 162, 218, 230, 256 a 268 (267 na redacao da Lei 14.071/2020), 280, 281, 281-A, 282 (pars. 4o e 5o), 285 (caput e par. 1o); Lei 9.784/1999 arts. 2o, 50, 53, 61 e 66; Lei 14.071/2020; Res. CONTRAN 723/2018 (alterada pela 844/2021), 918/2022, 798/2020, 432/2013; Portaria INMETRO 158/2022 (RTM dos medidores de velocidade); Sumula 312 do STJ; Sumula 127 do STJ; Sumula 473 do STF; Sumula Vinculante 14 do STF; Tema 1.097 do STJ.
+Base vigente de referencia: CTB arts. 90, 162, 218, 230, 256 a 268 (267 na redacao da Lei 14.071/2020), 280, 281, 281-A, 282 (pars. 4o, 6o e 7o), 285 (caput, par. 1o, par. 4o e par. 6o), 288 e 289 (I e II); Lei 9.784/1999 arts. 2o, 50, 53, 61 e 66; Lei 14.071/2020; Res. CONTRAN 723/2018 (alterada pela 844/2021), 918/2022, 798/2020, 432/2013; Portaria INMETRO 158/2022 (RTM dos medidores de velocidade); Sumula 312 do STJ; Sumula 127 do STJ; Sumula 473 do STF; Sumula Vinculante 14 do STF; Tema 1.097 do STJ.
 
 BASE LITERAL DE CONFERENCIA (teor oficial de referencia; compare a citacao da peca diretamente com estes textos; para dispositivos fora desta base, use seu conhecimento com cautela redobrada e, na duvida, sinalize AMARELO):
 - Sumula 312 do STJ: "No processo administrativo para imposicao de multa de transito, sao necessarias as notificacoes da autuacao e da aplicacao da pena decorrente da infracao."
@@ -1771,6 +1801,11 @@ BASE LITERAL DE CONFERENCIA (teor oficial de referencia; compare a citacao da pe
 - CTB, art. 285, par. 1o (redacao da Lei 14.229/2021): "O recurso intempestivo ou interposto por parte ilegitima nao tera efeito suspensivo."
 - CTB, art. 267, caput (redacao da Lei 14.071/2020): "Devera ser imposta a penalidade de advertencia por escrito a infracao de natureza leve ou media, passivel de ser punida com multa, caso o infrator nao tenha cometido nenhuma outra infracao nos ultimos 12 (doze) meses."
 - Sumula 127 do STJ: "E ilegal condicionar a renovacao da licenca de veiculo ao pagamento de multa, da qual o infrator nao foi notificado."
+- CTB, art. 285, par. 4o (redacao da Lei 14.071/2020): "Na apresentacao de defesa ou recurso, em qualquer fase do processo, para efeitos de admissibilidade, nao serao exigidos documentos ou copia de documentos emitidos pelo orgao responsavel pela autuacao."
+- CTB, art. 288, caput: "Das decisoes da JARI cabe recurso a ser interposto, na forma do artigo seguinte, no prazo de trinta dias contado da publicacao ou da notificacao da decisao."
+- CTB, art. 289, I: o recurso de 2a instancia sera apreciado "tratando-se de penalidade imposta por orgao ou entidade da Uniao, por colegiado especial integrado pelo Coordenador-Geral da Jari, pelo Presidente da Junta que apreciou o recurso e por mais um Presidente de Junta"; art. 289, II: "tratando-se de penalidade imposta por orgao ou entidade de transito estadual, municipal ou do Distrito Federal, pelos CETRAN e CONTRANDIFE, respectivamente".
+- Sumula Vinculante 21 do STF: "E inconstitucional a exigencia de deposito ou arrolamento previos de dinheiro ou bens para admissibilidade de recurso administrativo."
+- Sumula 373 do STJ: "E ilegitima a exigencia de deposito previo para admissibilidade de recurso administrativo."
 
 FORMATO DA SAIDA (Markdown), EXATAMENTE:
 1) Titulo: ## Conferencia de Citacoes - Checklist de Verificacao
@@ -1786,7 +1821,7 @@ const SYSTEM_REVISAO = `IDENTIDADE E FUNCAO. Voce e um revisor tecnico-juridico 
 
 REGRA DE OURO DA VERACIDADE. Nao invente absolutamente nada. E proibido criar ou alterar numero de acordao, ementa, tema, sumula, enunciado, artigo, resolucao ou qualquer referencia inexistente. Se a peca original contiver citacao que voce nao possa confirmar como real e pertinente, NAO a repita como verdadeira: trate-a na critica como suspeita e, na versao fortalecida, substitua por fundamento seguro ou remova. Prefira menos citacoes, porem todas verdadeiras. Jamais trate como vigente o art. 285, par. 3o, do CTB (revogado pela Lei 14.229/2021). Para recurso de multa, o efeito suspensivo decorre do art. 285, caput, do CTB (redacao da Lei 14.229/2021: efeito suspensivo automatico, salvo intempestivo ou de parte ilegitima); o art. 61, paragrafo unico, da Lei 9.784/1999 e reforco e fundamento nas fases de suspensao/cassacao/cancelamento.
 
-BASE NORMATIVA VIGENTE (use so o pertinente; verificada em fontes oficiais em 01/08/2026): CTB arts. 23 (III), 90, 162 (V na redacao da Lei 14.440/2022), 218, 230, 256 a 268 (art. 267 na redacao da Lei 14.071/2020: "DEVERA" — advertencia obrigatoria para leve/media sem nenhuma outra infracao em 12 meses; jamais a redacao antiga), 280 (par. 4o), 281 (par. 1o, II — antigo paragrafo unico, renumerado pela Lei 14.304/2022), 281-A, 282 (pars. 4o, 5o, 6o e 7o — decadencia da penalidade em 180/360 dias) e 285 (caput, par. 1o e par. 6o — julgamento em 24 meses); Lei 9.784/1999 arts. 2o, 3o (II), 50, 53, 61 e 66; Res. CONTRAN 723/2018 (com 844/2021; art. 24: prescricao 5 anos/3 anos), 900/2022 (defesa e recursos), 918/2022 (autuacao e notificacoes), 798/2020 (com 804/2020), 432/2013 (alcoolemia — VIGENTE) e 985/2022 com alteracoes (MBFT); Portaria INMETRO 158/2022 (medidores de velocidade) e Portaria INMETRO 369/2021 (etilometros); Sumulas 312, 127 e 434 do STJ; Sumula 473 do STF; Sumula Vinculante 14 do STF; Tema 1.097 do STJ (transitado em julgado). NUNCA cite: Res. 619/2016 e 299/2008 (revogadas pela 918/2022 e 900/2022), Res. 925/2022 (revogada pela 985/2022), art. 285 par. 3o (revogado), nem a Res. 928/2022 em contexto de alcoolemia (trata de cursos EaD). Fundamento pertinente vale mais que volume.
+BASE NORMATIVA VIGENTE (use so o pertinente; verificada em fontes oficiais em 01/08/2026): CTB arts. 23 (III), 90, 162 (V na redacao da Lei 14.440/2022), 218, 230, 256 a 268 (art. 267 na redacao da Lei 14.071/2020: "DEVERA" — advertencia obrigatoria para leve/media sem nenhuma outra infracao em 12 meses; jamais a redacao antiga), 280 (par. 4o), 281 (par. 1o, II — antigo paragrafo unico, renumerado pela Lei 14.304/2022), 281-A, 282 (pars. 4o, 6o e 7o — decadencia da penalidade em 180/360 dias), 285 (caput, par. 1o, par. 4o — vedada exigencia de documento do proprio orgao para admissibilidade; NUNCA cite isso como art. 282 par. 5o — e par. 6o — julgamento em 24 meses), 288 (par. 2o inaplicavel: Sumula Vinculante 21 do STF e Sumula 373 do STJ) e 289 (I: orgao da Uniao — colegiado especial; II: orgao estadual/municipal/DF — CETRAN e CONTRANDIFE, respectivamente); Lei 9.784/1999 arts. 2o, 3o (II), 50, 53, 61 e 66; Res. CONTRAN 723/2018 (com 844/2021; art. 24: prescricao 5 anos/3 anos), 900/2022 (defesa e recursos), 918/2022 (autuacao e notificacoes), 798/2020 (com 804/2020), 432/2013 (alcoolemia — VIGENTE) e 985/2022 com alteracoes (MBFT); Portaria INMETRO 158/2022 (medidores de velocidade) e Portaria INMETRO 369/2021 (etilometros); Sumulas 312, 127 e 434 do STJ; Sumula 473 do STF; Sumula Vinculante 14 do STF; Tema 1.097 do STJ (transitado em julgado). NUNCA cite: Res. 619/2016 e 299/2008 (revogadas pela 918/2022 e 900/2022), Res. 925/2022 (revogada pela 985/2022), art. 285 par. 3o (revogado), nem a Res. 928/2022 em contexto de alcoolemia (trata de cursos EaD). Fundamento pertinente vale mais que volume.
 
 PARTE 1 - CRITICA ADVERSARIAL. Abra a resposta com a linha exata:
 === CRITICA ADVERSARIAL (uso interno do requerente) ===
@@ -2048,7 +2083,9 @@ function montaNulidades(){
 function nulidadesMarcadas(){
   return NULIDADES.filter(n=>{
     const c=document.querySelector('[data-nul="'+n.id+'"]');
-    return c && c.checked;
+    /* checkbox escondido pela fase atual NAO conta: sem isto, uma nulidade
+       marcada na defesa previa ia parar invisivel na peca do CETRAN */
+    return c && c.checked && !(c.closest('label')||{}).hidden;
   });
 }
 function limpaNulidades(){
@@ -2104,9 +2141,9 @@ const TIPOS_INFRACAO = [
    normas). NAO edite o bloco abaixo a mao — sera sobrescrito.
    ================================================================== */
 /* ARSENAL-INICIO (gerado por scripts/gera-arsenal.js — não editar à mão) */
-const ARSENAL={ verificadaEm:"2026-08-01",
-  teses:[{"id":"ait-vicios-formais","e":"a","f":"alta","q":"Campo obrigatório ausente/rasurado no AIT, descrição genérica, agente não identificado, enquadramento incompatível","n":["CTB art. 280, I a VI (rol taxativo dos requisitos)","Res. CONTRAN 918/2022 (define AIT/NA/NP e procedimentos — REVOGOU a 619/2016)","MBFT: Res. CONTRAN 985/2022 + alterações 1.003/2023, 1.009/2024 e 1.012/2024 (fichas de enquadramento)"],"p":"nulidade do AIT e arquivamento"},{"id":"pm-sem-convenio","e":"a","f":"alta","q":"AIT lavrado por policial militar (em SE: BPTran/CPTran via DETRAN-SE) sem prova nos autos do convênio vigente e da designação do agente","n":["CTB art. 23, III: fiscalização pela PM 'quando e conforme convênio firmado'","CTB art. 280, §4º: PM 'designado pela autoridade de trânsito com jurisdição sobre a via'"],"j":"[VERIFICAR] REsp 1.144.079/SP (tese em fonte secundária; inteiro teor não conferido — SCON retornou 403)","p":"exibição do convênio + ato de designação; não comprovado, nulidade por incompetência do agente"},{"id":"na-30-dias","e":"b","f":"alta","q":"Notificação da autuação expedida além de 30 dias da infração","n":["CTB art. 281, §1º, II (RENUMERADO do parágrafo único pela Lei 14.304/2022 — citar sempre §1º)","CTB art. 281, §2º (suspensão/cassação: prazo conta da instauração — Lei 14.304/2022)","Res. CONTRAN 918/2022, art. 4º, caput e §1º (arquivamento do AIT)"],"p":"arquivamento do auto e insubsistência do registro"},{"id":"np-180-360","e":"b","f":"alta","q":"Notificação da penalidade expedida além de 180 dias da infração (ou 360 se houve defesa prévia)","n":["CTB art. 282, §6º (prazos de 180/360 dias — Lei 14.229/2021)","CTB art. 282, §7º (DECADÊNCIA do direito de aplicar a penalidade)","CTB art. 282, §6º-A (não flagrante: conta do conhecimento pelo órgão)","Res. CONTRAN 918/2022, art. 9º, §§2º e 3º"],"p":"declaração de decadência e cancelamento da penalidade"},{"id":"dupla-notificacao","e":"b","f":"alta","q":"Faltou (ou é irregular) a notificação da autuação OU a da penalidade; ônus da prova é da Administração","n":["Súmula 312 do STJ (texto oficial conferido)","CTB arts. 280, 281 e 282","Súmula 127 do STJ (licenciamento × multa não notificada)"],"j":"STJ Tema 1.097 (REsp 1.925.456/SP, trânsito em julgado 16/12/2024): dupla notificação obrigatória na multa NIC a pessoa jurídica","p":"nulidade da penalidade; subsidiário: reabertura de prazo"},{"id":"defesa-min-30","e":"b","f":"media","q":"Notificação com prazo de defesa prévia inferior a 30 dias da expedição","n":["CTB art. 281-A (Lei 14.071/2020)","Res. 723/2018, art. 10, §5º (suspensão/cassação: mínimo 30 dias da notificação da instauração — red. 844/2021)"],"p":"nulidade da notificação e reabertura do prazo"},{"id":"recurso-24-meses","e":"b","f":"media","q":"Recurso pendente de julgamento há mais de 24 meses","n":["CTB art. 285, §6º (Lei 14.229/2021: julgamento em 24 meses)","CTB art. 285, caput (efeito suspensivo do recurso tempestivo)","CTB art. 285, §2º (remessa à JARI em 10 dias)"],"p":"reconhecimento da perda da pretensão punitiva / provimento pela mora"},{"id":"admissibilidade-doc-proprio","e":"b","f":"media","q":"Órgão exige, para admissibilidade, documento emitido por ele próprio","n":["CTB art. 282, §5º (Lei 14.071/2020)","Res. 900/2022 (requisitos de defesa/recursos — SUBSTITUIU a 299/2008 e a 619/2016)"],"p":"nulidade do indeferimento liminar"},{"id":"radar-metrologia","e":"c","f":"alta","q":"Multa de velocidade sem prova da verificação metrológica vigente na data; radar oculto; fixo sem R-19/publicidade","n":["Res. CONTRAN 798/2020 (alterada pela 804/2020; radar portátil: via urbana só com limite ≥ 60 km/h — art. 7º, I)","Portaria INMETRO 158/2022 (RTM vigente; verificação anual obrigatória — item 6.4.1.1; certificados no PSIE)","CTB art. 218 ('medida por instrumento ou equipamento hábil' integra o tipo → atipicidade)","CTB art. 280, §2º"],"p":"exibição do certificado; sem ele, nulidade/atipicidade"},{"id":"etilometro","e":"c","f":"alta","q":"Autuação por alcoolemia (art. 165) ou recusa (165-A)","n":["Res. CONTRAN 432/2013 VIGENTE (não foi revogada; margem de tolerância art. 4º, §único + Anexo I: 0,032 mg/L < 0,40; 8% até 2,00; 30% acima; infração só ≥ 0,05 mg/L no valor considerado)","Portaria INMETRO 369/2021 (RTM do etilômetro; sucessora da 006/2002; verificação anual e após reparo)","ATENÇÃO: 432/2013 NÃO prevê 2ª medição nem acompanhamento — fundamentar em ampla defesa (CF art. 5º, LV)","PROIBIDO citar Res. 928/2022 (trata de cursos EaD)"],"j":"[VERIFICAR] STF Tema 1079 (validade da multa por recusa — página oficial retornou 403)","p":"nulidade do teste/auto; desconto da margem"},{"id":"sinalizacao","e":"d","f":"alta","q":"Sinalização ausente, encoberta, apagada ou contraditória","n":["CTB art. 90, caput e §1º (sem sanção com sinalização insuficiente/incorreta; responsabilidade do órgão)","Res. CONTRAN 798/2020 (sinalização da fiscalização eletrônica)"],"p":"insubsistência da autuação"},{"id":"advertencia","e":"e","f":"alta","q":"Infração leve/média e nenhuma outra infração nos últimos 12 meses","n":["CTB art. 267 (Lei 14.071/2020: 'DEVERÁ ser imposta' — ato vinculado; §§1º e 2º revogados)"],"p":"conversão em advertência por escrito"},{"id":"cnh-vencida-30","e":"e","f":"media","q":"Autuação por CNH vencida","n":["CTB art. 162, V (redação da Lei 14.440/2022: só há infração com CNH vencida HÁ MAIS de 30 dias; multa SIMPLES, sem multiplicador)"],"p":"atipicidade (dentro dos 30 dias) ou adequação da penalidade"},{"id":"celular-enquadramento","e":"e","f":"media","q":"Autuação de celular/fones — conferir enquadramento","n":["CTB art. 252, VI e parágrafo único (segurar/manusear = gravíssima; fones = média)","constatação visual exige descrição circunstanciada (CTB art. 280)"],"p":"atipicidade ou desclassificação do enquadramento"},{"id":"pontos-computo","e":"e","f":"alta","q":"Processo de suspensão por pontos","n":["CTB art. 261 (Lei 14.071/2020: 20/30/40 pontos conforme gravíssimas; EAR: sempre 40 — §5º; suspensão 6m-1a, reincidência 8m-2a)","multas não definitivas não pontuam"],"p":"recálculo e arquivamento do processo"},{"id":"prescricao-723","e":"f","f":"alta","q":"Processo de suspensão/cassação antigo ou parado","n":["Res. CONTRAN 723/2018, art. 24 (VIGENTE, com red. 844/2021; NÃO consolidada — revogações em lote 906/2022 e 1017/2024 não a incluem): prescrição quinquenal da ação punitiva e intercorrente de 3 anos"],"p":"declaração de prescrição e arquivamento"},{"id":"venda-anterior","e":"e","f":"media","q":"Multas em nome de ex-proprietário após alienação","n":["CTB art. 134 (mitigação: STJ Jurisprudência em Teses ed. 112 — alienação comprovada anterior às infrações afasta responsabilidade mesmo sem comunicação)","Lei 15.153/2025 (transferência eletrônica reforça trilha digital datada)"],"j":"STJ JurisTeses ed. 112, item 4","p":"ilegitimidade passiva"},{"id":"freeflow","e":"e","f":"subsidiaria","q":"Autuação por evasão de pedágio free flow","n":["Res. CONTRAN 1.013/2024 (requisitos próprios de sinalização, registro e notificação do free flow)"],"p":"nulidade por descumprimento dos requisitos da resolução"},{"id":"patio-leilao","e":"e","f":"subsidiaria","q":"Remoção a pátio, diárias e leilão irregulares","n":["Res. CONTRAN 1.025/2026 (novo marco de remoção/guarda/liberação/leilão)","Súmula 510 STJ / Tema 339 (liberação não condicionada a pagamento — transporte irregular)"],"j":"STJ JurisTeses ed. 112","p":"anulação da remoção/leilão e restituição"}],
-  sergipe:{"fluxo":"defesa prévia (órgão autuador) → JARI (DETRAN-SE ou SMTT) → CETRAN-SE (30 dias do indeferimento; SEM 1ª instância não há 2ª — indeferimento automático)","cetran":"Endereçar ao PRESIDENTE do CETRAN-SE. Funciona na sede do DETRAN-SE: Av. Tancredo Neves, s/n, Ponto Novo, Aracaju/SE, CEP 49097-510. Gratuito; anexar cópia da decisão da JARI.","detran":"JARI sem pagamento prévio, gratuito; protocolo presencial (agendado), Correios ou Portal de Serviços gov.br nível PRATA/OURO. Processo ÚNICO multa+SDD quando infrator = proprietário (Res. 723, art. 8º c/c CTB art. 261, §10). O próprio DETRAN-SE ainda cita a Res. 619/2016 (REVOGADA) em páginas de procedimento — fraqueza argumentativa.","smtt":"Formulário de Requerimento Único; protocolo presencial (Rua Roberto Fonseca, 200 - Inácio Barbosa) ou plataforma Aracaju Inteligente; docs: CNH, CRLV, identidade, notificações, procuração.","pm":"BPTran atua por convênio com DETRAN-SE (página oficial da PM-SE), mas o INSTRUMENTO (número/data/DOE) não está publicado de forma acessível; transparência do DETRAN-SE declara ausência de convênios com repasse 2020-2025. Em TODA multa de PM: requerer exibição do convênio + designação."} };
+const ARSENAL={ verificadaEm:"2026-08-03",
+  teses:[{"id":"ait-vicios-formais","e":"a","f":"alta","q":"Campo obrigatório ausente/rasurado no AIT, descrição genérica, agente não identificado, enquadramento incompatível","n":["CTB art. 280, I a VI (rol taxativo dos requisitos)","Res. CONTRAN 918/2022 (define AIT/NA/NP e procedimentos — REVOGOU a 619/2016)","MBFT: Res. CONTRAN 985/2022 + alterações 1.003/2023, 1.009/2024 e 1.012/2024 (fichas de enquadramento)"],"p":"nulidade do AIT e arquivamento"},{"id":"pm-sem-convenio","e":"a","f":"alta","q":"AIT lavrado por policial militar (em SE: BPTran/CPTran via DETRAN-SE) sem prova nos autos do convênio vigente e da designação do agente","n":["CTB art. 23, III: fiscalização pela PM 'quando e conforme convênio firmado'","CTB art. 280, §4º: PM 'designado pela autoridade de trânsito com jurisdição sobre a via'"],"j":"[VERIFICAR] REsp 1.144.079/SP (tese em fonte secundária; inteiro teor não conferido — SCON retornou 403)","p":"exibição do convênio + ato de designação; não comprovado, nulidade por incompetência do agente"},{"id":"na-30-dias","e":"b","f":"alta","q":"Notificação da autuação expedida além de 30 dias da infração","n":["CTB art. 281, §1º, II (RENUMERADO do parágrafo único pela Lei 14.304/2022 — citar sempre §1º)","CTB art. 281, §2º (suspensão/cassação: prazo conta da instauração — Lei 14.304/2022)","Res. CONTRAN 918/2022, art. 4º, caput e §1º (arquivamento do AIT)"],"p":"arquivamento do auto e insubsistência do registro"},{"id":"np-180-360","e":"b","f":"alta","q":"Notificação da penalidade expedida além de 180 dias da infração (ou 360 se houve defesa prévia)","n":["CTB art. 282, §6º (prazos de 180/360 dias — Lei 14.229/2021)","CTB art. 282, §7º (DECADÊNCIA do direito de aplicar a penalidade)","CTB art. 282, §6º-A (não flagrante: conta do conhecimento pelo órgão)","Res. CONTRAN 918/2022, art. 9º, §§2º e 3º"],"p":"declaração de decadência e cancelamento da penalidade"},{"id":"dupla-notificacao","e":"b","f":"alta","q":"Faltou (ou é irregular) a notificação da autuação OU a da penalidade; ônus da prova é da Administração","n":["Súmula 312 do STJ (texto oficial conferido)","CTB arts. 280, 281 e 282","Súmula 127 do STJ (licenciamento × multa não notificada)"],"j":"STJ Tema 1.097 (REsp 1.925.456/SP, trânsito em julgado 16/12/2024): dupla notificação obrigatória na multa NIC a pessoa jurídica","p":"nulidade da penalidade; subsidiário: reabertura de prazo"},{"id":"defesa-min-30","e":"b","f":"media","q":"Notificação com prazo de defesa prévia inferior a 30 dias da expedição","n":["CTB art. 281-A (Lei 14.071/2020)","Res. 723/2018, art. 10, §5º (suspensão/cassação: mínimo 30 dias da notificação da instauração — red. 844/2021)"],"p":"nulidade da notificação e reabertura do prazo"},{"id":"recurso-24-meses","e":"b","f":"media","q":"Recurso pendente de julgamento há mais de 24 meses","n":["CTB art. 285, §6º (Lei 14.229/2021: julgamento em 24 meses)","CTB art. 285, caput (efeito suspensivo do recurso tempestivo)","CTB art. 285, §2º (remessa à JARI em 10 dias)"],"p":"reconhecimento da perda da pretensão punitiva / provimento pela mora"},{"id":"admissibilidade-doc-proprio","e":"b","f":"media","q":"Órgão exige, para admissibilidade, documento emitido por ele próprio","n":["CTB art. 285, §4º (Lei 14.071/2020) — NÃO é o art. 282, §5º, que trata da data de recolhimento do valor da multa (Lei 9.602/1998)","Res. 900/2022 (requisitos de defesa/recursos — SUBSTITUIU a 299/2008 e a 619/2016)","Súmula Vinculante 21 do STF e Súmula 373 do STJ: vedado depósito prévio como condição de admissibilidade (fulminam o art. 288, §2º, do CTB)"],"p":"nulidade do indeferimento liminar"},{"id":"radar-metrologia","e":"c","f":"alta","q":"Multa de velocidade sem prova da verificação metrológica vigente na data; radar oculto; fixo sem R-19/publicidade","n":["Res. CONTRAN 798/2020 (alterada pela 804/2020; radar portátil: via urbana só com limite ≥ 60 km/h — art. 7º, I)","Portaria INMETRO 158/2022 (RTM vigente; verificação anual obrigatória — item 6.4.1.1; certificados no PSIE)","CTB art. 218 ('medida por instrumento ou equipamento hábil' integra o tipo → atipicidade)","CTB art. 280, §2º"],"p":"exibição do certificado; sem ele, nulidade/atipicidade"},{"id":"etilometro","e":"c","f":"alta","q":"Autuação por alcoolemia (art. 165) ou recusa (165-A)","n":["Res. CONTRAN 432/2013 VIGENTE (não foi revogada; margem de tolerância art. 4º, §único + Anexo I: 0,032 mg/L < 0,40; 8% até 2,00; 30% acima; infração só ≥ 0,05 mg/L no valor considerado)","Portaria INMETRO 369/2021 (RTM do etilômetro; sucessora da 006/2002; verificação anual e após reparo)","ATENÇÃO: 432/2013 NÃO prevê 2ª medição nem acompanhamento — fundamentar em ampla defesa (CF art. 5º, LV)","PROIBIDO citar Res. 928/2022 (trata de cursos EaD)"],"j":"[VERIFICAR] STF Tema 1079 (validade da multa por recusa — página oficial retornou 403)","p":"nulidade do teste/auto; desconto da margem"},{"id":"sinalizacao","e":"d","f":"alta","q":"Sinalização ausente, encoberta, apagada ou contraditória","n":["CTB art. 90, caput e §1º (sem sanção com sinalização insuficiente/incorreta; responsabilidade do órgão)","Res. CONTRAN 798/2020 (sinalização da fiscalização eletrônica)"],"p":"insubsistência da autuação"},{"id":"advertencia","e":"e","f":"alta","q":"Infração leve/média e nenhuma outra infração nos últimos 12 meses","n":["CTB art. 267 (Lei 14.071/2020: 'DEVERÁ ser imposta' — ato vinculado; §§1º e 2º revogados)"],"p":"conversão em advertência por escrito"},{"id":"cnh-vencida-30","e":"e","f":"media","q":"Autuação por CNH vencida","n":["CTB art. 162, V (redação da Lei 14.440/2022: só há infração com CNH vencida HÁ MAIS de 30 dias; multa SIMPLES, sem multiplicador)"],"p":"atipicidade (dentro dos 30 dias) ou adequação da penalidade"},{"id":"celular-enquadramento","e":"e","f":"media","q":"Autuação de celular/fones — conferir enquadramento","n":["CTB art. 252, VI e parágrafo único (segurar/manusear = gravíssima; fones = média)","constatação visual exige descrição circunstanciada (CTB art. 280)"],"p":"atipicidade ou desclassificação do enquadramento"},{"id":"pontos-computo","e":"e","f":"alta","q":"Processo de suspensão por pontos","n":["CTB art. 261 (Lei 14.071/2020: 20/30/40 pontos conforme gravíssimas; EAR: sempre 40 — §5º; suspensão 6m-1a, reincidência 8m-2a)","multas não definitivas não pontuam"],"p":"recálculo e arquivamento do processo"},{"id":"prescricao-723","e":"f","f":"alta","q":"Processo de suspensão/cassação antigo ou parado","n":["Res. CONTRAN 723/2018, art. 24 (VIGENTE, com red. 844/2021; NÃO consolidada — revogações em lote 906/2022 e 1017/2024 não a incluem): prescrição quinquenal da ação punitiva e intercorrente de 3 anos","NÃO apoiar a tese principal na Lei federal 9.873/1999 contra órgão estadual/municipal — ver jurisprudência abaixo. Usar os prazos do próprio CTB (art. 281, §1º, II; art. 282, §§6º e 7º) e, em SE, a ancoragem estadual (LC est. 33/1996, art. 122, §1º, II; LC est. 205/2011, art. 69)"],"j":"STJ Tema 1.294 (REsp 2.002.589 e REsp 2.137.071, Rel. Min. Afrânio Vilela, Primeira Seção, julgado em 19/12/2025): a Lei 9.873/1999 tem aplicação restrita à Administração federal e não se estende a Estados e Municípios; o Decreto 20.910/1932 não embasa prescrição intercorrente em processo administrativo estadual/municipal","p":"declaração de prescrição e arquivamento"},{"id":"venda-anterior","e":"e","f":"media","q":"Multas em nome de ex-proprietário após alienação","n":["CTB art. 134 (mitigação: STJ Jurisprudência em Teses ed. 112 — alienação comprovada anterior às infrações afasta responsabilidade mesmo sem comunicação)","Lei 15.153/2025 (transferência eletrônica reforça trilha digital datada)"],"j":"STJ JurisTeses ed. 112, item 4","p":"ilegitimidade passiva"},{"id":"freeflow","e":"e","f":"subsidiaria","q":"Autuação por evasão de pedágio free flow","n":["Res. CONTRAN 1.013/2024 (requisitos próprios de sinalização, registro e notificação do free flow)"],"p":"nulidade por descumprimento dos requisitos da resolução"},{"id":"patio-leilao","e":"e","f":"subsidiaria","q":"Remoção a pátio, diárias e leilão irregulares","n":["Res. CONTRAN 1.025/2026 (novo marco de remoção/guarda/liberação/leilão)","Súmula 510 STJ / Tema 339 (liberação não condicionada a pagamento — transporte irregular)"],"j":"STJ JurisTeses ed. 112","p":"anulação da remoção/leilão e restituição"}],
+  sergipe:{"fluxo":"defesa prévia (órgão autuador) → JARI (DETRAN-SE ou SMTT) → CETRAN-SE (30 dias do indeferimento; SEM 1ª instância não há 2ª — indeferimento automático)","cetran":"Endereçar ao PRESIDENTE do CETRAN-SE. Funciona na sede do DETRAN-SE: Av. Tancredo Neves, s/n, Ponto Novo, Aracaju/SE, CEP 49097-510. Gratuito; anexar cópia da decisão da JARI.","detran":"JARI sem pagamento prévio, gratuito; protocolo presencial (agendado), Correios ou Portal de Serviços gov.br nível PRATA/OURO. Processo ÚNICO multa+SDD quando infrator = proprietário (Res. 723, art. 8º c/c CTB art. 261, §10). O próprio DETRAN-SE ainda cita a Res. 619/2016 (REVOGADA) em páginas de procedimento — fraqueza argumentativa.","smtt":"Formulário de Requerimento Único; protocolo presencial (Rua Roberto Fonseca, 200 - Inácio Barbosa) ou plataforma Aracaju Inteligente; docs: CNH, CRLV, identidade, notificações, procuração.","pm":"BPTran atua por convênio com DETRAN-SE (página oficial da PM-SE), mas o INSTRUMENTO (número/data/DOE) não está publicado de forma acessível; transparência do DETRAN-SE declara ausência de convênios com repasse 2020-2025. Em TODA multa de PM: requerer exibição do convênio + designação.","locais":"PORTA DE ENTRADA (cite SEMPRE antes de qualquer tese estadual): Lei Complementar estadual de Sergipe nº 33/1996 (Código de Organização e de Procedimento da Administração Pública do Estado de Sergipe), art. 113, §2º: 'Os procedimentos de concurso, de licitação, administrativo fiscal e outros de específica previsão legal reger-se-ão pelas legislações próprias, aplicando-se-lhes, com as adaptações necessárias, as normas deste Código.' Ou seja: o processo administrativo do DETRAN-SE rege-se pelo CTB e pelas Resoluções do CONTRAN e, SUPLETIVAMENTE, pela LC estadual 33/1996 — e NÃO pela Lei federal 9.784/1999, que é norma da União. Em peça dirigida a órgão de Sergipe, a LC est. 33/1996 é fundamento mais forte e mais dificilmente afastável que a Lei 9.784/1999. | MOTIVAÇÃO — LC est. 33/1996, art. 71, §2º: a motivação deve conter 'I - a indicação da norma e do dispositivo em que se amparar o ato; II - a exatidão dos fatos levados em conta; III - a enunciação da relação de pertinência lógica entre os fatos ocorridos e o objeto do ato'; e §3º: a motivação deve ser contemporânea ou anterior ao ato. Combinado com o art. 76, V ('Será nulo o ato administrativo praticado sem motivação, ou com motivação viciada por inexatidão') e com o art. 76, §4º ('O ato nulo não admite ratificação, reforma ou conversão'). USO: decisão de JARI ou do DETRAN-SE com fórmula genérica é NULA por direito estadual — peça a nulidade, não a reforma, e invoque o §4º para bloquear motivação posterior. | FORMALIDADE É ESSENCIAL — LC est. 33/1996, art. 70, §3º: 'Toda formalidade é essencial à validade do ato administrativo, salvo disposição legal em contrário.' O §4º só dispensa a formalidade quando o resultado se produziu SEM lesão ao administrado e quando omitida SEM protesto do interessado. USO: inverte o 'pas de nullité sans grief' — em Sergipe a regra é a essencialidade, e o ônus de demonstrar a exceção é da Administração; quem apresenta defesa protesta, o que por si só afasta a hipótese de dispensa. Vício não sanado gera nulidade pelo art. 76, III. | CONTEÚDO OBRIGATÓRIO DA NOTIFICAÇÃO — LC est. 33/1996, art. 144: da notificação deverá constar 'I - o texto integral do ato administrativo; II - a finalidade da notificação; III - a identificação do procedimento administrativo (...); IV - o órgão competente para apreciar a impugnação do ato; V - a menção de que o procedimento é regido por este Código.' USO: notificação-formulário que traz apenas código da infração e valor, sem o teor integral do ato e sem indicar o órgão competente para a impugnação, é nula (art. 76, III). | NOTIFICAÇÃO POR EDITAL — LC est. 33/1996, art. 143, §1º (a via postal é obrigatória sempre que exista distribuição na localidade da residência) e §3º (o edital só cabe se o interessado for desconhecido, se o lugar for ignorado/incerto/inacessível, ou se o número de interessados tornar inconveniente outra forma, e deve ser publicado no Diário Oficial do Estado E em jornal de grande circulação). USO: endereço constante do RENAVAM/CNH afasta 'interessado desconhecido'; edital só no DOE, sem jornal, é nulo. | ALEGAÇÕES FINAIS EM SUSPENSÃO/CASSAÇÃO — LC est. 33/1996, art. 127: 'Concluída a instrução, o interessado será notificado para apresentar suas alegações finais no prazo de 10 (dez) dias.' USO: é etapa que NÃO existe no rito federal e é OBRIGATÓRIA no direito estadual sergipano. O processo de suspensão do DETRAN-SE costuma ir da defesa direto à decisão, suprimindo-a — nulidade de procedimento (art. 76, III) combinada com o art. 111 (contraditório e ampla defesa) e o art. 115, I e II (instauração obrigatória para impor sanção e restringir direitos). | DURAÇÃO DO PROCESSO — LC est. 33/1996, art. 140: 'O procedimento administrativo deverá estar concluído em até 120 (cento e vinte) dias da sua instauração', e o parágrafo único exige que a excepcionalidade seja justificada pela autoridade ao superior hierárquico nos 5 dias seguintes à expiração. USO: em processo de suspensão parado, requerer em preliminar que o órgão EXIBA essa justificativa; a ausência é vício de procedimento e sustenta a irrazoabilidade. | PRESCRIÇÃO — LC est. 33/1996, art. 122, §1º, II: 'Não se iniciará a instrução sempre que se verificar (...) a caducidade ou prescrição do direito que se pretenda exercer'; e art. 4º, X (princípio da revisão, ressalvados os casos de prescrição e decadência). Parâmetro quinquenal do próprio Estado: LC est. 205/2011 (Lei Orgânica do TCE/SE), art. 69: 'Prescreve em 5 (cinco) anos a pretensão punitiva do Tribunal de Contas do Estado', com decretação DE OFÍCIO (§1º). USO: depois do Tema 1.294 do STJ (a Lei federal 9.873/1999 não alcança Estados e Municípios), a ancoragem estadual passou a ser indispensável — sustente o dever de exame prévio pela LC 33/1996 e o parâmetro de 5 anos pela LC 205/2011, sem apoiar a tese principal na Lei 9.873/1999. | IMPEDIMENTO DO JULGADOR — LC est. 33/1996, art. 120, VIII (deve abster-se quem 'conheceu em primeira instância, tendo-lhe proferido decisão') e §1º: 'A inobservância do disposto no caput implicará a anulação dos atos em que o agente houver intervido'; art. 121 assegura ao interessado recusar o agente. USO: servidor do DETRAN-SE que decidiu a defesa prévia e depois atua na JARI; membro da JARI que também compõe o CETRAN-SE. Requeira a ata da sessão e os atos de nomeação. | COMPOSIÇÃO DO CETRAN-SE — Lei estadual 4.543/2002, art. 3º: o colegiado é composto pelo Presidente, três representantes do Estado (DETRAN/SE, DER/SE e PM/SE), três representantes de Municípios (as três maiores frotas) e quatro representantes de entidades civis (patronal, trabalhador, CREA-SE e Poder Legislativo); §2º exige membros reconhecidamente experientes em trânsito; §4º fixa mandato de 2 anos, admitida uma recondução. Art. 4º, V: compete ao CETRAN-SE julgar os recursos contra decisões das JARI. USO: julgamento por colegiado incompleto, irregularmente composto ou com membro fora do mandato é nulo — requeira a ata e os atos de nomeação. | GRATUIDADE E VEDAÇÃO DE GARANTIA DE INSTÂNCIA — LC est. 33/1996, art. 43: 'Para efeito de interposição de recurso administrativo, não será exigida garantia de instância, seja qual for a sua modalidade'; art. 109: direito de petição e de certidões 'independentemente do pagamento de taxas'; art. 114, VII (princípio da gratuidade). Lei estadual 8.638/2019, art. 7º: a Taxa Estadual de Fiscalização e Serviços Diversos NÃO incide sobre o direito de petição, sobre certidões para defesa de direitos nem sobre pedidos de informação destinados a instruir defesa. USO: qualquer cobrança para protocolar defesa/recurso ou para obter cópia do AIT e do certificado do medidor é ilegal em Sergipe por lei estadual expressa — some-se a Súmula Vinculante 21 do STF e a Súmula 373 do STJ. | CÓPIA INTEGRAL DOS AUTOS — Constituição do Estado de Sergipe, art. 3º, XIX: 'O direito de certidão compreende o de obter reprodução integral dos documentos solicitados'; §1º garante a gratuidade quando destinada à defesa de direitos. LC est. 33/1996, art. 108 (informações em 30 dias, sob pena de responsabilidade), art. 109, §1º (fotocópias autenticadas se o interessado solicitar) e §2º ('Qualquer restrição injustificada oposta pela Administração Pública ao interessado (...) sujeitará o agente público à responsabilidade administrativa, civil e penal'). USO: derruba a prática de entregar print de sistema em vez do processo completo; cite o §2º ao requerer. | EFICÁCIA DOS ATOS DO DETRAN-SE — Constituição do Estado de Sergipe, art. 26, §2º: 'Os atos administrativos expedidos pelas autarquias e fundações estaduais só entrarão em vigor após publicação em órgão oficial'; LC est. 33/1996, art. 66, §2º (ato de efeito externo só é eficaz a partir da publicação no DOE) e art. 69, §3º, VI (a publicação no DOE é requisito de eficácia da delegação de competência). O DETRAN-SE é autarquia especial (Lei est. 5.785/2005, art. 2º). USO: portaria, resolução, delegação de competência ou ato de designação de agente autuador não publicados no DOE não produzem efeito — requeira a prova da publicação e, na falta, ataque a competência (art. 76, II e III). | PROPORCIONALIDADE COM SANÇÃO DE NULIDADE — LC est. 33/1996, art. 4º, VI: no desempenho da função administrativa suscetível de agravar a situação do administrado 'somente se adotarão providências cuja extensão e intensidade sejam indispensáveis'; art. 76, I: é NULO o ato praticado em desconformidade com os princípios do art. 4º. Constituição do Estado de Sergipe, art. 25, caput, eleva razoabilidade e transparência a princípios constitucionais estaduais expressos. USO: no direito federal a proporcionalidade é princípio implícito de força persuasiva; em Sergipe é regra legal com nulidade cominada. Vale especialmente em suspensão por pontuação e cassação. | EFEITO SUSPENSIVO E EXECUÇÃO — LC est. 33/1996, art. 45, §2º: a autoridade 'poderá, no despacho de recebimento do recurso, e motivadamente, declarar que o recebe no efeito suspensivo' para prevenir lesão de difícil reparação; art. 67, §2º, II (não é executório o ato de que se interpôs recurso com efeito suspensivo) e §3º ('A decisão de proceder à execução administrativa será previamente notificada ao seu destinatário'). USO: requeira o efeito suspensivo também por esse fundamento estadual; a recusa não motivada é, ela própria, nulidade pelo art. 76, V. Contra bloqueio de CNH ou recolhimento sem notificação prévia da execução, invoque o art. 67, §3º. | COMPETÊNCIA DA PM EM SERGIPE — Lei estadual 5.785/2005, art. 45 (o DETRAN/SE conta com a participação da Companhia de Polícia de Trânsito - CPTran da PMSE) e art. 46, parágrafo único (DETRAN/SE e PMSE, 'com a interveniência da Secretaria de Estado da Segurança Pública', podem celebrar convênios 'disciplinando a extensão, natureza e condições de colaboração'). Combinado com a LC est. 33/1996, art. 69 (delegação de competência exige lei habilitadora e publicação no DOE como requisito de eficácia) e art. 76, II (incompetência em razão da matéria = nulo). USO: a própria lei estadual condiciona a atuação da PM a convênio cuja extensão é definida no instrumento — requeira a exibição do convênio VIGENTE na data e do ato de designação PUBLICADO, e sustente que o ônus de demonstrar a cadeia de competência é da Administração. | DECISÃO FUNDAMENTADA EM SUSPENSÃO E CASSAÇÃO — CTB, art. 265: as penalidades de suspensão do direito de dirigir e de cassação devem ser aplicadas por decisão fundamentada da autoridade de trânsito, em processo administrativo com amplo direito de defesa. USO: decisão genérica em processo de suspensão/cassação viola diretamente dispositivo do próprio CTB, e não apenas a Lei 9.784/1999 — argumento mais difícil de afastar."} };
 /* ARSENAL-FIM */
 /* teses do arsenal pertinentes ao caso (por infracao e por fase) */
 function tesesDoArsenal(infracaoId, faseId){
@@ -2124,6 +2161,136 @@ function tesesDoArsenal(infracaoId, faseId){
   (mapa[infracaoId]||[]).forEach(id=>{ const t=T.find(x=>x.id===id); if(t) alvo.push(t); });
   const vistos={}; return alvo.filter(t=>{ if(vistos[t.id]) return false; vistos[t.id]=1; return true; })
     .sort((a,b)=>({alta:0,media:1,subsidiaria:2}[a.f]||3)-({alta:0,media:1,subsidiaria:2}[b.f]||3));
+}
+
+/* ==================================================================
+   v5.2 — O ORGAO ENTRA NA PECA (rodada 2 da auditoria)
+
+   O sistema JA sabia quem e quem em Sergipe (ARSENAL.sergipe) e ja
+   sabia normalizar o nome do orgao (orgaoCanonico). Mas nada disso
+   chegava ao prompt: a peca saia enderecada "em geral", e o
+   conhecimento local morria dentro do codigo.
+
+   Aqui o orgao vira contexto juridico concreto:
+   1. QUEM julga cada instancia (art. 289 do CTB muda conforme a
+      esfera — errar isso gera NAO CONHECIMENTO do recurso);
+   2. COMO se protocola naquele orgao (o que ele exige de fato);
+   3. QUE tese local nasce dali (convenio da PM, norma revogada que
+      o proprio orgao ainda aplica).
+   ================================================================== */
+const PERFIS_ORGAO={
+  /* o cargo do dirigente do DETRAN/SE e DIRETOR-PRESIDENTE: a propria lei
+     estadual que organiza a autarquia o nomeia assim (Lei est. 5.785/2005,
+     art. 11, par. 2o). Nao e "Diretor-Geral". */
+  'DETRAN-SE':{ esfera:'estadual', uf:'SE',
+    dirigente:'ILUSTRISSIMO(A) SENHOR(A) DIRETOR(A)-PRESIDENTE DO DEPARTAMENTO ESTADUAL DE TRANSITO DE SERGIPE - DETRAN/SE (cargo confirmado na Lei estadual 5.785/2005; nao inventes nome de pessoa)',
+    jari:'Presidente da JARI do DETRAN/SE', segunda:'Presidente do CETRAN/SE' },
+  'DER/SE':{ esfera:'estadual', uf:'SE',
+    dirigente:'dirigente maximo do DER/SE (Departamento Estadual de Infraestrutura Rodoviaria de Sergipe), pela designacao funcional',
+    jari:'Presidente da JARI vinculada ao DER/SE', segunda:'Presidente do CETRAN/SE' },
+  'SMTT Aracaju':{ esfera:'municipal', uf:'SE',
+    dirigente:'dirigente maximo da SMTT de Aracaju (Superintendencia Municipal de Transportes e Transito), pela designacao funcional',
+    jari:'Presidente da JARI vinculada a SMTT de Aracaju', segunda:'Presidente do CETRAN/SE' },
+  'PRF':{ esfera:'federal', uf:'',
+    dirigente:'autoridade de transito da Policia Rodoviaria Federal responsavel pela autuacao, pela designacao funcional',
+    jari:'Presidente da JARI da Policia Rodoviaria Federal',
+    segunda:'colegiado especial de segunda instancia do art. 289, I, do CTB, no ambito da propria PRF (aos cuidados do Coordenador-Geral da JARI)' },
+  'DNIT':{ esfera:'federal', uf:'',
+    dirigente:'autoridade de transito do DNIT responsavel pela autuacao, pela designacao funcional',
+    jari:'Presidente da JARI do DNIT',
+    segunda:'colegiado especial de segunda instancia do art. 289, I, do CTB, no ambito do proprio DNIT (aos cuidados do Coordenador-Geral da JARI)' },
+  'CETRAN-SE':{ esfera:'estadual', uf:'SE',
+    dirigente:'Presidente do CETRAN/SE', jari:'Presidente do CETRAN/SE', segunda:'Presidente do CETRAN/SE' }
+};
+/* descobre a esfera de um orgao que NAO esta na lista (caso de fora de SE) */
+function perfilOrgao(){
+  const bruto=(($('#fOrgao')||{}).value||'').trim();
+  if(!bruto) return null;
+  const canon=orgaoCanonico(bruto);
+  if(PERFIS_ORGAO[canon]) return Object.assign({ nome:canon, bruto:bruto }, PERFIS_ORGAO[canon]);
+  /* orgao de fora de Sergipe: deduz a esfera pelo nome, sem inventar cargo */
+  const n=bruto.toLowerCase().replace(/[^a-z]/g,'');
+  const ufm=bruto.toUpperCase().match(/\b([A-Z]{2})\b\s*$/);
+  const uf=(ufm&&ufm[1]!=='SE')?ufm[1]:'';
+  if(n.indexOf('prf')!==-1||n.indexOf('dnit')!==-1||n.indexOf('federal')!==-1)
+    return { nome:bruto, bruto:bruto, esfera:'federal', uf:'',
+      dirigente:'autoridade de transito do orgao federal autuador, pela designacao funcional',
+      jari:'Presidente da JARI do orgao federal autuador',
+      segunda:'colegiado especial de segunda instancia do art. 289, I, do CTB, no ambito do proprio orgao federal' };
+  if(n.indexOf('df')!==-1&&(n.indexOf('detran')!==-1||n.indexOf('der')!==-1))
+    return { nome:bruto, bruto:bruto, esfera:'distrital', uf:'DF',
+      dirigente:'dirigente maximo do orgao de transito do Distrito Federal, pela designacao funcional',
+      jari:'Presidente da JARI do orgao autuador', segunda:'CONTRANDIFE' };
+  if(n.indexOf('detran')!==-1||n.indexOf('der')!==-1)
+    return { nome:bruto, bruto:bruto, esfera:'estadual', uf:uf,
+      dirigente:'dirigente maximo do orgao estadual autuador, pela designacao funcional',
+      jari:'Presidente da JARI vinculada ao orgao autuador',
+      segunda:'Presidente do CETRAN'+(uf?('/'+uf):' da respectiva UF') };
+  return { nome:bruto, bruto:bruto, esfera:'', uf:uf,
+    dirigente:'dirigente maximo do orgao autuador, pela designacao funcional',
+    jari:'Presidente da JARI vinculada ao orgao autuador',
+    segunda:'orgao de segunda instancia competente na forma do art. 289 do CTB' };
+}
+/* a autoridade EXATA para a fase deste caso */
+function autoridadeDaFase(p, fase){
+  if(!p) return '';
+  switch(fase){
+    case 'defesa_previa': case 'indicacao': return p.dirigente;
+    case 'jari': return p.jari;
+    case 'cetran': return p.segunda;
+    case 'suspensao': case 'cassacao': case 'cancelamento':
+      return 'dirigente maximo do orgao INSTAURADOR do processo'+
+             (p.esfera==='estadual'&&p.uf==='SE' ? ' (em regra o DETRAN/SE, que expede a CNH)' : '');
+    default: return p.dirigente;
+  }
+}
+/* bloco que vai junto com o caso para a IA: quem julga, como protocola e
+   que tese local nasce do orgao */
+function textoOrgao(){
+  const p=perfilOrgao(); if(!p) return '';
+  const fase=faseAtualId();
+  const S=(ARSENAL&&ARSENAL.sergipe)||{};
+  const L=[];
+
+  L.push('\nORGAO DESTE CASO: '+p.bruto+(p.nome!==p.bruto?(' (identificado como '+p.nome+')'):'')+
+         (p.esfera?(' — orgao de transito de esfera '+p.esfera.toUpperCase()+'.'):'.'));
+  const aut=autoridadeDaFase(p, fase);
+  if(aut) L.push('ENDERECAMENTO OBRIGATORIO DESTA PECA: dirige a peca ao '+aut+
+    '. Casa o cabecalho com a fase declarada; se o cargo nominal exato nao constar dos autos, usa a designacao '+
+    'funcional e NUNCA inventes nome de pessoa.');
+
+  /* a regra do art. 289 muda com a esfera — e a causa classica de nao conhecimento */
+  if(p.esfera==='federal'){
+    L.push('ATENCAO — ORGAO FEDERAL: o recurso de SEGUNDA instancia NAO vai ao CETRAN nem ao CONTRANDIFE. '+
+      'Pelo art. 289, I, do CTB, penalidade imposta por orgao ou entidade da Uniao e julgada em 2a instancia por '+
+      '"colegiado especial integrado pelo Coordenador-Geral da Jari, pelo Presidente da Junta que apreciou o recurso '+
+      'e por mais um Presidente de Junta"; havendo apenas uma JARI, julgam os proprios membros dela (paragrafo unico). '+
+      'O CONTRANDIFE e o conselho do DISTRITO FEDERAL (art. 289, II) e nao tem competencia sobre orgao federal.');
+  } else if(p.esfera==='distrital'){
+    L.push('ORGAO DO DISTRITO FEDERAL: o recurso de 2a instancia e julgado pelo CONTRANDIFE (art. 289, II, do CTB).');
+  } else if(p.esfera==='estadual'||p.esfera==='municipal'){
+    L.push('ORGAO '+p.esfera.toUpperCase()+': o recurso de 2a instancia e julgado pelo CETRAN'+
+      (p.uf?('/'+p.uf):' da respectiva UF')+' (art. 289, II, do CTB). Nao confundas com o CONTRANDIFE, que so julga '+
+      'penalidade imposta por orgao do Distrito Federal.');
+  }
+
+  /* conhecimento local de Sergipe — so quando o caso for de Sergipe */
+  const ehSE = (p.uf==='SE') || ['DETRAN-SE','SMTT Aracaju','DER/SE','CETRAN-SE'].indexOf(p.nome)!==-1;
+  if(ehSE){
+    if(S.fluxo) L.push('FLUXO RECURSAL EM SERGIPE: '+S.fluxo);
+    if(fase==='cetran'&&S.cetran) L.push('CETRAN/SE: '+S.cetran);
+    if((p.nome==='DETRAN-SE')&&S.detran) L.push('PRATICA DO DETRAN/SE: '+S.detran);
+    if((p.nome==='SMTT Aracaju')&&S.smtt) L.push('PRATICA DA SMTT DE ARACAJU: '+S.smtt);
+    if(S.locais) L.push('BASE NORMATIVA LOCAL DE SERGIPE (usa SOMENTE o que for pertinente e esteja marcado como '+
+      'verificado; o que estiver marcado [NAO CONFIRMADO] NAO pode ser citado como norma na peca): '+S.locais);
+    if(S.pm && (p.nome==='DETRAN-SE'||p.nome==='DER/SE')){
+      L.push('TESE LOCAL DE ALTO RENDIMENTO — CONVENIO DA PM: '+S.pm+' Portanto, SE (e somente se) os autos '+
+        'indicarem que o auto foi lavrado por policial militar (BPTran/CPTran/PM), desenvolve como tese autonoma a '+
+        'incompetencia do agente por falta de prova do convenio (art. 23, III, do CTB) e da designacao (art. 280, '+
+        'par. 4o), requerendo a exibicao de ambos. Se os autos NAO indicarem agente militar, NAO levantes esta tese.');
+    }
+  }
+  return L.join('\n')+'\n';
 }
 
 /* ==================================================================
@@ -2414,7 +2581,12 @@ function aplicaFase(){
   /* 4. esconde o que não cabe nesta fase */
   (cfg.ocultar||[]).forEach(sel=>{
     let alvo=null;
-    if(sel.indexOf('[data-nul')===0){ const cx=document.querySelector(sel); alvo=cx?cx.parentNode:null; }
+    if(sel.indexOf('[data-nul')===0){
+      const cx=document.querySelector(sel); alvo=cx?cx.parentNode:null;
+      /* esconder tambem DESMARCA: o que esta fase nao mostra nao pode
+         viajar marcado para dentro da peca */
+      if(cx) cx.checked=false;
+    }
     else { const e=document.querySelector(sel); alvo = e ? (e.closest('.fg,.pts-ear')||e) : null; }
     if(alvo) alvo.hidden=true;
   });
@@ -2423,6 +2595,9 @@ function aplicaFase(){
   if(aj){ if(cfg.ajuda){ aj.hidden=false; aj.innerHTML=cfg.ajuda; } else { aj.hidden=true; aj.innerHTML=''; } }
   /* 6. em suspensão o risco de pontos É o mérito: abre sozinho */
   if(cfg.abrirPontos){ const f=$('#ferr'); if(f) f.open=true; }
+  /* 7. v5.2: a fase mudou — o destaque das teses e o aviso do órgão mudam junto
+     (o passo 4 acabou de esconder/desmarcar o que esta fase não usa) */
+  try{ sugereNulidades(); }catch(e){}
   pintaPendencias();
 }
 function montaInfracoes(){
@@ -2439,12 +2614,31 @@ function tipoInfracaoAtual(){
 /* destaca no checklist as nulidades tipicas do tipo escolhido */
 function sugereNulidades(){
   document.querySelectorAll('#nulidades label').forEach(l=>l.classList.remove('sug'));
-  const t=tipoInfracaoAtual();
-  if(!t || !t.nul.length) return;
-  t.nul.forEach(id=>{
+  const destaca=(id)=>{
     const c=document.querySelector('[data-nul="'+id+'"]');
     if(c && c.parentNode && c.parentNode.classList) c.parentNode.classList.add('sug');
-  });
+  };
+  const t=tipoInfracaoAtual();
+  if(t && t.nul.length) t.nul.forEach(destaca);
+  /* v5.2: em SE, boa parte das multas do DETRAN/DER e lavrada pelo BPTran (PM)
+     e o convenio nunca vem nos autos. O sistema DESTACA a tese para o operador
+     conferir nos autos — nunca marca sozinho, porque marcar sem conferir seria
+     afirmar um fato que ninguem verificou. */
+  const p=perfilOrgao();
+  if(p && (p.nome==='DETRAN-SE'||p.nome==='DER/SE')) destaca('convenio');
+  avisoConvenio(p);
+}
+/* aviso curto ao lado do checklist, so quando faz sentido */
+function avisoConvenio(p){
+  const box=$('#avisoOrgao'); if(!box) return;
+  const cx=document.querySelector('[data-nul="convenio"]');
+  const visivel = cx && !(cx.closest('label')||{}).hidden;
+  if(p && visivel && (p.nome==='DETRAN-SE'||p.nome==='DER/SE')){
+    box.hidden=false;
+    box.innerHTML='Em Sergipe boa parte das multas do '+escapeHtml(p.nome)+' e lavrada pelo <b>BPTran (Polícia Militar)</b>, '+
+      'por convênio que não é publicado de forma acessível. <b>Confira no auto quem foi o agente</b>: se for policial militar, '+
+      'marque a tese do convênio — ela exige que o órgão exiba o convênio e a designação, e a falta de qualquer um dos dois anula o auto.';
+  } else { box.hidden=true; box.innerHTML=''; }
 }
 /* roteiro de teses que segue junto com o caso para a IA */
 function dicaInfracaoDe(id){
@@ -2538,6 +2732,7 @@ function pedidoParaPlano(){
   'Placa do veiculo: '+($('#fPlaca').value.trim().toUpperCase()||'[PLACA]')+'.\n'+
   'CPF do requerente: '+($('#fCpf').value.trim()||'[CPF DO REQUERENTE]')+'.\n'+
   'Fatos e observacoes: '+($('#notes').value.trim()||'(nenhuma informada)')+'\n'+
+  textoOrgao()+
   textoInfracao()+
   textoNulidades()+
   textoPontos()+
@@ -2600,7 +2795,7 @@ async function runLote(){
   const obsGeral=$('#notes').value.trim();
   const hoje=new Date().toLocaleDateString('pt-BR');
   const listaAits=itens.map(x=>x.ait).join(', ');
-  const oks=[], falhas=[], prontas=[];
+  const oks=[], falhas=[], prontas=[], naoSalvas=[];
   let outEl=null, status=null;
 
   for(let i=0;i<itens.length;i++){
@@ -2634,6 +2829,7 @@ async function runLote(){
       'e os documentos anexados reunem TODOS eles. ESTA peca defende EXCLUSIVAMENTE o AIT '+it.ait+': '+
       'usa apenas os documentos e dados pertinentes a ele. Os demais AITs so podem ser mencionados quando '+
       'juridicamente relevantes para esta defesa (por exemplo, no risco de pontuacao do art. 261).\n'+
+      textoOrgao()+              /* v5.2: enderecamento e tese local tambem no lote */
       dicaInfracaoDe(it.inf)+
       'Fatos e observacoes gerais do cliente: '+(obsGeral||'(nenhuma informada)')+'\n'+
       'Observacoes especificas DESTA multa: '+(it.obs||'(nenhuma)')+'\n'+
@@ -2660,11 +2856,16 @@ async function runLote(){
         nulidades:[], pontos:{ atual:$('#ptsAtual').value, grav:$('#ptsGrav').value, ear:$('#ptsEar').checked },
         text:r.text, fileNames:files.map(f=>f.name), date:new Date().toLocaleString('pt-BR') };
       cases.unshift(rec);
-      try{ setCases(cases); }catch(e){}
-      lastText=r.text; lastHTML=outEl.innerHTML; lastKind='peca'; pecaSalva=true; loadedCaseId=rec.id;
+      /* Falha ao gravar NAO pode ser engolida: a peca foi gerada (e paga),
+         entao registramos que ela NAO esta em Casos Salvos e avisamos no
+         fim — com o download do Word como rede de seguranca. */
+      let salvou=true;
+      try{ setCases(cases); }catch(e){ salvou=false; naoSalvas.push(it.ait); }
+      lastText=r.text; lastHTML=outEl.innerHTML; lastKind='peca'; pecaSalva=salvou; loadedCaseId=rec.id;
       paginaResultado(outEl, r.text);        /* v4.3 */
       mostraCusto(out, r.modelo, r.uso, 'lote', rotaL.motivo);
-      estados[i]=(r.stop==='interrompido'||r.stop==='max_tokens') ? 'pronta — CONFIRA (pode estar incompleta)' : 'pronta';
+      estados[i]=(r.stop==='interrompido'||r.stop==='max_tokens') ? 'pronta — CONFIRA (pode estar incompleta)'
+                : (salvou ? 'pronta' : 'pronta, mas NAO SALVA — baixe o Word');
       oks.push(it.ait); prontas.push(rec);
     }catch(err){
       if(status){ status.remove(); status=null; }
@@ -2677,11 +2878,13 @@ async function runLote(){
 
   travaBotoes(false); bl.disabled=false; bl.textContent=rotuloBtn;
   if(lastText){ $('#toolbar').style.display='grid'; ajustaToolbar(); }
-  alert('Lote concluído: '+oks.length+' defesa(s) gerada(s) e salva(s) em CASOS SALVOS (uma por AIT).'+
+  alert('Lote concluído: '+(oks.length-naoSalvas.length)+' defesa(s) gerada(s) e salva(s) em CASOS SALVOS (uma por AIT).'+
+    (naoSalvas.length ? '\n\nATENCAO: '+naoSalvas.length+' defesa(s) foram GERADAS mas NAO puderam ser salvas ('+naoSalvas.join(', ')+') — o armazenamento falhou. BAIXE O WORD DELAS AGORA (vou oferecer em seguida); sem isso, fechando a pagina elas se perdem.' : '')+
     (falhas.length ? '\n\nFalharam: '+falhas.join(', ')+' — gere essas de novo (individualmente ou num novo lote só com elas).' : '')+
     '\n\nAntes de protocolar cada uma: abra o caso, use "Conferir citações" e gere o PDF.');
-  /* um arquivo Word por defesa, todos de uma vez — cada um vira o seu PDF */
-  if(prontas.length && confirm('Baixar agora o Word (.docx) de cada defesa gerada?\n\nSerão '+prontas.length+' arquivo(s), um por multa — em ABNT, prontos para conferir e protocolar.')){
+  /* um arquivo Word por defesa, todos de uma vez — cada um vira o seu PDF.
+     Se alguma nao foi salva, o download deixa de ser opcional: e a unica copia. */
+  if(prontas.length && (naoSalvas.length || confirm('Baixar agora o Word (.docx) de cada defesa gerada?\n\nSerão '+prontas.length+' arquivo(s), um por multa — em ABNT, prontos para conferir e protocolar.'))){
     prontas.forEach((rec,k)=>{ setTimeout(()=>{ try{ downloadDocx(rec.text, rec.name); }catch(e){} }, k*700); });
   }
   window.scrollTo({ top:0, behavior:'smooth' });
@@ -3755,11 +3958,19 @@ function saveDraft(){
         orgao:$('#fOrgao').value, ait:$('#fAit').value, notes:$('#notes').value,
         dataNotif:$('#fDataNotif').value, prazoManual:$('#fPrazoManual').value,
         placa:$('#fPlaca').value, cpf:$('#fCpf').value, tel:$('#fTel').value,
-        infracao:$('#fInfracao').value }
+        infracao:$('#fInfracao').value,
+        ptsAtual:$('#ptsAtual').value, ptsGrav:$('#ptsGrav').value, ptsEar:$('#ptsEar').checked,
+        nulidades:nulidadesMarcadas().map(n=>n.id) }
     }));
   }catch(e){ /* sem espaco: o rascunho e so uma rede extra, nao pode travar nada */ }
 }
 function limpaDraft(){ try{ localStorage.removeItem(LS.rascunho); }catch(e){} }
+/* v5.1: o rascunho passa a valer DESDE O PRIMEIRO CAMPO digitado, nao so
+   depois da peca pronta. Fechou a aba sem querer no meio do caso? Ao voltar,
+   o sistema oferece recuperar tudo. (Com atraso de 800ms para nao gravar a
+   cada tecla.) */
+let draftTimer=null;
+function agendaDraft(){ clearTimeout(draftTimer); draftTimer=setTimeout(()=>{ try{ saveDraft(); }catch(e){} }, 800); }
 
 /* ==================================================================
    v4.3 — VISUALIZADOR EM PÁGINAS (modo PDF do resultado)
@@ -3935,6 +4146,7 @@ async function runGen(){
     `Placa do veiculo: ${$('#fPlaca').value.trim().toUpperCase()||'[PLACA]'}.\n`+
     `CPF do requerente: ${$('#fCpf').value.trim()||'[CPF DO REQUERENTE]'}.\n`+
     `Fatos e observacoes: ${$('#notes').value.trim()||'(nenhuma informada)'}\n`+
+    textoOrgao()+                /* v5.2: quem julga, como protocola, tese local */
     textoInfracao()+
     textoNulidades()+
     textoPontos()+
@@ -4102,19 +4314,46 @@ function setCases(c){
   try{ localStorage.setItem(LS.cases, JSON.stringify(c)); }
   catch(e){ erroLocal = e; }
   renderCases();
-  nuvemEnviar(antes, c);                 // sobe alteracoes e exclusoes (se logado)
+  const envio = nuvemEnviar(antes, c);   // sobe alteracoes e exclusoes (se logado)
 
   if(erroLocal){
     if(nvSessao){
-      alert('O armazenamento deste navegador encheu, mas fique tranquilo: o caso foi salvo NA NUVEM.\n\nEle esta seguro e aparece em qualquer aparelho onde voce entrar. Para liberar espaco aqui, exclua casos antigos da lista.');
+      /* Nao afirmar NADA antes de a nuvem responder: a mensagem so aparece
+         quando o envio confirmar (ou falhar), e diz a verdade nos dois casos. */
+      envio.then(ok=>{
+        if(ok){
+          alert('O armazenamento deste navegador encheu, mas o caso SUBIU PARA A NUVEM e esta confirmado la.\n\nO rascunho automatico foi mantido por seguranca. Para liberar espaco aqui, faca um Backup dos casos e exclua casos antigos da lista.');
+        }else{
+          alert('ATENCAO — O CASO NAO FOI SALVO EM LUGAR NENHUM.\n\nO armazenamento deste navegador encheu E a nuvem nao confirmou o envio.\n\nNAO FECHE ESTA JANELA. Copie a peca agora (Copiar/Exportar), depois exclua casos antigos e salve de novo.');
+        }
+      });
     }else{
-      alert('Armazenamento cheio: o caso NAO foi salvo. Faca um Backup dos casos (⬇️) e exclua casos antigos, depois tente de novo.');
-      throw erroLocal;
+      alert('Armazenamento cheio: o caso NAO foi salvo. Faca um Backup dos casos e exclua casos antigos, depois tente de novo.');
     }
+    /* SEMPRE relancar: e o throw que impede o limpaDraft() de apagar o
+       rascunho — a ultima copia sobrevivente quando a gravacao falha. */
+    throw erroLocal;
   }
+
+  /* Aviso ANTES de encher (uma vez por sessao): melhor pedir limpeza com
+     folga do que descobrir o limite na hora de salvar um caso com prazo. */
+  try{
+    const kb = Math.round(JSON.stringify(c).length/1024);
+    if(kb > 3500 && !sessionStorage.getItem('adt_aviso_espaco')){
+      sessionStorage.setItem('adt_aviso_espaco','1');
+      alert('Seus casos ja ocupam ~'+kb+' KB do espaco deste navegador (o limite fica perto de 5000 KB).\n\nFaca um Backup dos casos e exclua os antigos antes que o espaco acabe.');
+    }
+  }catch(e){}
 }
 $('#btnSave').onclick=()=>{
-  if(!lastText){ alert('Nada para salvar.'); return; }
+  /* Salvar SEM peca e permitido: registra o cadastro e — o mais importante —
+     o PRAZO, que passa a ser vigiado pela agenda. Antes, so dava para
+     cadastrar um prazo gerando (e pagando) uma peca primeiro. */
+  if(!lastText){
+    const temAlgo=$('#fNome').value.trim()||$('#fAit').value.trim()||$('#fDataNotif').value||$('#fPrazoManual').value;
+    if(!temAlgo){ alert('Nada para salvar ainda: preencha ao menos o nome do cliente, o nº do AIT/processo ou uma data.'); return; }
+    if(!confirm('Ainda não há peça gerada. Salvar mesmo assim o CADASTRO do caso (dados + prazo) para ele entrar na agenda?\n\nA peça você gera depois, quando quiser.')) return;
+  }
   const cases=getCases();
   let rid = loadedCaseId||('c'+(new Date().getTime()));
   /* protecao contra sobrescrever o caso errado: se ha um caso aberto mas o
@@ -4145,6 +4384,13 @@ $('#btnSave').onclick=()=>{
     text:lastText, fileNames:(files.length?files.map(f=>f.name):prevFiles), date:new Date().toLocaleString('pt-BR') };
   const idx=cases.findIndex(c=>c.id===rec.id); if(idx>=0) cases[idx]=rec; else cases.unshift(rec);
   loadedCaseId=rec.id;
+  /* recurso da proxima instancia salvo: o prazo agora e deste caso novo,
+     entao o pai indeferido sai do contador (senao a agenda dobrava) */
+  if(paiRecurso && rec.id!==paiRecurso){
+    const pai=cases.find(x=>x.id===paiRecurso);
+    if(pai) pai.prazoManual='';
+    paiRecurso=null;
+  }
   try{
     setCases(cases);
     pecaSalva=true; limpaDraft();
@@ -4187,9 +4433,10 @@ function renderCases(){
       '<div class="linha2"></div>';
     const l2=d.querySelector('.linha2');
 
-    /* etiqueta de prazo — só faz sentido enquanto o caso não foi protocolado/julgado */
+    /* etiqueta de prazo — enquanto o caso esta em preparo OU indeferido
+       com prazo de recurso correndo (contaPrazo decide) */
     const badge=badgePrazo(c);
-    if(badge && st.aberto){
+    if(badge && contaPrazo(c)){
       const b=document.createElement('span'); b.className='tag '+badge.cls; b.textContent=badge.txt;
       b.title=badge.dica; l2.appendChild(b);
     }
@@ -4205,7 +4452,28 @@ function renderCases(){
     sel.onchange=(ev)=>{
       ev.stopPropagation();
       const todos=getCases(); const alvo=todos.find(x=>x.id===c.id);
-      if(alvo){ alvo.status=sel.value; alvo.date=new Date().toLocaleString('pt-BR'); setCases(todos); }
+      if(alvo){
+        alvo.status=sel.value; alvo.date=new Date().toLocaleString('pt-BR');
+        /* Indeferimento abre um PRAZO NOVO (30 dias para a instancia seguinte).
+           Capturamos a data da decisao na hora — sem ela o caso sumia da
+           agenda exatamente quando o prazo fatal comecava a correr. */
+        if(sel.value==='indeferido' && proximaFase(alvo.proc)){
+          const resp=prompt('Em que dia o cliente foi NOTIFICADO do indeferimento? (dd/mm/aaaa)\n\nO prazo de 30 dias do recurso à instância seguinte conta dessa data — com ela, o caso continua na agenda com a etiqueta "recorrer".\n\nDeixe em branco se ainda não souber.');
+          const m=String(resp||'').trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+          if(m){
+            const dia=+m[1], mes=+m[2], ano=+m[3];
+            const base=new Date(Date.UTC(ano, mes-1, dia));
+            if(!isNaN(base.getTime()) && base.getUTCDate()===dia && base.getUTCMonth()===mes-1){
+              alvo.dataNotif=ano+'-'+String(mes).padStart(2,'0')+'-'+String(dia).padStart(2,'0');
+              /* mesma conta do estimarPrazo: 30 dias contando o primeiro */
+              alvo.prazoManual=new Date(base.getTime()+29*86400000).toISOString().slice(0,10);
+            } else { alert('Data invalida — o prazo do recurso NAO foi registrado.\n\nPara registrar depois: abra o caso, preencha o PRAZO FINAL e salve.'); }
+          } else if(String(resp||'').trim()!==''){
+            alert('Nao entendi a data (use dd/mm/aaaa) — o prazo do recurso NAO foi registrado.\n\nPara registrar depois: abra o caso, preencha o PRAZO FINAL e salve.');
+          }
+        }
+        setCases(todos);
+      }
     };
     sel.onclick=ev=>ev.stopPropagation();
     l2.appendChild(sel);
@@ -4245,32 +4513,46 @@ function diasDoCaso(c){
   if(c.dataNotif){ const r=estimarPrazo(c.dataNotif, c.proc||''); return r.diasRestantes; }
   return null;
 }
+/* Um caso conta na agenda enquanto tiver prazo correndo: em preparo, OU
+   indeferido com o prazo do recurso registrado (a unica regra, usada pela
+   etiqueta, pela barra Agenda e pelo painel — nao duplicar). */
+function contaPrazo(c){
+  const st=ST[c.status||'rascunho']||ST.rascunho;
+  return st.aberto || ((c.status||'')==='indeferido' && !!c.prazoManual);
+}
 function badgePrazo(c){
   const d=diasDoCaso(c);
   if(d===null) return null;
   const base=c.prazoManual?'prazo final informado':'estimativa a partir da notificação';
-  if(d<0)  return { cls:'pz-venc',  txt:'vencido há '+Math.abs(d)+'d', dica:'Pela '+base+', o prazo já passou. Confira a notificação.' };
-  if(d===0)return { cls:'pz-venc',  txt:'vence HOJE',                  dica:'Protocole hoje ('+base+').' };
-  if(d<=3) return { cls:'pz-urg',   txt:'faltam '+d+'d',               dica:'Prazo apertado ('+base+').' };
-  if(d<=7) return { cls:'pz-perto', txt:'faltam '+d+'d',               dica:'Prazo se aproximando ('+base+').' };
-  return         { cls:'pz-ok',     txt:'faltam '+d+'d',               dica:'Prazo em dia ('+base+').' };
+  let b;
+  if(d<0)       b={ cls:'pz-venc',  txt:'vencido há '+Math.abs(d)+'d', dica:'Pela '+base+', o prazo já passou. Confira a notificação.' };
+  else if(d===0)b={ cls:'pz-venc',  txt:'vence HOJE',                  dica:'Protocole hoje ('+base+').' };
+  else if(d<=3) b={ cls:'pz-urg',   txt:'faltam '+d+'d',               dica:'Prazo apertado ('+base+').' };
+  else if(d<=7) b={ cls:'pz-perto', txt:'faltam '+d+'d',               dica:'Prazo se aproximando ('+base+').' };
+  else          b={ cls:'pz-ok',    txt:'faltam '+d+'d',               dica:'Prazo em dia ('+base+').' };
+  if((c.status||'')==='indeferido'){ b.txt='recorrer: '+b.txt; b.dica='Prazo do recurso à instância seguinte. '+b.dica; }
+  return b;
 }
 function pintaAgenda(cases){
   const ag=$('#agenda'); if(!ag) return;
-  const abertos=cases.filter(c=>(ST[c.status||'rascunho']||ST.rascunho).aberto)
-                     .map(c=>({ c, d:diasDoCaso(c) }))
-                     .filter(x=>x.d!==null);
-  if(!abertos.length){ ag.hidden=true; ag.innerHTML=''; soUrgentes=false; return; }
+  const comPrazo=cases.filter(contaPrazo).map(c=>({ c, d:diasDoCaso(c) }));
+  const abertos=comPrazo.filter(x=>x.d!==null);
+  /* caso em aberto SEM data de notificacao: a agenda nao tem como vigiar o
+     prazo dele — isso precisa aparecer, senao "nenhum vencendo" vira
+     falsa tranquilidade */
+  const semData=comPrazo.filter(x=>x.d===null).length;
+  if(!abertos.length && !semData){ ag.hidden=true; ag.innerHTML=''; soUrgentes=false; return; }
   const vencidos=abertos.filter(x=>x.d<0).length;
   const hoje=abertos.filter(x=>x.d===0).length;
   const semana=abertos.filter(x=>x.d>0&&x.d<=7).length;
-  const urgentes=vencidos+hoje+semana;
+  const urgentes=vencidos+hoje+semana+(semData?1:0);
   ag.hidden=false;
   ag.className='agenda'+(urgentes?' urg':'');
   const partes=[];
   if(vencidos) partes.push('<b>'+vencidos+'</b> com prazo vencido');
   if(hoje)     partes.push('<b>'+hoje+'</b> vencendo HOJE');
   if(semana)   partes.push('<b>'+semana+'</b> nos próximos 7 dias');
+  if(semData)  partes.push('<b>'+semData+'</b> SEM DATA de notificação (a agenda não vigia esses — abra o caso e informe a data)');
   ag.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFD966" stroke-width="1.9" style="vertical-align:-2px;margin-right:2px"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7v5l3.2 2"></path></svg> ' + (partes.length
       ? 'Agenda: '+partes.join(' • ')+'.'
       : '<b>'+abertos.length+'</b> caso(s) em aberto, nenhum vencendo esta semana.');
@@ -4291,7 +4573,8 @@ function pintaPainel(cases){
   cases = cases || getCases();
   if(!cases.length){ el.hidden=true; el.innerHTML=''; return; }
   const abertos=cases.filter(c=>(ST[c.status||'rascunho']||ST.rascunho).aberto);
-  const urg=abertos.map(c=>diasDoCaso(c)).filter(d=>d!==null && d<=7).length;
+  /* prazos: inclui tambem indeferidos com prazo de recurso correndo */
+  const urg=cases.filter(contaPrazo).map(c=>diasDoCaso(c)).filter(d=>d!==null && d<=7).length;
   const prot=cases.filter(c=>(c.status||'')==='protocolado').length;
   let gasto=0; try{ gasto=gastoDoMes()*cotacaoDolar(); }catch(e){}
   el.hidden=false; el.innerHTML='';
@@ -4423,8 +4706,12 @@ function criaProximaInstancia(id){
   if(!confirm('Criar um caso NOVO de recurso à instância seguinte para:\n\n«'+c.name+'»?\n\nOs dados do cliente são aproveitados; o caso antigo fica guardado como está.')) return;
   loadCase(c.id);
   loadedCaseId=null;                       /* sera salvo como caso NOVO */
+  paiRecurso=c.id;                         /* ao salvar, o pai sai do contador */
   $('#procType').value=next;
-  $('#fDataNotif').value=''; $('#fPrazoManual').value=''; updatePrazo();
+  /* A data da decisao ja foi capturada ao marcar "indeferido": o caso novo
+     nasce com ela (o prazo do recurso conta dai). O alerta abaixo vira
+     conferencia, nao digitacao obrigatoria. */
+  $('#fDataNotif').value=c.dataNotif||''; $('#fPrazoManual').value=''; updatePrazo();
   const extra='RECURSO CONTRA INDEFERIMENTO: a fase anterior ('+rotuloFase(c.proc)+') foi INDEFERIDA. '+
     'Anexar a decisao de indeferimento; se ela for generica, atacar tambem a falta de motivacao (art. 50 da Lei 9.784/1999).';
   const notas=($('#notes').value||'').trim();
@@ -4513,7 +4800,15 @@ $('#btnNew').onclick=()=>{ if(lastText && !pecaSalva && !confirm('Ha uma peca/an
   limpaNulidades(); $('#ptsAtual').value=''; $('#ptsGrav').value=''; $('#ptsEar').checked=false;
   $('#ptsRes').hidden=true; $('#ferr').open=false; montaDocumentos();
   $('#toolbar').style.display='none';
-  $('#out').innerHTML=`<div id="placeholder" class="empty"><div class="empty-title">Pronto para gerar a sua peça</div><div class="steps"><div class="pill"><div class="n">1</div><div class="l">Preencha o caso</div></div><div class="pill"><div class="n">2</div><div class="l">Gerar peça</div></div><div class="pill"><div class="n">3</div><div class="l">Conferir citações</div></div><div class="pill"><div class="n">4</div><div class="l">Google Docs / Gerar PDF</div></div></div><div class="empty-note">O módulo de prazo estima o vencimento a partir da data da notificação. Corrija o que vier em destaque na conferência antes de protocolar.</div></div>`; };
+  $('#out').innerHTML=`<div id="placeholder" class="empty"><div class="empty-title">Pronto para gerar a sua peça</div><div class="steps"><div class="pill"><div class="n">1</div><div class="l">Preencha o caso</div></div><div class="pill"><div class="n">2</div><div class="l">Gerar peça</div></div><div class="pill"><div class="n">3</div><div class="l">Conferir citações</div></div><div class="pill"><div class="n">4</div><div class="l">Google Docs / Gerar PDF</div></div></div><div class="empty-note">O módulo de prazo estima o vencimento a partir da data da notificação. Corrija o que vier em destaque na conferência antes de protocolar.</div></div>`;
+  /* Novo caso limpa TAMBEM a memoria da assistente. Sem isto, o cliente
+     seguinte herdava nome, placa e fase do anterior via CASO_CHAT — e a
+     fase "presa" travava o formulario adaptativo. (As variaveis do chat
+     sao declaradas mais abaixo no arquivo; no clique, ja existem.) */
+  chatHist=[]; CASO_CHAT={}; chatSalva(); casoChatSalva(); chatPinta(); pintaChatChips();
+  /* e o rascunho automatico do caso anterior tambem morre aqui: quem clicou
+     em "Novo caso" ja decidiu que aquilo nao vale mais */
+  limpaDraft(); };
 
 function docTitle(){ return ($('#fNome').value.trim()||'Peça') + (($('#fAit').value.trim())?(' - '+$('#fAit').value.trim()):''); }
 
@@ -4898,9 +5193,16 @@ const NUVEM = {
 let nvCliente = null, nvSessao = null;
 
 function nvMostra(estado){
-  $('#nvOff').hidden   = estado !== 'off';
+  /* O aviso de perigo aparece SEMPRE que os casos existem so neste aparelho:
+     tanto sem nuvem configurada ('off') quanto configurada mas SEM login
+     ('login') — que era exatamente o estado em que ele ficava escondido. */
+  $('#nvOff').hidden   = estado === 'on';
   $('#nvLogin').hidden = estado !== 'login';
   $('#nvOn').hidden    = estado !== 'on';
+  const aj = $('#nvOff .nv-ajuda');
+  if(aj && estado === 'login'){
+    aj.innerHTML = '<b style="color:#B8A76C">Backup na nuvem DESCONECTADO.</b> Seus casos existem só neste aparelho: se limpar o navegador ou trocar de aparelho, perde tudo. <b>Entre acima</b> (ou crie a conta) para os casos ficarem guardados na nuvem também.';
+  }
 }
 function nvStatus(msg, tipo){
   const s = $('#nvStatus'), p = $('#nvPonto');
@@ -5025,9 +5327,11 @@ function nvMesclar(locais, nuvens){
   return [...mapa.values()].sort((a, b) => nvData(b.date) - nvData(a.date));
 }
 
-/* ---- sobe alteracoes e exclusoes (chamado por setCases) ---- */
+/* ---- sobe alteracoes e exclusoes (chamado por setCases) ----
+   Devolve true so quando a nuvem CONFIRMOU o envio. setCases usa esse
+   retorno para nunca afirmar "esta na nuvem" sem prova. */
 async function nuvemEnviar(antes, depois){
-  if(!nvSessao || !nvCliente) return;
+  if(!nvSessao || !nvCliente) return false;
   try{
     nvStatus('salvando...', 'sync');
     /* exclusoes viram lapides no banco (ou ficam pendentes ate ter conexao) */
@@ -5040,11 +5344,13 @@ async function nuvemEnviar(antes, depois){
       await nvUpsert(mudados.map(c => ({ ...nvParaBanco(c), user_id: nvSessao.user.id })));
     }
     nvStatus('tudo salvo na nuvem', 'on');
+    return true;
   }catch(e){
-    // Falhou a nuvem? A copia local ja foi gravada, e as exclusoes pendentes
-    // ficam guardadas para a proxima sincronizacao. Nada se perde agora.
+    // Falhou a nuvem? Se a copia local foi gravada, nada se perde; se ate a
+    // copia local falhou, quem avisa com alarde e o setCases (que sabe disso).
     nvStatus('sem conexao — salvo neste aparelho', 'erro');
     console.warn('[nuvem]', e);
+    return false;
   }
 }
 
@@ -5236,13 +5542,17 @@ window.addEventListener('beforeunload', e=>{
    energia), oferece a recuperacao ao abrir */
 function ofereceRascunho(){
   let r=null; try{ r=JSON.parse(localStorage.getItem(LS.rascunho)||'null'); }catch(e){}
-  if(!r || !r.text) return;
+  /* v5.1: rascunho sem peca tambem vale — e um caso em PREENCHIMENTO */
+  const temCampos = r && r.campos && ['nome','ait','notes','dataNotif','prazoManual','placa'].some(k=>String(r.campos[k]||'').trim()!=='');
+  if(!r || (!r.text && !temCampos)) return;
   const out=$('#out');
   const bar=document.createElement('div');
   bar.className='hint';
   bar.style.cssText='display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#12110d;border:1px solid rgba(255,217,102,.3);border-radius:10px;padding:10px 12px;margin-bottom:12px';
   const tx=document.createElement('span'); tx.style.cssText='flex:1;min-width:200px';
-  tx.textContent='Há uma peça/análise gerada em '+(r.em||'sessão anterior')+' que não foi salva.';
+  tx.textContent = r.text
+    ? 'Há uma peça/análise gerada em '+(r.em||'sessão anterior')+' que não foi salva.'
+    : 'Há um caso em PREENCHIMENTO de '+(r.em||'sessão anterior')+((r.campos||{}).nome?' ('+r.campos.nome+')':'')+' que não foi salvo.';
   const b1=document.createElement('button'); b1.className='tb'; b1.style.height='36px'; b1.textContent='Recuperar';
   const b2=document.createElement('button'); b2.className='tb'; b2.style.height='36px'; b2.textContent='Descartar';
   b1.onclick=()=>{
@@ -5253,19 +5563,42 @@ function ofereceRascunho(){
     $('#fDataNotif').value=c.dataNotif||''; $('#fPrazoManual').value=c.prazoManual||'';
     $('#fPlaca').value=c.placa||''; $('#fCpf').value=c.cpf||''; $('#fTel').value=c.tel||'';
     if(c.infracao!==undefined){ $('#fInfracao').value=c.infracao||''; sugereNulidades(); }
+    limpaNulidades();
+    (c.nulidades||[]).forEach(id=>{ const cx=document.querySelector('[data-nul="'+id+'"]'); if(cx) cx.checked=true; });
+    $('#ptsAtual').value=c.ptsAtual||''; $('#ptsGrav').value=c.ptsGrav||''; $('#ptsEar').checked=!!c.ptsEar;
+    try{ calculaPontos(); }catch(e){}
+    if((c.nulidades||[]).length || c.ptsAtual) $('#ferr').open=true;
     montaCopiaveis();
     $('#outType').onchange(); updatePrazo();
-    $('#placeholder')?.remove(); bar.remove();
-    out.innerHTML='';
-    const el=document.createElement('div'); el.className='output'; el.innerHTML=mdToHtml(r.text); out.appendChild(el);
-    lastText=r.text; lastHTML=el.innerHTML; lastKind=r.kind||'peca'; pecaSalva=false; loadedCaseId=null;
-    paginaResultado(el, r.text);             /* v4.3 */
-    $('#toolbar').style.display='grid'; ajustaToolbar();
+    bar.remove();
+    if(r.text){
+      $('#placeholder')?.remove();
+      out.innerHTML='';
+      const el=document.createElement('div'); el.className='output'; el.innerHTML=mdToHtml(r.text); out.appendChild(el);
+      lastText=r.text; lastHTML=el.innerHTML; lastKind=r.kind||'peca'; pecaSalva=false; loadedCaseId=null;
+      paginaResultado(el, r.text);             /* v4.3 */
+      $('#toolbar').style.display='grid'; ajustaToolbar();
+    }
   };
   b2.onclick=()=>{ limpaDraft(); bar.remove(); };
   bar.appendChild(tx); bar.appendChild(b1); bar.appendChild(b2);
   out.insertBefore(bar, out.firstChild);
 }
+/* liga o rascunho automatico nos campos do caso (digitar ou mudar ja agenda) */
+['fNome','fOrgao','fAit','notes','fPlaca','fCpf','fTel','fDataNotif','fPrazoManual','ptsAtual','ptsGrav'].forEach(id=>{
+  const e=$('#'+id); if(!e) return;
+  e.addEventListener('input', agendaDraft); e.addEventListener('change', agendaDraft);
+});
+['procType','outType','fInfracao','ptsEar'].forEach(id=>{
+  const e=$('#'+id); if(!e) return;
+  e.addEventListener('change', agendaDraft);
+});
+document.addEventListener('change', ev=>{ if(ev.target && ev.target.matches && ev.target.matches('[data-nul]')) agendaDraft(); });
+/* v5.2: trocou o órgão? o destaque da tese do convênio e o aviso acompanham */
+(function(){ const e=$('#fOrgao'); if(!e) return;
+  const rev=()=>{ try{ sugereNulidades(); }catch(err){} };
+  e.addEventListener('change', rev); e.addEventListener('blur', rev);
+})();
 
 /* ---------- init ---------- */
 carregaTriagem();          /* v4.0: complexidade/red flags da ultima triagem */

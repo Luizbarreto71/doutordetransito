@@ -191,8 +191,8 @@
   .logado button{font:inherit;font-size:12px;font-weight:700;padding:6px 11px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer}
   .logado button:hover{border-color:var(--gold);color:var(--gold)}
 
-  /* Bloco do login gov.br — destacado de propósito: o cliente precisa
-     perceber claramente o que está informando e por quê. */
+  /* Bloco do aviso "Sem senha, sem risco" — destacado de propósito: o
+     cliente precisa ver logo que aqui NÃO se pede senha de gov.br. */
   .govbr{background:var(--card2);border:1px solid var(--line2);border-radius:13px;padding:16px;margin:4px 0}
   .govbr-h{display:flex;align-items:center;gap:8px;font-weight:800;font-size:13.5px;color:var(--gold);margin-bottom:6px}
   .govbr-h .ic{width:16px;height:16px}
@@ -609,7 +609,7 @@
             <div class="campo" data-so-cadastro>
               <label class="flt" for="regCpf">CPF</label>
               <input id="regCpf" type="text" placeholder="000.000.000-00" maxlength="14" inputmode="numeric" autocomplete="off">
-              <p class="hint">É o mesmo CPF do seu login gov.br.</p>
+              <p class="hint">Usado só para identificar o seu caso.</p>
             </div>
             <div class="campo" data-so-cadastro>
               <label class="flt" for="regNasc">Data de nascimento</label>
@@ -660,27 +660,17 @@
             <p class="hint">Alguns estados exigem. Está impresso no CRLV.</p>
           </div>
 
-          <!-- Acesso ao SENATRAN. O portal do gov.br só devolve as infrações
-               do próprio titular, por isso o login é do cliente.
-               O CPF não é pedido de novo: vem do cadastro. -->
+          <!-- A consulta usa APENAS placa + Renavam (dados do CRLV).
+               NUNCA pedir senha do gov.br aqui: é compromisso público do site
+               (FAQ, Termos e Política de Privacidade dizem "nunca pedimos"). -->
           <div class="govbr full">
-            <div class="govbr-h"><svg class="ic"><use href="#i-lock"/></svg> Acesso ao SENATRAN (gov.br)</div>
-            <p class="govbr-p">As multas ficam no portal do gov.br e só o titular tem acesso. Por isso a consulta usa o seu login — do mesmo jeito que você entraria no site do SENATRAN. Usaremos o CPF <b id="govbrCpf">—</b>, do seu cadastro.</p>
-            <div class="campo">
-              <label class="flt" for="login_senha">Sua senha do gov.br</label>
-              <input id="login_senha" name="login_senha" type="password" placeholder="senha do gov.br" autocomplete="new-password">
-            </div>
-            <p class="govbr-nota">
-              <b>Não guardamos a sua senha.</b> Ela é usada só para esta consulta e descartada em seguida —
-              não fica salva no seu navegador, nem em banco de dados, nem em registro nenhum.
-              Se preferir não informar,
-              <a href="#ferramenta">envie a foto da notificação</a> que analisamos do mesmo jeito.
-            </p>
+            <div class="govbr-h"><svg class="ic"><use href="#i-shield"/></svg> Sem senha, sem risco</div>
+            <p class="govbr-p" style="margin:0">A consulta usa apenas a <b>placa</b> e o <b>Renavam</b>, que estão no documento do veículo (CRLV). <b>Nunca pedimos a sua senha do gov.br</b> — se algum site pedir, desconfie. Se preferir, <a href="#ferramenta" style="color:var(--gold);font-weight:700">envie a foto da notificação</a> que analisamos do mesmo jeito.</p>
           </div>
 
           <label class="consent full">
             <input type="checkbox" id="consent">
-            <span id="consentTexto">Autorizo o uso do meu login do gov.br <b>exclusivamente</b> para esta consulta de infrações, e o contato sobre o meu caso. Estou ciente de que o resultado tem <b>caráter preliminar</b> e <b>não garante resultado</b>.</span>
+            <span id="consentTexto">Autorizo a consulta do veículo informado (placa e Renavam) e o contato sobre o meu caso. Estou ciente de que o resultado tem <b>caráter preliminar</b> e <b>não garante resultado</b>.</span>
           </label>
 
           <div class="full">
@@ -1038,8 +1028,8 @@ $$('.reveal').forEach(el => io.observe(el));
    de quem não clica no WhatsApp.
 
    A senha DO SITE é cuidada pelo Supabase (com hash) — ela nunca passa
-   pelo nosso código. E não tem nada a ver com a senha do gov.br, que é
-   outra coisa e não é guardada em lugar nenhum.
+   pelo nosso código. Senha do gov.br este site NUNCA pede, em lugar
+   nenhum (compromisso público: FAQ, Termos e Política de Privacidade).
    ========================================================= */
 let sb = null, sessao = null, perfil = null;
 let modoAuth = 'criar';   // 'criar' | 'entrar'
@@ -1071,11 +1061,8 @@ function mostraLogado(){
   if(logado){
     $('#logadoNome').textContent = perfil?.nome || 'Cadastro incompleto';
     $('#logadoEmail').textContent = sessao.user.email;
-    $('#govbrCpf').textContent = perfil?.cpf ? mascaraCpf(perfil.cpf) : '—';
   }
 }
-
-const mascaraCpf = d => String(d).replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
 
 async function carregaPerfil(){
   if(!sessao) { perfil = null; return; }
@@ -1218,34 +1205,20 @@ $('#renavam').addEventListener('input', e => {
 $('#codigo_seguranca').addEventListener('input', e => {
   e.target.value = e.target.value.replace(/\D/g, '');
 });
-$('#login_cpf').addEventListener('input', e => {
-  const d = e.target.value.replace(/\D/g, '').slice(0, 11);
-  e.target.value = d
-    .replace(/(\d{3})(\d)/, '$1.$2')
-    .replace(/(\d{3})\.(\d{3})(\d)/, '$1.$2.$3')
-    .replace(/(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
-});
-$('#tel').addEventListener('input', e => {
-  const d = e.target.value.replace(/\D/g, '').slice(0, 11);
-  e.target.value = d.length <= 10
-    ? d.replace(/(\d{0,2})(\d{0,4})(\d{0,4})/, (_, a, b, c) => [a && `(${a}`, a.length === 2 ? ') ' : '', b, c && `-${c}`].join('')).trim()
-    : d.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
-});
 
 function marcaErro(el, erro) { el.classList.toggle('erro', !!erro); }
 
 $('#formConsulta').addEventListener('submit', async ev => {
   ev.preventDefault();
+  $('#consultaErro').hidden = true;   // some o aviso da tentativa anterior
 
   const placa = $('#placa').value.trim().toUpperCase();
   const renavam = $('#renavam').value.trim();
   const codigo = $('#codigo_seguranca').value.trim();
-  const loginSenha = $('#login_senha').value;
 
-  // Nome, WhatsApp e CPF vêm do cadastro — não pedimos duas vezes.
+  // Nome e WhatsApp vêm do cadastro — não pedimos duas vezes.
   const nome = perfil?.nome || '';
   const tel = perfil?.telefone || '';
-  const loginCpf = perfil?.cpf || '';
 
   // Validação no cliente: cada consulta é paga, então não deixamos passar lixo.
   const placaOk = RE_PLACA.test(placa);
@@ -1254,8 +1227,6 @@ $('#formConsulta').addEventListener('submit', async ev => {
   marcaErro($('#renavam'), !renavamOk);
   if (!placaOk) return aviso('Confira a placa. Use o formato ABC1234 ou ABC1D23.');
   if (!renavamOk) return aviso('Confira o Renavam. São de 9 a 11 dígitos, sem pontos.');
-  if (!cpfValido(loginCpf)) return aviso('Seu cadastro está sem CPF válido. Saia e crie a conta de novo, ou fale com a gente.');
-  if (!loginSenha) return aviso('Informe a senha do gov.br para consultarmos as infrações.');
   if (!$('#consent').checked) return aviso('Marque a autorização para continuar.');
 
   const btn = $('#btnConsultar');
@@ -1269,7 +1240,9 @@ $('#formConsulta').addEventListener('submit', async ev => {
   res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
   try {
-    const params = { placa, renavam, login_cpf: loginCpf, login_senha: loginSenha };
+    // Só placa + Renavam (+ código do CRLV, se o estado exigir).
+    // NUNCA acrescentar credenciais aqui: o site promete que não pede.
+    const params = { placa, renavam };
     if (codigo) params.codigo_seguranca = codigo;
 
     const r = await fetch('/api/consulta', {
@@ -1278,9 +1251,6 @@ $('#formConsulta').addEventListener('submit', async ev => {
       body: JSON.stringify(params),
     });
     const j = await r.json();
-
-    // A senha some da tela e da memória assim que sai daqui.
-    $('#login_senha').value = '';
 
     if (!r.ok || j.code !== 200) {
       const motivo = j.code_message || j.error || (Array.isArray(j.errors) && j.errors.join(' ')) || ('Erro ' + r.status);
@@ -1374,111 +1344,9 @@ function msgLead(l, extra) {
   return `Olá! Vim pelo site do ${CFG.marca}.\nNome: ${l.nome}\nWhatsApp: ${l.tel}\nPlaca: ${l.placa}\nRenavam: ${l.renavam}\n${extra}`;
 }
 
-/* --- Rótulos amigáveis para as chaves que a Infosimples devolve --- */
-const ROTULOS = {
-  placa: 'Placa', renavam: 'Renavam', chassi: 'Chassi', marca_modelo: 'Marca / Modelo',
-  ano_fabricacao: 'Ano de fabricação', ano_modelo: 'Ano do modelo', cor: 'Cor',
-  situacao: 'Situação', categoria: 'Categoria', especie: 'Espécie', tipo: 'Tipo',
-  municipio: 'Município', uf: 'UF', proprietario: 'Proprietário', nome: 'Proprietário',
-  combustivel: 'Combustível', potencia: 'Potência', restricao_1: 'Restrição 1',
-  restricao_2: 'Restrição 2', restricao_3: 'Restrição 3', restricao_4: 'Restrição 4',
-  licenciamento_situacao: 'Licenciamento', exercicio: 'Exercício',
-  total: 'Total', valor_total: 'Valor total', quantidade: 'Quantidade',
-  pontos: 'Pontos', pontuacao: 'Pontuação',
-};
-const rotulo = k => ROTULOS[k] || k.replace(/_/g, ' ').replace(/^\w/, c => c.toUpperCase());
-
-// Chaves que não interessam ao usuário final
-const OCULTAR = /^(normalizado_|site_receipt|.*_codigo$|.*_detalhes$)/;
-
-const ehVazio = v => v === null || v === undefined || v === '' ||
-  (Array.isArray(v) && v.length === 0) ||
-  (typeof v === 'object' && !Array.isArray(v) && Object.keys(v).length === 0);
-
-function fmtValor(v) {
-  if (typeof v === 'boolean') return v ? 'Sim' : 'Não';
-  return String(v);
-}
-
-/** Renderiza o retorno da Infosimples sem depender do formato exato de cada Detran. */
-function renderConsulta(j, lead) {
-  const res = $('#resConsulta');
-  const dados = Array.isArray(j.data) ? j.data : [];
-  if (!dados.length) {
-    res.className = 'res ok';
-    res.innerHTML = `<div class="res-box">
-      <div class="res-head"><svg class="ic"><use href="#i-check-c"/></svg><h3>Nada encontrado para este veículo</h3></div>
-      <p style="color:var(--muted);font-size:13.5px;margin:0">A consulta não retornou registros. Confira os dados ou fale com a gente para checarmos manualmente.</p>
-      ${blocoCta(lead, 'Nada encontrado na consulta automática.')}
-    </div>`;
-    return;
-  }
-
-  let html = '';
-  let achouPendencia = false;
-
-  dados.forEach(item => {
-    const escalares = {}, listas = {};
-    Object.entries(item).forEach(([k, v]) => {
-      if (OCULTAR.test(k) || ehVazio(v)) return;
-      if (Array.isArray(v) && typeof v[0] === 'object') listas[k] = v;
-      else if (typeof v !== 'object') escalares[k] = v;
-    });
-
-    // Qualquer lista com registros, ou flag "existe_*" verdadeira, é sinal de pendência.
-    if (Object.keys(listas).length) achouPendencia = true;
-    Object.entries(escalares).forEach(([k, v]) => { if (/^existe_/.test(k) && v === true) achouPendencia = true; });
-
-    if (Object.keys(escalares).length) {
-      html += '<div class="res-grupo"><h4>Dados do veículo</h4><div class="kv">';
-      Object.entries(escalares).forEach(([k, v]) => {
-        html += `<div><b>${esc(rotulo(k))}</b><span>${esc(fmtValor(v))}</span></div>`;
-      });
-      html += '</div></div>';
-    }
-
-    Object.entries(listas).forEach(([k, arr]) => {
-      const cols = [...new Set(arr.flatMap(o => Object.keys(o)))]
-        .filter(c => !OCULTAR.test(c) && arr.some(o => !ehVazio(o[c]) && typeof o[c] !== 'object'));
-      if (!cols.length) return;
-      html += `<div class="res-grupo"><h4>${esc(rotulo(k))} (${arr.length})</h4><div class="tabela"><table><thead><tr>`;
-      cols.forEach(c => html += `<th>${esc(rotulo(c))}</th>`);
-      html += '</tr></thead><tbody>';
-      arr.forEach(o => {
-        html += '<tr>';
-        cols.forEach(c => html += `<td>${ehVazio(o[c]) ? '—' : esc(fmtValor(o[c]))}</td>`);
-        html += '</tr>';
-      });
-      html += '</tbody></table></div></div>';
-    });
-  });
-
-  res.className = 'res ' + (achouPendencia ? 'warn' : 'ok');
-  const titulo = achouPendencia
-    ? 'Encontramos pendências no seu veículo'
-    : 'Consulta concluída';
-  const icone = achouPendencia ? '#i-alert' : '#i-check-c';
-  const legenda = achouPendencia
-    ? 'Há registros que merecem atenção. Um especialista pode avaliar se cabe defesa e qual o prazo.'
-    : 'Não encontramos pendências nesta consulta. Ainda assim, vale conferir o seu prontuário da CNH.';
-
-  res.innerHTML = `<div class="res-box">
-    <div class="res-head"><svg class="ic"><use href="${icone}"/></svg><h3>${titulo}</h3></div>
-    <p style="color:var(--muted);font-size:13.5px;margin:0 0 16px">${legenda}</p>
-    ${html}
-    ${j.site_receipts && j.site_receipts.length ? `<p style="font-size:12px;color:var(--muted2);margin:0 0 10px"><a href="${esc(j.site_receipts[0])}" target="_blank" rel="noopener" style="color:var(--gold)">Ver comprovante da consulta no site do órgão</a></p>` : ''}
-    <p style="font-size:11.5px;color:var(--muted2);margin:0">Consulta de caráter preliminar, baseada em dados públicos do órgão de trânsito. Confira sempre os prazos junto ao órgão.</p>
-    ${blocoCta(lead, achouPendencia ? 'A consulta encontrou pendências no meu veículo e quero avaliar a defesa.' : 'Fiz a consulta no site e quero falar sobre o meu caso.')}
-  </div>`;
-}
-
-function blocoCta(lead, extra) {
-  return `<div class="res-cta">
-    <b>Quer a defesa completa pronta para protocolar?</b>
-    <p>Um especialista avalia o seu caso e monta a peça técnica.</p>
-    <a class="btn wa" target="_blank" href="${waLink(msgLead(lead, extra))}"><svg class="ic"><use href="#i-whatsapp"/></svg> Falar com especialista</a>
-  </div>`;
-}
+/* A tela de resultado da consulta é o painel.html: o submit acima grava o
+   resultado em sessionStorage e manda o cliente para lá. Não renderizamos
+   a tabela aqui para não existirem duas telas fazendo a mesma coisa. */
 
 /* =========================================================
    FERRAMENTA DE ANÁLISE POR IA (upload de documentos)

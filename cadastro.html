@@ -252,8 +252,19 @@ function setFile(id,f){
   if(f.size>20*1024*1024){ alert('Arquivo muito grande (máx ~20MB): '+f.name); return; }
   files[id]=f;
   const n=$('#n'+id.slice(1)); n.classList.add('show');
-  n.innerHTML='📎 '+f.name+'<span class="x" data-clr="'+id+'">remover</span>';
-  n.querySelector('.x').onclick=()=>{ delete files[id]; n.classList.remove('show'); $('#'+id).value=''; };
+  // O nome do arquivo entra como TEXTO, nunca como HTML: um arquivo com
+  // "<" no nome viraria código na página se usássemos innerHTML aqui.
+  n.textContent='';
+  const clipe=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  clipe.setAttribute('viewBox','0 0 24 24');
+  clipe.setAttribute('style','width:15px;height:15px;fill:none;stroke:#FFD966;stroke-width:1.8;stroke-linecap:round;vertical-align:-2px;margin-right:7px');
+  clipe.innerHTML='<path d="M20 11.5l-7.8 7.8a4.5 4.5 0 0 1-6.4-6.4l8-8a3 3 0 0 1 4.3 4.3l-8 8a1.5 1.5 0 0 1-2.2-2.2l7.4-7.4"/>';
+  n.appendChild(clipe);
+  n.appendChild(document.createTextNode(f.name));
+  const x=document.createElement('span');
+  x.className='x'; x.textContent='remover';
+  x.onclick=()=>{ delete files[id]; n.classList.remove('show'); $('#'+id).value=''; };
+  n.appendChild(x);
 }
 
 $('#enviar').onclick=()=>{
